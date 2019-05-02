@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="苯宝宝假期呆在学校学习，然而校园网实在坑爹。。所以通过一些教程了解了搭建代理服务器的方式通过ipv6来上网，效果还不错，虽然也有一些问题QAQ">
+<meta name="keywords" content="IPv6,shadowsocks,Vultr,VPS,CentOS 6,Linux,校园网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网">
+<meta property="og:url" content="https://phantomT.github.io/2018/08/07/VPS-SSR/index.html">
+<meta property="og:site_name" content="欢迎来到本尊的鱼缸">
+<meta property="og:description" content="苯宝宝假期呆在学校学习，然而校园网实在坑爹。。所以通过一些教程了解了搭建代理服务器的方式通过ipv6来上网，效果还不错，虽然也有一些问题QAQ">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/07/VPS-SSR/VPS-SSR/taocan.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/07/VPS-SSR/VPS-SSR/SSRclient.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/07/VPS-SSR/VPS-SSR/icon.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/07/VPS-SSR/VPS-SSR/proxyserver.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/07/VPS-SSR/VPS-SSR/proxyrule.png">
+<meta property="og:updated_time" content="2019-02-04T08:28:16.217Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网">
+<meta name="twitter:description" content="苯宝宝假期呆在学校学习，然而校园网实在坑爹。。所以通过一些教程了解了搭建代理服务器的方式通过ipv6来上网，效果还不错，虽然也有一些问题QAQ">
+<meta name="twitter:image" content="https://phantomt.github.io/2018/08/07/VPS-SSR/VPS-SSR/taocan.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://phantomT.github.io/2018/08/07/VPS-SSR/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网 | 欢迎来到本尊的鱼缸</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">欢迎来到本尊的鱼缸</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Nothing is true and everything is permitted.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-记录">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>记录</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://phantomT.github.io/2018/08/07/VPS-SSR/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Phantom T">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到本尊的鱼缸">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-07 00:46:48" itemprop="dateCreated datePublished" datetime="2018-08-07T00:46:48+08:00">2018-08-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-04 16:28:16" itemprop="dateModified" datetime="2019-02-04T16:28:16+08:00">2019-02-04</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>苯宝宝假期呆在学校学习，然而校园网实在坑爹。。所以通过一些教程了解了搭建代理服务器的方式通过ipv6来上网，效果还不错，虽然也有一些问题QAQ<br><a id="more"></a></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>苯宝宝所在华北某校，校园网是ipv6+ipv4；</li>
+<li>校园网目前针对ipv4收费，ipv6暂时免费，但经过路由器无法使用ipv6；</li>
+<li>校园网坑爹限速，即使假期也日均200KB/s，github访问速度一度达到11KiB/s,而ipv6速度贼快，youtube等墙外网站基本1080P+的清晰度随便看，墙内即使是bilibili，对于一些没有地区限制的视频(非剧集等)，基本上也是1080P+的清晰度流畅观看，下载资源基本满速；</li>
+<li>校园网网络认证收费，试图使用路由器尝试多拨等(Openwrt，以后写这个)，但并未破解成功，也未能实现路由器转发ipv6。校园网收费具体如下:<blockquote>
+<ul>
+<li>10元/30天(100小时)</li>
+<li>30元/30天(200小时)  <del>没错，你没有看错，三倍的价格只有两倍的时间</del></li>
+<li>50元/30天(无限时长) <del>但是网速并没有任何改变</del></li>
+</ul>
+</blockquote>
+</li>
+<li><p>截图为证:<br><img src="VPS-SSR/taocan.png" alt></p>
+</li>
+<li><p>一般宿舍都是组团买50元的套餐，但是目前学校好像按照账号限速！！！也就是说我们特么6个人分一个号的速度！！！本来网口只有100兆！而且50块钱也太贵了！更多的吐槽不能乱说了，怕水表。</p>
+</li>
+<li><p><strong>下面开始正题</strong></p>
+</li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>ipv6环境，大概就是一个支持ipv6的网口，windows可以通过网络设置查看，若ipv6显示无网络连接，就是不支持了。</li>
+<li>支持ipv6的服务器，我选的是Vultr的，因为有一个比较便宜。。。大概每个月两顿食堂的饭钱不到，还有更便宜的但是配置实在太低了。。。搬瓦工的VPS有个问题就是他家KVM架构不支持。</li>
+<li>SSH工具，我选择putty</li>
+<li>电脑和脑子还有搜索引擎</li>
+</ul>
+<h2 id="VPS"><a href="#VPS" class="headerlink" title="VPS"></a>VPS</h2><ul>
+<li>VPS可以选择去<a href="http://www.vultr.com注册一个账号然后买一个洛杉矶的服务器(测试一下哪个延时低和速度快选哪个)，可以使用支付宝付款的。" target="_blank" rel="noopener">www.vultr.com注册一个账号然后买一个洛杉矶的服务器(测试一下哪个延时低和速度快选哪个)，可以使用支付宝付款的。</a><br>推广一下我的<a href="https://www.vultr.com/?ref=7480130" target="_blank" rel="noopener">分享链接</a>，<strong>如果要购买这个再考虑点</strong>，不然别说苯宝宝坑。。。</li>
+<li>安装系统，根据教程我装的是CentOS 6，和以前用的debian内核的不一样，话说好像6和7都不一样= =；<blockquote>
+<p>另:搭建服务器时一定要选择”Enable ipv6”选项。</p>
+</blockquote>
+</li>
+<li>购买完成后从Vultr的后台获取服务器的ip地址和root密码，使用<a href="https://www.putty.org/" target="_blank" rel="noopener">putty</a>连接服务器，putty界面中鼠标右键为粘贴。Linux命令行的基本操作要会一些，避免出些基础的错误。</li>
+</ul>
+<h2 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h2><h3 id="SSR的搭建"><a href="#SSR的搭建" class="headerlink" title="SSR的搭建"></a>SSR的搭建</h3><ol>
+<li>使用<a href="https://teddysun.com/486.html" target="_blank" rel="noopener">秋水逸冰</a>提供的一键安装脚本，可以一键安装Shadowsocks-Python， ShadowsocksR， Shadowsocks-Go， Shadowsocks-libev 版（四选一）服务端；</li>
+<li>使用root登录服务器，并运行一下命令:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh</span><br><span class="line">chmod +x shadowsocks-all.sh</span><br><span class="line">./shadowsocks-all.sh 2&gt;&amp;1 | tee shadowsocks-all.log</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>按需求选择shadowsocksR，然后选择端口什么的，</p>
+<ul>
+<li>服务器端口:自己设定（如不设定，默认从 9000-19999 之间随机生成）</li>
+<li>密码:自己设定（如不设定，默认为 teddysun.com）</li>
+<li>加密方式:自己设定（如不设定，Python 和 libev 版默认为 aes-256-gcm，R 和 Go 版默认为 aes-256-cfb）</li>
+<li>协议（protocol）:自己设定（如不设定，默认为 origin）（仅限 ShadowsocksR 版）</li>
+<li>混淆（obfs）:自己设定（如不设定，默认为 plain）（仅限 ShadowsocksR 版）</li>
+<li><p><em>备注:脚本默认创建单用户配置文件，如需配置多用户，请手动修改相应的配置文件后重启即可。</em></p>
+</li>
+<li><p>安装完成后，会提示如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Congratulations, your_shadowsocks_version install completed!</span><br><span class="line">Your Server IP        :your_server_ip</span><br><span class="line">Your Server Port      :your_server_port</span><br><span class="line">Your Password         :your_password</span><br><span class="line">Your Encryption Method:your_encryption_method</span><br><span class="line"></span><br><span class="line">Your QR Code: (For Shadowsocks Windows, OSX, Android and iOS clients)</span><br><span class="line"> ss://your_encryption_method:your_password@your_server_ip:your_server_port</span><br><span class="line">Your QR Code has been saved as a PNG file path:</span><br><span class="line"> your_path.png</span><br><span class="line"></span><br><span class="line">Welcome to visit:https://teddysun.com/486.html</span><br><span class="line">Enjoy it!</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>卸载方式请看<a href="https://teddysun.com/486.html" target="_blank" rel="noopener">秋水逸冰</a>的原文</strong></p>
+<ol start="3">
+<li>下载ShadowsocksR的客户端</li>
+</ol>
+<ul>
+<li><p><a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="noopener">常规版 Windows 客户端</a></p>
+</li>
+<li><p><a href="https://github.com/shadowsocksrr/shadowsocksr-csharp/releases" target="_blank" rel="noopener">ShadowsocksR 版 Windows 客户端</a></p>
+</li>
+</ul>
+<p><em>更多版本请到仓库内自行搜索</em></p>
+<ol start="4">
+<li>开启SSR<br><code>/etc/init.d/shadowsocks-r start | stop | restart | status</code></li>
+</ol>
+<ul>
+<li><p>修改配置文件<br><code>vi /etc/init.d/shadowsocks-r.json</code><br>将”server”:”0.0.0.0”修改为”server”:”::”，然后重启SSR<br><code>/etc/init.d/shadowsocks-r restart</code></p>
+</li>
+<li><p>放行ipv6端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/sbin/ip6tables -I INPUT -p tcp --dport &quot;yourport&quot; -j ACCEPT    #将这里的&quot;yourport&quot;改成在上面搭建过程中设置的端口</span><br><span class="line">/etc/rc.d/init.d/ip6tables save    #保存端口放行设置</span><br><span class="line">/etc/init.d/ip6tables restart    #重启ip6tables，应用放行设置</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="SSR客户端的设置-Windows系统"><a href="#SSR客户端的设置-Windows系统" class="headerlink" title="SSR客户端的设置/Windows系统"></a>SSR客户端的设置/Windows系统</h3><p>将SSR客户端下载后解压缩，文件夹大致如图:<br><img src="VPS-SSR/SSRclient.png" alt><br>双击 <strong>ShadowsocksR-dotnet4.0.exe</strong> 启动<br>这时任务栏会出现一个小飞机图标，<img src="VPS-SSR/icon.png" alt><br>双击小飞机，填入服务器数据，如果使用ipv6，则将ip一栏填写成服务器的ipv6地址。<br>例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">服务器IP: #服务器的ip地址</span><br><span class="line">服务器端口: 8388   #前面设置的服务器端口</span><br><span class="line">密码: #前面设置的SSR密码</span><br><span class="line">加密: aes-256-cfb</span><br><span class="line">协议: 默认的 origin 就行</span><br><span class="line">协议参数: 不用管</span><br><span class="line">混淆: 默认的 plain 就行</span><br><span class="line">混淆参数: 不用管</span><br><span class="line">备注: 随意</span><br><span class="line">Group: 随意</span><br></pre></td></tr></table></figure></p>
+<p>右键小飞机，将系统代理模式设置为PAC模式，代理规则为全局，这时小飞机就会变成绿色，像上面的图片一样。<br><em>更多SSR的使用请上网自行搜索，包括二维码、绕行规则什么的</em></p>
+<h3 id="使用Proxifier进行全局代理"><a href="#使用Proxifier进行全局代理" class="headerlink" title="使用Proxifier进行全局代理"></a>使用Proxifier进行全局代理</h3><ul>
+<li>下载安装<a href="http://www.proxifier.com/" target="_blank" rel="noopener">Proxifier</a>，注册码啥的靠搜索引擎；</li>
+<li>设置代理服务器:<ol>
+<li>点击Profile-&gt;Proxy Servers，然后点击右侧添加服务器;</li>
+<li>Address填:127.0.0.1;</li>
+<li>Port填:1080;</li>
+<li>Protocol选择:SOCKS Version 5;</li>
+<li>确定。<br><img src="VPS-SSR/proxyserver.png" alt></li>
+</ol>
+</li>
+<li>添加代理规则:<ol>
+<li>点击Profile-&gt;Proxification Rules，逐一添加;</li>
+<li>将ShadowsocksR-dotnet4.0.exe添加到直连;</li>
+<li>将localhost添加到直连;</li>
+<li>将默认设置为Proxy SOCKS5 127.0.0.1。<br><img src="VPS-SSR/proxyrule.png" alt></li>
+</ol>
+</li>
+</ul>
+<h2 id="使用BBR进行速度优化"><a href="#使用BBR进行速度优化" class="headerlink" title="使用BBR进行速度优化"></a>使用BBR进行速度优化</h2><p><em>核心方法来自<a href="https://teddysun.com/489.html" target="_blank" rel="noopener">秋水逸冰</a></em><br>此方法在苯宝宝的服务器上测试通过</p>
+<ul>
+<li>在TCP连接中，由于需要维持连接的可靠性，引入了拥塞控制和流量管理的方法。Google BBR就是谷歌公司提出的一个 <strong>开源TCP拥塞控制的算法</strong> 。在最新的linux 4.9及以上的内核版本中已被采用。<br><a href="https://blog.csdn.net/dog250/article/details/52830576" target="_blank" rel="noopener">BBR算法解析</a></li>
+<li>由于Google BBR非常新，<strong>任何低于4.9的linux内核版本都需要升级到4.9及以上才能使用</strong>，故若VPS本身内核版本较低的话，只有KVM架构的VPS才能使用，<strong>openvz的VPS用户若内核版本较低则无法使用！</strong></li>
+</ul>
+<hr>
+<p><strong>由于是使用最新版系统内核，最好请勿在生产环境安装，以免产生不可预测之后果。</strong></p>
+<hr>
+<h3 id="内核升级方法"><a href="#内核升级方法" class="headerlink" title="内核升级方法"></a>内核升级方法</h3><p>首先查看内核版本:<br><code>uname -r</code><br>若符合条件则可以继续<br><del>一般Vultr新安装的的CentOS 6都是新内核的</del><br>否则请升级内核。</p>
+<ul>
+<li>CentOS 系统，执行以下命令即可升级内核:<br><code>yum --enablerepo=elrepo-kernel -y install kernel-ml kernel-ml-devel</code></li>
+<li>CentOS 6:<br><code>sed -i &#39;s/^default=.*/default=0/g&#39; /boot/grub/grub.conf</code></li>
+<li>CentOS 7:<br><code>grub2-set-default 0</code></li>
+</ul>
+<h3 id="安装BBR"><a href="#安装BBR" class="headerlink" title="安装BBR"></a>安装BBR</h3><p>使用root用户登录，运行以下命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh</span><br><span class="line">chmod +x bbr.sh</span><br><span class="line">./bbr.sh</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后，脚本会提示需要重启 VPS，输入 y 并回车后重启。</p>
+<p>重启后，进入VPS，验证安装是否成功，分别输入以下命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.core.default_qdisc</span><br><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure></p>
+<p>这些命令的返回值一般为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_available_congestion_control = reno cubic bbr</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">tcp_bbr                20480  8</span><br></pre></td></tr></table></figure></p>
+<p>如与以上结果类似或相同，则BBR已经启动。</p>
+<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><p>那么，使用ipv6的VPS就搭建完成了，可以打开<del>youtube</del>等不存在的网站试验以下hhh</p>
+<h3 id="问题遗留"><a href="#问题遗留" class="headerlink" title="问题遗留"></a>问题遗留</h3><p>其实还是有一些问题的，比如路由器不能转换ipv6地址(好像是这么描述的)就是连接路由器以后就无法使用ipv6了，也就是说Wi-fi与ipv6不能一起用诶。还没有想出好的方法，真的还需要好好学习一个。<br>希望自己也可以成为大佬&gt;_&lt;</p>
+<h3 id="参考链接-更新"><a href="#参考链接-更新" class="headerlink" title="参考链接[更新]"></a>参考链接[更新]</h3><p><a href="https://www.iamzs.top/archives/ssr-ipv6-proxifier.html" target="_blank" rel="noopener">某前辈的博客</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Phantom T 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="Phantom T 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Phantom T</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://phantomT.github.io/2018/08/07/VPS-SSR/" title="搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网">https://phantomT.github.io/2018/08/07/VPS-SSR/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IPv6/" rel="tag"># IPv6</a>
+          
+            <a href="/tags/shadowsocks/" rel="tag"># shadowsocks</a>
+          
+            <a href="/tags/Vultr/" rel="tag"># Vultr</a>
+          
+            <a href="/tags/VPS/" rel="tag"># VPS</a>
+          
+            <a href="/tags/CentOS-6/" rel="tag"># CentOS 6</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/校园网/" rel="tag"># 校园网</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/15/Serial-assit/" rel="next" title="PID串口助手的第一部分：串口通信">
+                <i class="fa fa-chevron-left"></i> PID串口助手的第一部分：串口通信
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/09/Hexo-sitemap/" rel="prev" title="Hexo进行SEO优化，添加Sitemap">
+                Hexo进行SEO优化，添加Sitemap <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Phantom T">
+            
+              <p class="site-author-name" itemprop="name">Phantom T</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/phantomT" title="GitHub &rarr; https://github.com/phantomT" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:bobphantom@126.com" title="E-Mail &rarr; mailto:bobphantom@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VPS"><span class="nav-number">3.</span> <span class="nav-text">VPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建"><span class="nav-number">4.</span> <span class="nav-text">搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSR的搭建"><span class="nav-number">4.1.</span> <span class="nav-text">SSR的搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSR客户端的设置-Windows系统"><span class="nav-number">4.2.</span> <span class="nav-text">SSR客户端的设置/Windows系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Proxifier进行全局代理"><span class="nav-number">4.3.</span> <span class="nav-text">使用Proxifier进行全局代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用BBR进行速度优化"><span class="nav-number">5.</span> <span class="nav-text">使用BBR进行速度优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内核升级方法"><span class="nav-number">5.1.</span> <span class="nav-text">内核升级方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装BBR"><span class="nav-number">5.2.</span> <span class="nav-text">安装BBR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束"><span class="nav-number">6.</span> <span class="nav-text">结束</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题遗留"><span class="nav-number">6.1.</span> <span class="nav-text">问题遗留</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接-更新"><span class="nav-number">6.2.</span> <span class="nav-text">参考链接[更新]</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phantom T</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'b6dcc47c3c7ef6e52002',
+    clientSecret: '4b1bd615b27b373815e57080ed022051b759ea8c',
+    repo: 'hexo-gitalk',
+    owner: 'phantomT',
+    admin: ['phantomT'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

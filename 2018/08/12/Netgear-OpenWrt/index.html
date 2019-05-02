@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="用闲鱼上淘的Netgear路由器刷Openwrt系统，设置IPv6，尝试shadowsocks，实现校园网加速/不完美免费免流，路由器的ss感觉并不能达到要求。。ss代理  支持Windows 10/Linux 支持安卓(测试Android 8，三丧OEM) iOS需要购买代理软件IPv6仅对于pc端使用有效，安卓能获取IPv6地址但不知道为啥连不上v6的代理？？">
+<meta name="keywords" content="IPv6,shadowsocks,Linux,校园网,OpenWrt,路由器,Netgear">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索">
+<meta property="og:url" content="https://phantomT.github.io/2018/08/12/Netgear-OpenWrt/index.html">
+<meta property="og:site_name" content="欢迎来到本尊的鱼缸">
+<meta property="og:description" content="用闲鱼上淘的Netgear路由器刷Openwrt系统，设置IPv6，尝试shadowsocks，实现校园网加速/不完美免费免流，路由器的ss感觉并不能达到要求。。ss代理  支持Windows 10/Linux 支持安卓(测试Android 8，三丧OEM) iOS需要购买代理软件IPv6仅对于pc端使用有效，安卓能获取IPv6地址但不知道为啥连不上v6的代理？？">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/hardware.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/open1.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/open2.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/open3.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/open4.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/barrier.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/calmer.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/huawei.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/index.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/login.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/success.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/testv6.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/speedtest.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/pingtest.png">
+<meta property="og:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/phonev6.jpg">
+<meta property="og:updated_time" content="2018-08-12T06:17:21.742Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索">
+<meta name="twitter:description" content="用闲鱼上淘的Netgear路由器刷Openwrt系统，设置IPv6，尝试shadowsocks，实现校园网加速/不完美免费免流，路由器的ss感觉并不能达到要求。。ss代理  支持Windows 10/Linux 支持安卓(测试Android 8，三丧OEM) iOS需要购买代理软件IPv6仅对于pc端使用有效，安卓能获取IPv6地址但不知道为啥连不上v6的代理？？">
+<meta name="twitter:image" content="https://phantomt.github.io/2018/08/12/Netgear-OpenWrt/Netgear-OpenWrt/hardware.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://phantomT.github.io/2018/08/12/Netgear-OpenWrt/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索 | 欢迎来到本尊的鱼缸</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">欢迎来到本尊的鱼缸</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Nothing is true and everything is permitted.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-记录">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>记录</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://phantomT.github.io/2018/08/12/Netgear-OpenWrt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Phantom T">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到本尊的鱼缸">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-12 14:15:57 / 修改时间：14:17:21" itemprop="dateCreated datePublished" datetime="2018-08-12T14:15:57+08:00">2018-08-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>用闲鱼上淘的Netgear路由器刷Openwrt系统，设置IPv6，尝试shadowsocks，实现校园网加速/不完美免费免流，路由器的ss感觉并不能达到要求。。<br>ss代理</p>
+<ul>
+<li>支持Windows 10/Linux</li>
+<li>支持安卓(测试Android 8，三丧OEM)</li>
+<li>iOS需要购买代理软件<br>IPv6仅对于pc端使用有效，安卓能获取IPv6地址但不知道为啥连不上v6的代理？？</li>
+</ul>
+<a id="more"></a>
+<h2 id="设备介绍"><a href="#设备介绍" class="headerlink" title="设备介绍"></a>设备介绍</h2><p>网件WNDR3700V4路由器，大概是14年出的，价位大概300+左右，配置还是很豪华的，毕竟是专业的厂家，和某些贴牌的不一样。</p>
+<h3 id="硬件配置"><a href="#硬件配置" class="headerlink" title="硬件配置"></a>硬件配置</h3><pre><code>&gt; latform:  Atheros AR9344
+&gt; Target:   ar71xx
+&gt; Instruction Set:  MIPS32
+&gt; Sub Instruction Set:  MIPS32 74K series
+&gt; Bootloader:   U-Boot
+&gt; CPU MHz:  560
+&gt; Flash MB: 128NAND
+&gt; RAM MB:   128
+&gt; Ethernet 100M ports:  -
+&gt; Ethernet GBit ports:  5
+&gt; Modem:    No
+&gt; Comments network ports:   1 WAN + 4x LAN
+&gt; VLAN: Yes
+&gt; WLAN Hardware:    AR9582 [an 2x2:2] + AR9344 [bgn 2x2:2]
+&gt; WLAN 2.4GHz:  b/g/n
+&gt; WLAN 5.0GHz:  a/n
+&gt; WLAN Comments:    2x2:2 MIMO
+&gt; Detachable Antennas:  -
+&gt; USB ports:    1x 2.0
+&gt; SATA ports:   -
+&gt; Serial:   Yes
+&gt; JTAG: Yes
+</code></pre><p>数据来自<a href="https://wiki.openwrt.org/toh/hwdata/netgear/netgear_wndr3700_v4" target="_blank" rel="noopener">OpenWrt的Wiki</a>，刷机固件等也来自于此。<br><a href="https://wiki.openwrt.org/toh/netgear/wndr3700#tab__hardware_details" target="_blank" rel="noopener">WNDR3700各个版本的对比</a></p>
+<blockquote>
+<p><img src="Netgear-OpenWrt/hardware.png" alt="对比图局部"></p>
+</blockquote>
+<h3 id="开箱"><a href="#开箱" class="headerlink" title="开箱"></a>开箱</h3><p>在闲鱼上花了100块钱淘到的：</p>
+<blockquote>
+<p><img src="Netgear-OpenWrt/open1.jpg" alt="开箱1"><br><img src="Netgear-OpenWrt/open2.jpg" alt="开箱2"><br><img src="Netgear-OpenWrt/open3.jpg" alt="开箱3"><br><img src="Netgear-OpenWrt/open4.jpg" alt="开箱4"></p>
+</blockquote>
+<h2 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a>刷机</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+<li>OpenWrt的官方固件(其实是因为我不会自己编译emmmm)</li>
+<li>路由器</li>
+<li>电脑(Windows 10)</li>
+<li>网线</li>
+<li>SSH工具(我选择putty)</li>
+<li>SCP传输工具(我选择WinSCP)</li>
+<li>牙签(避免变砖应急用的)</li>
+<li>tftp工具和Netgear的官方固件(同上，救砖)</li>
+</ul>
+<p>固件版本：Openwrt Chaos Calmer 15.05.1，使用官方提供的固件。<br>固件可以从<a href="https://wiki.openwrt.org/toh/hwdata/netgear/netgear_wndr3700_v4" target="_blank" rel="noopener">OpenWrt的Wiki</a>中获得。</p>
+<h3 id="先前的尝试"><a href="#先前的尝试" class="headerlink" title="先前的尝试"></a>先前的尝试</h3><ul>
+<li>因为前一段时间刷过一个小的路由器，TP-Link的WR720N V4，但是ROM太小了没有加什么插件之类的。</li>
+<li>那个路由器先刷的解锁Bootloader的openwrt固件，<br><img src="Netgear-OpenWrt/barrier.png" alt="barrierbreaker"></li>
+<li>然后刷了Breed的Bootloader，最后在用Breed升级的正常的openwrt。<br><img src="Netgear-OpenWrt/calmer.png" alt="chaoscalmer"></li>
+<li>期间，变砖一次，抢救一下午，一开始以为没救了，直到一次偶然启动发现灯亮了，于是抢救一下，也不知道是怎么搞得就不停的传最后就救回来的。<br>总的来说就是安全模式感天动地。= =</li>
+<li>救砖的时候不小心还用 <strong><em>？？？码</em></strong> 进入了楼里的一个华为路由器(/交换机？？)，平时检测不到大概是因为ip地址与路由器的局域网地址冲突了，也许这就是为什么学校通告里写的要关闭路由器的DHCP服务(虽然不关也能用诶)。<br><img src="Netgear-OpenWrt/huawei.jpg" alt="huawei"></li>
+</ul>
+<p>准备好固件和路由器还有救砖的准备就可以开始了。</p>
+<p>因为现在系统就是原版的，可以直接用后台上传固件。</p>
+<h3 id="物理连接"><a href="#物理连接" class="headerlink" title="物理连接"></a>物理连接</h3><p>第一步是物理连接，路由器是原版的系统，因为为了避免在刷机过程中没有网，于是我把正在用的另一个路由器的地址改成了<code>10.0.0.1</code></p>
+<p>使用时我先试的将Internet口，也就是WAN口与笔记本的网口进行连接，然后使用cmd进行<code>ping</code>连接测试，</p>
+<p>登录<code>192.168.1.1</code>，输入默认用户名和密码，进入后台。</p>
+<p>上传固件。<br>重新启动。</p>
+<h3 id="进入后台"><a href="#进入后台" class="headerlink" title="进入后台"></a>进入后台</h3><ul>
+<li>启动后依然输入<code>192.168.1.1</code>进入管理界面，这是会自动跳转至Openwrt的Web界面(Luci)。<br>用户名：<code>root</code><br>密码：随意设置</li>
+<li><p>然后页面上方会有一段提示未设置密码的英文，点进去设置一下就行，<strong>这步必须做</strong> 否则SSH可能无法登录。</p>
+</li>
+<li><p>设置完密码后，Luci界面的概况如下：<br><img src="Netgear-OpenWrt/index.png" alt="home"></p>
+</li>
+<li>使用putty登入路由器后台，就会显示以下界面：<br><img src="Netgear-OpenWrt/login.png" alt="login in"></li>
+<li>首先要更新配置源，也就是安装包的来源：<br><code>opkg update</code></li>
+<li><p>然后可(yi)能(ding)会出现类似以下的报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opkg_conf_load: Could not lock /var/lock/opkg.lock: Resource temporarily unavailable.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这时就要依次输入以下并重新更新源：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;nameserver 114.114.114.114&quot;&gt;/tmp/resolv.conf</span><br><span class="line">rm -f /var/lock/opkg.lock</span><br><span class="line">opkg update</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上可以看为添加国内域名解析到临时分区，并且对安装源的锁解锁/删除，然后更新的命令</p>
+<ul>
+<li>等源更新完后，再次出现root命令输入时，输入：<br><code>opkg install wget</code><br>安装GNU wget模块，为后面做准备。</li>
+</ul>
+<p>然后可以选择从web界面中添加软件包也可以选择从命令行(CLI)添加。</p>
+<ul>
+<li>如果英文界面看着不爽，可以安装<code>luci-i18n-base-zh-cn</code>简中的界面语言包，安装完成后，到<code>系统-系统-语言与界面</code>中更换中文界面。<br>在同一级界面中可以将路由器时间改到<code>Asia/Shanghai</code>。</li>
+</ul>
+<h3 id="开启wifi"><a href="#开启wifi" class="headerlink" title="开启wifi"></a>开启wifi</h3><p>可以选择现在开启wifi，也可以最后配置完再开启，因为wifi直接桥接的<code>lan</code>口，所以应该时无所谓的。<br>直接在<code>网络-无线</code>界面中配置即可，802.11an协议的是5G信号的wifi，另一个则是2.4G的。<br>添加前可以使用扫描来查看现有环境中的所有广播的Wifi信号以及它们的信息如信道等。<br>设置的时候选择一个使用人数最少的信道，功率可以调到最大，一定不要<code>隐藏ESSID</code>，SSID相当与Wifi的名字，默认都是广播的，隐藏了就只能手动输入添加连接了。<br>安全设置中加密方式选择<code>WPA2-PSK</code>，算法自动，添加密码。</p>
+<h2 id="设置网络并开启IPv6"><a href="#设置网络并开启IPv6" class="headerlink" title="设置网络并开启IPv6"></a>设置网络并开启IPv6</h2><h3 id="什么是IPv6"><a href="#什么是IPv6" class="headerlink" title="什么是IPv6"></a>什么是IPv6</h3><ul>
+<li>IPv6是Internet Protocol Version 6的缩写。IPv6是IETF（互联网工程任务组，Internet Engineering Task Force）设计的用于替代现行版本IP协议（IPv4）的下一代IP协议。IPv6的允许的庞大地址数量也使得其成为物联网时代的关键，最近我国也出台了相应的IPv6发展计划，将大力推动IPv4向v6过渡。</li>
+<li>IPv6对于普通用户来说和IPv4是一样的，只是地址表示不同，IPv6网速快其一是用的人少，加上本身的网络层次扁平，使得链路拥塞较少(因为IPv6的设定是全球每台设备都有唯一的地址，因此 <strong><em>就像</em></strong> 一个局域网一样);其二是基础设备建设更优秀，带宽更大，因此网速也就会快一些，据说将现有的IPv4用户全部转移至IPv6网络，网速依然可以提高10倍。</li>
+</ul>
+<h3 id="IPv6的特点"><a href="#IPv6的特点" class="headerlink" title="IPv6的特点"></a>IPv6的特点</h3><p>IPv6有诸多不同，也使得其配置方式和IPv4不一样。</p>
+<ul>
+<li>具有更大的地址空间：128位</li>
+<li>使用更小的路由表</li>
+<li>增强的组播支持以及对流的控制</li>
+<li>无状态自动配置</li>
+<li>强制使用IPSec加密通讯，更安全</li>
+<li><p>···更多具体内容参见维基百科与计算机网络书籍</p>
+</li>
+<li><p><em>如果是windows系统，为了保护mac地址会额外生成一个临时IPv6地址，并使用这个临时地址通信，禁用这个临时地址使用命令：netsh interface IPv6 set privacy state=disable</em></p>
+</li>
+</ul>
+<h3 id="从IPv4到IPv6"><a href="#从IPv4到IPv6" class="headerlink" title="从IPv4到IPv6"></a>从IPv4到IPv6</h3><h4 id="过渡"><a href="#过渡" class="headerlink" title="过渡"></a>过渡</h4><ol>
+<li><p>隧道<br> 隧道（Tunneling）是另一个用来链接IPv4与IPv6的机制。为了连通IPv6互联网，一个孤立主机或网络需要使用现存IPv4的基础设施来携带IPv6数据包。这可由将IPv6数据包装入IPv4数据包的隧道协议来完成，实际上就是将IPv4当成IPv6的链接层。<br> IP协议号码的41号用来标示将IPv6数据讯框直接装入IPv4数据包。IPv6亦能加入UDP数据包，如为了跨过一些会阻挡协议41流量的路由器或NAT设备。其它流行的封装机制则有AYIYA和GRE。 </p>
+</li>
+<li><p>双堆栈<br> 双堆栈（Dual IP stack implementation）是将IPv6视为一种IPv4的延伸，以共享代码的方式去实现网络堆栈，其可以同时支持IPv4和IPv6，如此是相对较为容易的。如此的实现称为“双堆栈”，并且，一个实现双堆栈的主机称为“双堆栈主机”。这步骤描述于RFC 4213。<br> 目前大部分IPv6的实现使用双堆栈。一些早期实验性实现使用独立的IPv4和IPv6堆栈。 </p>
+<h4 id="IPv6的链路方式"><a href="#IPv6的链路方式" class="headerlink" title="IPv6的链路方式"></a>IPv6的链路方式</h4><p>一方面可以看成过渡，另一方可以看成IPv6协议所在的链路环境</p>
+</li>
+<li><p>NATIVE<br> 这个需要运营商（ISP）支持，这种方式允许路由器下级的客户端与拨号服务器直接通信并获取原生IPv6地址，如果在支持的ISP下，选择路由器上的NATIVE就可以了，NATIVE下可以配置无状态配置IPv6或者静态IPv6或者DHCP分配IPv6。</p>
+</li>
+<li><p>PASSTHROUGH/RELAY(中继模式)<br> 在这个模式下，路由器成为下一跳，与NAT的区别是，路由器只会转发数据包，并不会修改源地址。<br> 在这种模式下，可以使用客户端无状态自动生成的IPv6地址，也可以停用本机接受RA广播并使用自己配置的地址，比如拨号获取了<code>2001：250：7801：7788：</code>的前缀，你可以把设备配置成<code>2001：250：7801：7788：：2</code>并且可以通信。但是一定要关闭RA广播防止设备通过DHCP来获取地址，与IPv4不同，在IPv6协议中，网卡可以同时有多个IPv6地址，并且DHCP获取地址的优先级高于静态地址。<strong>路由器配置也着重讲这个方法</strong><br> 理论上说，如果你有一台支持IPv6的足够强大的路由器（使用relay方式），你可以将 <strong>65536^4</strong> 个设备都连接到路由器上共享你的带宽，而且可以实现全球可达。</p>
+</li>
+<li><p>NAT<br> 这种方式就是像在IPv4模式下一样，路由器替换源地址，并且分配给你的是内网的IPv6地址，也就是前缀第一部分在2000-3FFF之外的地址。<br> 个人比较抵制这种方式，除了因为尝试了这个方案并失败了的原因以外，</p>
+<ol>
+<li>新版本的固件已经不再支持有关的依赖包;</li>
+<li>NAT本身是一种IPv4地址不够用而IPv6协议还未推广时的 <strong>妥协</strong> 方案，是IPv4的<del>续命</del>方式，也是阻碍推广IPv6的一大因素;</li>
+<li>NAT会使得本身扁平化的网络结构被强行分层，增加路由表长度;</li>
+<li>NAT获得的地址 <strong>全球不可达</strong> ，而长远来看全球可达地址对于游戏、PT下载等需要外网可达地址才能发挥高性能的程序有巨大意义。</li>
+</ol>
+</li>
+</ol>
+<h3 id="添加设置"><a href="#添加设置" class="headerlink" title="添加设置"></a>添加设置</h3><p>考虑到学校网络貌似不资瓷NATIVE，以及地址分配针对设备分配，和针对NAT的看法和尝试失败后，我选择使用中继方式使路由器可以”分发”IPv6地址。</p>
+<ul>
+<li>进入路由器后台，可以使用WinSCP软件登录后台，直接双击目标文件打开编辑，<code>Ctrl+S</code>保存。<br>  如果会用vim，直接用vim编辑即可。</li>
+<li><p><code>/etc/config/dhcp</code>: 配置好relay</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">config dhcp &apos;lan&apos;</span><br><span class="line">    option interface &apos;lan&apos;</span><br><span class="line">    option start &apos;100&apos;</span><br><span class="line">    option limit &apos;150&apos;</span><br><span class="line">    option leasetime &apos;12h&apos;</span><br><span class="line">    option ra &apos;relay&apos;</span><br><span class="line">    option dhcpv6 &apos;relay&apos;</span><br><span class="line">    option ndp &apos;relay&apos;</span><br><span class="line"></span><br><span class="line">config dhcp &apos;wan&apos;</span><br><span class="line">    option interface &apos;wan&apos;</span><br><span class="line">    option ignore &apos;1&apos;</span><br><span class="line"></span><br><span class="line">config dhcp &apos;wan6&apos;</span><br><span class="line">    option interface &apos;wan&apos;</span><br><span class="line">    option ra &apos;relay&apos;</span><br><span class="line">    option dhcpv6 &apos;relay&apos;</span><br><span class="line">    option ndp &apos;relay&apos;</span><br><span class="line">    option master 1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>/etc/config/network</code> 在wan口启用IPv6并设置wan6口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">config interface wan</span><br><span class="line">    option IPv6 1</span><br><span class="line"></span><br><span class="line">config interface &apos;wan6&apos;</span><br><span class="line">    option ifname &apos;eth0.2&apos;</span><br><span class="line">    option proto &apos;dhcpv6&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>/etc/config/firewall</code> 在防火墙中禁用对IPv6的过滤，防止LAN口IPv6配置信息被过滤<br><code>option disable_IPv6 &#39;1&#39;</code></p>
+</li>
+<li><p>以上设置就可以实现向设备分配IPv6了。</p>
+</li>
+<li><p>对于openwrt+脚本存在这样的问题，就是路由表不正确，就是路由表把本应该路由到lan口地址路由到wan口，形成loop直至ttl耗尽。<br>为了解决这个问题使用了大佬的脚本：</p>
+</li>
+</ul>
+<ol>
+<li><p>新建/usr/sbin/route6并输入以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">while true</span><br><span class="line">do</span><br><span class="line">    pfix=`ip -6 route| grep default| grep ::/64|cut -d &quot; &quot; -f 3`</span><br><span class="line">    result=`ip -6 route|grep pppoe-wan |grep $pfix | grep -v &apos;default&apos;`</span><br><span class="line">if [[ &quot;$result&quot; != &quot;&quot; ]]</span><br><span class="line">then</span><br><span class="line">    ip -6 route del $pfix</span><br><span class="line">    ip -6 route add $pfix dev br-lan</span><br><span class="line">fi</span><br><span class="line">sleep 1</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>chmod +x /usr/sbin/route6</p>
+</li>
+<li><p>新建/etc/init.d/route6并输入以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh /etc/rc.common</span><br><span class="line"># /init.d/route6</span><br><span class="line"></span><br><span class="line">START=99</span><br><span class="line"></span><br><span class="line">start() &#123;</span><br><span class="line">    route6 &gt;/dev/null 2&gt;&amp;1 &amp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stop() &#123;</span><br><span class="line">    killall route6</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /usr/sbin/route6</span><br><span class="line">chmod +x /etc/init.d/route6</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>ln -s /etc/init.d/route6 S99route6</code></p>
+</li>
+</ol>
+<ul>
+<li><p>这样的设置能使出错的路由表在1s内被修正，实测占用cpu不高，也不影响通信。</p>
+</li>
+<li><p>以上是IPv6的设置部分，设置完成后，电脑的网络设置中应该可以获得如下信息：<br><img src="Netgear-OpenWrt/success.png" alt="success"></p>
+</li>
+</ul>
+<p><strong>那么！为了避免后面的步骤出问题又要重来的尴尬，现在去系统的<code>备份与升级</code>界面中将现在的系统备份下载下来</strong><br><strong>一定要做这一步！！！</strong><br>完成以后重启试试~</p>
+<h2 id="过渡段落"><a href="#过渡段落" class="headerlink" title="过渡段落"></a>过渡段落</h2><p><strong>警示：</strong> 从原理上说，目前在笔记本电脑和手机已经可以像<a href="https://phantomt.github.io/2018/08/07/VPS-SSR/">上一篇文章</a>中设置的那样使用ss进行校园网穿透了，也就是说以下步骤并不必要。<br>我是为了试验才进行的下面步骤。<br><strong>以下步骤不一定可以成功，仅供参考，如发生意外情况，请还原到上面备份好的系统使用。</strong></p>
+<h2 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h2><p><em>以下步骤均需要完成<code>opkg update</code>后进行。</em></p>
+<h3 id="方案一-部分一"><a href="#方案一-部分一" class="headerlink" title="方案一/部分一"></a>方案一/部分一</h3><h4 id="一次配置"><a href="#一次配置" class="headerlink" title="一次配置"></a>一次配置</h4><ul>
+<li>下载<a href="https://sourceforge.net/projects/openwrt-dist/files/shadowsocks-libev/" target="_blank" rel="noopener">shadowsocks-libev-spec</a>和<a href="https://sourceforge.net/projects/openwrt-dist/files/luci-app/shadowsocks-spec/" target="_blank" rel="noopener">luci-app-shadowsocks-spec</a></li>
+<li><p>还需要已经默认安装的<code>dnsmasq</code>为子网提供DHCP和DNS，和一开始下载的GNU wget来完成https下载。</p>
+</li>
+<li><p>将下载完的文件使用WinSCP上传到路由器的<code>/tmp</code>目录中，并使用putty进入<code>/tmp</code>：<br><code>cd /tmp</code></p>
+</li>
+<li>然后就可以使用<code>opkg install xx.ipk</code>来安装了。<br><em>Linux命令行使用技巧：1. 先使用<code>ls</code>命令查看文件夹内的文件; 2. 填写文件名时使用<code>Tab</code>键尝试自动补全</em></li>
+<li><p>安装完成后便可以在Luci的界面看到<code>服务</code>下的shadowsocks了。</p>
+</li>
+<li><p>暂时先不开启ShadowSocks，接着配置dns避开DNS污染。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir /etc/dnsmasq.d</span><br><span class="line">//新建一个dnsmasq.d的目录</span><br><span class="line">//这里边存放dns规则</span><br><span class="line"> </span><br><span class="line">echo &quot;conf-dir=/etc/dnsmasq.d&quot; &gt;&gt; /etc/dnsmasq.conf</span><br><span class="line">//使dnsmasq.d目录内的规则生效</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载UDP有关的包<br><code>opkg install iptables-mod-tproxy</code></p>
+</li>
+<li><p>依次使用如下命令来下载国内域名加速列表和污染地址屏蔽列表，这两个列表一个是用来设定国内访问白名单，一个是用来屏蔽污染IP的黑名单，具体内容你也可以来<a href="https://github.com/felixonmars/dnsmasq-china-list" target="_blank" rel="noopener">这里</a>瞧瞧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget -4 --no-check-certificate -O /etc/dnsmasq.d/accelerated-domains.china.conf https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf</span><br><span class="line"> </span><br><span class="line">wget -4 --no-check-certificate -O /etc/dnsmasq.d/bogus-nxdomain.china.conf https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/bogus-nxdomain.china.conf</span><br><span class="line"> </span><br><span class="line">echo &quot;server=/#/127.0.0.1#7913&quot; &gt; gfwlist.conf</span><br><span class="line">//最后一句是让其他不在列表中（即国外域名）都走代理解析，端口7913。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下面进入shadowsocks界面添加自己的代理，注意：要添加服务器的 <strong>IP地址</strong> ，填写域名可能导致无法解析。</p>
+</li>
+<li><p>然后配置UDP转发，如果刚才没有安装<code>iptables-mod-tproxy</code>，则会显示其缺失。<br>勾选，然后根据前边<code>dnsmasq</code>的配置，我们设置 <strong>本地端口为对应的7913</strong> 以接收DNS查询包，然后填写转发地址，我们让这些查询包通过SS代理，然后访问到谷歌的公共DNS <strong><code>8.8.4.4</code>的53端口</strong> 上(<code>8.8.8.8</code>也行)。</p>
+</li>
+<li><p>这样一来，就实现了国内国外智能选用DNS(查看<code>accelerated-domains.china.conf</code>以确认哪些域名会被发送到国内的<code>114.114.114.114</code>解析。)</p>
+</li>
+<li>开启ShadowSocks，然后在CLI界面输入<code>/etc/init.d/dnsmasq restart</code>以重启dnsmasq服务。</li>
+</ul>
+<h4 id="自动更新"><a href="#自动更新" class="headerlink" title="自动更新"></a>自动更新</h4><ul>
+<li>建立更新那两个列表的脚本</li>
+<li><p>在<code>/usr/bin</code>目录下做如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">touch updatednsmasq</span><br><span class="line">//创建一个空文件</span><br><span class="line">chmod +x updatednsmasq</span><br><span class="line">//给予执行权限</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑updatednsmasq：<br>(可以使用vim，也可以直接用WinSCP打开修改)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cnlist() &#123;</span><br><span class="line">    wget -4 --no-check-certificate -O /etc/dnsmasq.d/accelerated-domains.china.conf https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf</span><br><span class="line">    wget -4 --no-check-certificate -O /etc/dnsmasq.d/bogus-nxdomain.china.conf https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/bogus-nxdomain.china.conf</span><br><span class="line">&#125;</span><br><span class="line">cnlist</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新建一个计划任务，让它每天中午12点跑一次。</p>
+</li>
+<li>在Luci界面中，打开<code>系统-计划任务</code>，输入：<br><code>* 12 * * * /usr/bin/updatednsmasq</code></li>
+<li>这样每天中午12点，只要有网，那么DNS这两个列表就都会更新一次。</li>
+</ul>
+<h3 id="方案二-部分二"><a href="#方案二-部分二" class="headerlink" title="方案二/部分二"></a>方案二/部分二</h3><p>方案二是用另外的方式来制定转发规则的，<strong>如果两种方案一起用可能会出现问题</strong>。</p>
+<h4 id="一次配置-1"><a href="#一次配置-1" class="headerlink" title="一次配置"></a>一次配置</h4><ul>
+<li>同样安装那两个包以及后面的UDP相关的包</li>
+<li><p>下载忽略文件列表，忽略国内网站，避免过度代理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O- &apos;http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest&apos; | awk -F\| &apos;/CN\|ipv4/ &#123; printf(&quot;%s/%d\n&quot;, $4, 32-log($5)/log(2)) &#125;&apos; &gt; /etc/ignore.list</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入Luci界面的shadowsocks界面，将底部的访问控制中，在<code>被忽略IP列表</code>填写第1步下载的<code>/etc/ignore.list</code>。</p>
+</li>
+<li>到<code>网络-DHCP/DNS-基本设置</code>，把DNS转发地址填上<code>127.0.0.1#7913</code></li>
+<li>到<code>网络-DHCP/DNS-host和解析文件里</code>把<code>忽略解析文件</code>勾上。</li>
+</ul>
+<p><strong>苯宝宝只进行到这里，因为后面的加入了出现了问题如无法联网，甚至连<code>202.204.67.15</code>都打不开的问题，因此下面的脚本请谨慎使用</strong></p>
+<h4 id="自动更新list"><a href="#自动更新list" class="headerlink" title="自动更新list"></a>自动更新list</h4><ul>
+<li><p>在<code>/etc/</code>目录下新建一个<code>ignore.list.update.sh</code>脚本文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget -O- &apos;http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest&apos; | awk -F\| &apos;/CN\|ipv4/ &#123; printf(&quot;%s/%d\n&quot;, $4, 32-log($5)/log(2)) &#125;&apos; &gt; /etc/ignore.list</span><br><span class="line">/etc/init.d/shadowsocks restart</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给予执行权限:<br><code>chmod +x /etc/ignore.list.update.sh</code></p>
+</li>
+<li><p>可以用<code>sh ignore.list.update.sh</code>命令执行看看有没有正确执行。</p>
+</li>
+<li><p>同样使用计划任务是其每天12点执行一次更新：<br><code>* 12 * * *sh /etc/ignore.list.update.sh</code></p>
+</li>
+</ul>
+<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><p>那么到这里配置就全部完成了，可以进行IPv6网络测试，</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>下面有几个测试网站：<br><a href="www.keme.net">keme</a>，这个网站中如果能够使用IPv6则能看到一只动态的小乌龟，如果不能使用则是静止的。<br><img src="Netgear-OpenWrt/testv6.png" alt="keme"><br><a href="http://ipv6-test.com/" target="_blank" rel="noopener">ipv6-test</a>，测试带宽以及连接状况<br><img src="Netgear-OpenWrt/speedtest.png" alt="ipv6test"><br><img src="Netgear-OpenWrt/pingtest.png" alt="ipv6ping"><br>下面是手机在 <strong>能够连接IPv6代理时</strong> 进行测速的结果<br><img src="Netgear-OpenWrt/phonev6.jpg" alt="phonetest"></p>
+<p>可以看到，相比于日常网速300kB/s的IPv4网络来说，IPv6网络换算的速度4MB/s快了很多，而实际使用上最快可以达到20MB/s的速度。<br>手机连接ss后可以访问谷歌全家桶以及Instagram等APP。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>坑爹的哔哩哔哩客户端居然不支持在不连校园网仅连代理免流的情况下打开，而其他的软件都可以成功打开使用，只有 <strong>哔哩哔哩客户端不行</strong> ，这一点可以说是非常不完美了。<br>iOS系统的代理软件国区被下架，剩余的软件需要花钱购买，因此不才没有进行测试。(Android大法好~)<br>如果没有ss代理，目前是不能实现完美校园网免流的，但是速度会有提升。<br>使用ss代理可以 <strong>提速并<em>基本</em>实现免流</strong> 。</p>
+<p><strong>如果有大佬能够解决这个问题，或者有更好的配置方法，请一定告诉我。</strong></p>
+<h2 id="感受与吐槽"><a href="#感受与吐槽" class="headerlink" title="感受与吐槽"></a>感受与吐槽</h2><p>为了完成这个目标，苯宝宝真是看了网上能找到的所有Openwrt以及相关开源系统的IPv6设置，其中也有一些其他学校同学的记录，<br>比如：华南理工，清华，北邮，北航，哈工大等，(清华大佬的博客居然要用代理才能连上= =)，其中NAT方案的组件一种来自北邮，要通过开始的编译加入;另一种来自西电研究生的作品，以安装形式加入。无论如何设置，理论联系实际总是充满艰辛。<br>我也看了下Openwrt的官方指导(也没怎么看懂)，大概确认了现在的方向，可能和大佬们的结果有些差距，不过我觉得还是很符合我自己的需求的，如果可能的话，再对路由器的ss进行优化修改。<br>DHCPv6和中继模式的IPv6地址应该是不一样的。</p>
+<p><strong>IPv6也是未来的趋势</strong>，随着设备和系统的更迭升级，以后的配置肯定也会越来越简单，同样随着我国网民的认知水品以及判断力的不断提高，G*W肯定也会逐渐变得宽松，上🔼网也会变得越来越方便。</p>
+<blockquote>
+<p>这把不仅好好认识了一把IPv6，还见识了Linux系统的编译，有些东西并没有想象中那么难，而有些事做起来确实很难。<br>看到了ss和ssr的命运纠葛和我们吃瓜群众的煽风点火，也许，环境与我们之间的相互作用比想象中更强。<br>和很多大佬的NAT方案不一样，也许结果也不一样。<br>理论联系实际很艰难，尤其当理论不扎实，实际问题有很多的时候。<br>真的，有的大佬是真的会玩0.0<br>计算机网络真的不仅多还很杂0.0</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://tieba.baidu.com/p/5640074547" target="_blank" rel="noopener">哈工大大佬的帖子</a><br><a href="https://www.logcg.com/archives/860.html" target="_blank" rel="noopener">路由器刷OpenWRT安装shadowsocks使用透明代理+去DNS污染</a><br><a href="https://www.logcg.com/archives/868.html" target="_blank" rel="noopener">自动更新DNS转发列表</a><br><a href="https://www.8dlive.com/post/314.html" target="_blank" rel="noopener">网件3800路由器安装shadowsocks折腾记(二)</a><br><a href="https://dangfan.me/zh-Hans/posts/router" target="_blank" rel="noopener">清华本科生适用路由器配置指南</a><br><a href="https://blog.blahgeek.com/2014/02/22/openwrt-ipv6-nat/" target="_blank" rel="noopener">OpenWRT配置IPv6的NAT（一般结合isatap使用）</a><br><a href="https://tang.su/2017/03/openwrt-ipv6-nat/" target="_blank" rel="noopener">在OpenWrt上配置原生IPv6 NAT</a><br><a href="https://blog.csdn.net/dog250/article/details/7799398" target="_blank" rel="noopener">IPv6的NAT原理以及MAP66</a><code>IPv6的标准中不建议使用NAT</code></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Phantom T 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="Phantom T 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Phantom T</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://phantomT.github.io/2018/08/12/Netgear-OpenWrt/" title="Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索">https://phantomT.github.io/2018/08/12/Netgear-OpenWrt/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IPv6/" rel="tag"># IPv6</a>
+          
+            <a href="/tags/shadowsocks/" rel="tag"># shadowsocks</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/校园网/" rel="tag"># 校园网</a>
+          
+            <a href="/tags/OpenWrt/" rel="tag"># OpenWrt</a>
+          
+            <a href="/tags/路由器/" rel="tag"># 路由器</a>
+          
+            <a href="/tags/Netgear/" rel="tag"># Netgear</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/09/Hexo-sitemap/" rel="next" title="Hexo进行SEO优化，添加Sitemap">
+                <i class="fa fa-chevron-left"></i> Hexo进行SEO优化，添加Sitemap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/09/why-42-181109/" rel="prev" title="瞎想和总结系列1">
+                瞎想和总结系列1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Phantom T">
+            
+              <p class="site-author-name" itemprop="name">Phantom T</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/phantomT" title="GitHub &rarr; https://github.com/phantomT" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:bobphantom@126.com" title="E-Mail &rarr; mailto:bobphantom@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#设备介绍"><span class="nav-number">1.</span> <span class="nav-text">设备介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#硬件配置"><span class="nav-number">1.1.</span> <span class="nav-text">硬件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开箱"><span class="nav-number">1.2.</span> <span class="nav-text">开箱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刷机"><span class="nav-number">2.</span> <span class="nav-text">刷机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先前的尝试"><span class="nav-number">2.2.</span> <span class="nav-text">先前的尝试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理连接"><span class="nav-number">2.3.</span> <span class="nav-text">物理连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入后台"><span class="nav-number">2.4.</span> <span class="nav-text">进入后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启wifi"><span class="nav-number">2.5.</span> <span class="nav-text">开启wifi</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置网络并开启IPv6"><span class="nav-number">3.</span> <span class="nav-text">设置网络并开启IPv6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是IPv6"><span class="nav-number">3.1.</span> <span class="nav-text">什么是IPv6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv6的特点"><span class="nav-number">3.2.</span> <span class="nav-text">IPv6的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从IPv4到IPv6"><span class="nav-number">3.3.</span> <span class="nav-text">从IPv4到IPv6</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#过渡"><span class="nav-number">3.3.1.</span> <span class="nav-text">过渡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IPv6的链路方式"><span class="nav-number">3.3.2.</span> <span class="nav-text">IPv6的链路方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加设置"><span class="nav-number">3.4.</span> <span class="nav-text">添加设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过渡段落"><span class="nav-number">4.</span> <span class="nav-text">过渡段落</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装shadowsocks"><span class="nav-number">5.</span> <span class="nav-text">安装shadowsocks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方案一-部分一"><span class="nav-number">5.1.</span> <span class="nav-text">方案一/部分一</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一次配置"><span class="nav-number">5.1.1.</span> <span class="nav-text">一次配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动更新"><span class="nav-number">5.1.2.</span> <span class="nav-text">自动更新</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案二-部分二"><span class="nav-number">5.2.</span> <span class="nav-text">方案二/部分二</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一次配置-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">一次配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动更新list"><span class="nav-number">5.2.2.</span> <span class="nav-text">自动更新list</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束"><span class="nav-number">6.</span> <span class="nav-text">结束</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">6.1.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">6.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感受与吐槽"><span class="nav-number">7.</span> <span class="nav-text">感受与吐槽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">8.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phantom T</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'b6dcc47c3c7ef6e52002',
+    clientSecret: '4b1bd615b27b373815e57080ed022051b759ea8c',
+    repo: 'hexo-gitalk',
+    owner: 'phantomT',
+    admin: ['phantomT'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
