@@ -6,3 +6,4 @@ node_modules/
 public/
 .deploy*/
 init_gitalk.js
+package-lock.json
