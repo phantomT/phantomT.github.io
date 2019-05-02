@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="2019-01-082019年1月8日，学校组织的电气认识实习安排我们前往昌平区的特高压直流试验基地进行参观。我们参观了各种红警磁暴线圈画风的各种电源和实验设备，嗯，金钱的味道。图片已经过压缩，所以不会那么清晰“西电东送、北电南供、水火互剂、风光互补”/中国能源互联网">
+<meta name="keywords" content="EE,HVDC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="参观国家电网公司特高压直流试验基地&#x2F;认识实习">
+<meta property="og:url" content="https://phantomT.github.io/2019/05/02/EE-002-UHV/index.html">
+<meta property="og:site_name" content="欢迎来到本尊的鱼缸">
+<meta property="og:description" content="2019-01-082019年1月8日，学校组织的电气认识实习安排我们前往昌平区的特高压直流试验基地进行参观。我们参观了各种红警磁暴线圈画风的各种电源和实验设备，嗯，金钱的味道。图片已经过压缩，所以不会那么清晰“西电东送、北电南供、水火互剂、风光互补”/中国能源互联网">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190105122449.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_142051.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_142054.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_145917.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190105122514.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_142606.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_144222.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_144229.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_144532.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/20190108_143239.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_143247.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_143632.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/20190108_143502.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_143359.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_144051.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190108_143646.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190105122509.jpg">
+<meta property="og:updated_time" content="2019-05-02T12:33:18.387Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="参观国家电网公司特高压直流试验基地&#x2F;认识实习">
+<meta name="twitter:description" content="2019-01-082019年1月8日，学校组织的电气认识实习安排我们前往昌平区的特高压直流试验基地进行参观。我们参观了各种红警磁暴线圈画风的各种电源和实验设备，嗯，金钱的味道。图片已经过压缩，所以不会那么清晰“西电东送、北电南供、水火互剂、风光互补”/中国能源互联网">
+<meta name="twitter:image" content="https://phantomt.github.io/2019/05/02/EE-002-UHV/EE-002-UHV/20190105122449.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://phantomT.github.io/2019/05/02/EE-002-UHV/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>参观国家电网公司特高压直流试验基地/认识实习 | 欢迎来到本尊的鱼缸</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">欢迎来到本尊的鱼缸</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Nothing is true and everything is permitted.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-记录">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>记录</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://phantomT.github.io/2019/05/02/EE-002-UHV/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Phantom T">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到本尊的鱼缸">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">参观国家电网公司特高压直流试验基地/认识实习
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-02 20:28:14 / 修改时间：20:33:18" itemprop="dateCreated datePublished" datetime="2019-05-02T20:28:14+08:00">2019-05-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>2019-01-08<br>2019年1月8日，学校组织的电气认识实习安排我们前往昌平区的特高压直流试验基地进行参观。我们参观了各种红警磁暴线圈画风的各种电源和实验设备，嗯，金钱的味道。<br><strong>图片已经过压缩，所以不会那么清晰</strong><br>“西电东送、北电南供、水火互剂、风光互补”/中国能源互联网<br><a id="more"></a></p>
+<h2 id="为何要使用特高压输电"><a href="#为何要使用特高压输电" class="headerlink" title="为何要使用特高压输电"></a>为何要使用特高压输电</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">参考书目：</span><br><span class="line">1. 特高压交直流电网 刘振亚</span><br><span class="line">2. 读懂中国制造2025</span><br></pre></td></tr></table></figure>
+<p>在<strong>中国制造2025规划纲要</strong>中提到其中一个战略任务和重点是：大力推动重点领域突破发展，而这里的重点领域除了信息技术（新一代），还包括了电力设备等。</p>
+<h3 id="满足大规模远距离电力输送要求"><a href="#满足大规模远距离电力输送要求" class="headerlink" title="满足大规模远距离电力输送要求"></a>满足大规模远距离电力输送要求</h3><ul>
+<li>UHV DC：远距离，大容量点对点输电</li>
+<li>UHV AC：接入、传输、消纳十分灵活，交流电压等级越高，电网结构越强，输送能力越大，承受扰动能力越强<br>根据中国能源和负荷的分布特点，<strong>特高压交流输电</strong>定位于主网架建设和跨大区联网输电，同时为直流输电提供重要的支撑；<strong>特高压直流输电</strong>定位于大型能源基地的远距离，大容量外送。</li>
+</ul>
+<h3 id="保护生态环境"><a href="#保护生态环境" class="headerlink" title="保护生态环境"></a>保护生态环境</h3><p><code>推动清洁能源发展与煤电布局优化</code></p>
+<ul>
+<li>推动国家清洁能源开发目标实现及清洁能源的高效利用。</li>
+<li>促进以电代煤和煤电布局优化，大幅度减少“三华”电网范围内燃煤消耗，有效利用洗精煤和外来电力，提高已有电厂燃煤质量和利用效率，改善当地环境质量。（( •̀ ω •́ )y和雾霾对抗到底）</li>
+</ul>
+<h3 id="提高电网运行安全性和社会综合效益"><a href="#提高电网运行安全性和社会综合效益" class="headerlink" title="提高电网运行安全性和社会综合效益"></a>提高电网运行安全性和社会综合效益</h3><p>有利于在全国范围内实现土地资源优化开发与节约利用。特高压输电大量节省输电走廊，显著提高单位走廊宽度的输送容量和走廊的输电效率，节约宝贵的土地资源。</p>
+<h3 id="提高能源输送保障能力"><a href="#提高能源输送保障能力" class="headerlink" title="提高能源输送保障能力"></a>提高能源输送保障能力</h3><p>“输煤输电并举、加快发展输电”是解决中国煤电运综合平衡难题的关键举措，对于提高能源生产、转换、输送和利用效率，优化利用全国环境资源，增强能源供给的安全性意义重大。</p>
+<h2 id="参观"><a href="#参观" class="headerlink" title="参观"></a>参观</h2><p>因为参观大部分的地方都不让照相，所以就展馆和试验线路照了些相。<br>（50W警告）</p>
+<h3 id="室内外各种实验室"><a href="#室内外各种实验室" class="headerlink" title="室内外各种实验室"></a>室内外各种实验室</h3><ul>
+<li>特高压户外试验场</li>
+<li>污秽及环境实验室</li>
+<li>直流换流阀实验室</li>
+<li>避雷器实验室</li>
+<li>绝缘子实验室/毫无印象，莫得参观吧</li>
+<li>试验大厅/电磁屏蔽性能70dB/对超厚超贵的屏蔽层印象深刻/还有大风勿开却开了的大门= =  </li>
+</ul>
+<p><strong>太怂不敢传照片，图就看特高压那本书吧</strong><br><img src="EE-002-UHV/20190105122449.jpg" alt="那来给大家做个试验吧"><br>那来给大家做个试验吧  </p>
+<h3 id="试验线段-amp-amp-电晕笼"><a href="#试验线段-amp-amp-电晕笼" class="headerlink" title="试验线段&amp;&amp;电晕笼"></a>试验线段&amp;&amp;电晕笼</h3><p>/这个没有50W警告，所以有几张照片/<br>双回线±1200kV设计，据说曾经还进行过带电检修测试，吓skr人(⊙o⊙)<br><img src="EE-002-UHV/20190108_142051.jpg" alt="方方的是电晕笼，具有电缆自然下垂的弧度"><br>方方的是电晕笼，具有电缆自然下垂的弧度<br><img src="EE-002-UHV/20190108_142054.jpg" alt="好像是送电部分"><br>好像是送电部分<br><img src="EE-002-UHV/20190108_145917.jpg" alt="走之前拍的"><br>👆走之前拍的<br>这种时候只有这个表情包符合现状了：<br><img src="EE-002-UHV/20190105122514.jpg" alt="嗯嗯嗯"><br>嗯嗯嗯  </p>
+<h2 id="展馆"><a href="#展馆" class="headerlink" title="展馆"></a>展馆</h2><p><img src="EE-002-UHV/20190108_142606.jpg" alt="起步(⊙o⊙)"><br>起步(⊙o⊙)  </p>
+<p>中间就是介绍各个试验基地以及各基地的作用和配置<br>还有全国建成和待建的线路<br><img src="EE-002-UHV/20190108_144222.jpg" alt="还有全国能源和负荷的大致分布"><br>👆还有全国能源和负荷的大致分布<br><img src="EE-002-UHV/20190108_144229.jpg" alt="没错，钓鱼岛瞩目📌"><br>没错，钓鱼岛瞩目📌  </p>
+<p><img src="EE-002-UHV/20190108_144532.jpg" alt="结束/你们为什么一定要挡着苯宝宝拍照╰（‵□′）╯"><br>↑结束/你们为什么一定要挡着苯宝宝拍照╰（‵□′）╯  </p>
+<h2 id="目前的四大特高压基地（的模型-￣▽￣-”）"><a href="#目前的四大特高压基地（的模型-￣▽￣-”）" class="headerlink" title="目前的四大特高压基地（的模型(￣▽￣)”）"></a>目前的四大特高压基地（的模型(￣▽￣)”）</h2><h3 id="特高压直流试验基地-北京昌平"><a href="#特高压直流试验基地-北京昌平" class="headerlink" title="特高压直流试验基地/北京昌平"></a>特高压直流试验基地/北京昌平</h3><p>此行参观的基地，主要进行超/特高压直流输电关键技术领域的研究，能满足特高压直流输电关键技术研究的需求，具备更高电压等级（±1000kV,±1200kV）研究能力。<br><img src="20190108_143239.jpg" alt><br>你看这线路又高又长和那铁笼又弯又宽(￣┰￣*)<br><img src="EE-002-UHV/20190108_143247.jpg" alt="可以看到那长长的试验线路和电晕笼"><br>↑可以看到那长长的试验线路和电晕笼  </p>
+<h3 id="特高压交流试验基地-湖北武汉"><a href="#特高压交流试验基地-湖北武汉" class="headerlink" title="特高压交流试验基地/湖北武汉"></a>特高压交流试验基地/湖北武汉</h3><p>唔，这个当然就是研究特高压交流输电关键技术的了，和直流基地的一样，已经有很多研究成果投入到了实际运行当中。<br>嗯这个里面还养了各种小动物(●ˇ∀ˇ●)，极低频电磁场生态影响长期观测基地，可开展大型的动植物电磁波长期暴露试验。<br><strong>（造谣的是不是可以去体验一下━┳━　━┳━）</strong><br><img src="EE-002-UHV/20190108_143632.jpg" alt="展台：莫挨老子"><br>展台：莫挨老子<br><img src="20190108_143502.jpg" alt><br><img src="EE-002-UHV/20190108_143359.jpg" alt="据说水池边高压线下就是生态观测基地,,ԾㅂԾ,,"><br>👆据说水池边高压线下就是生态观测基地,,ԾㅂԾ,,  </p>
+<h3 id="西藏高海拔试验基地-西藏羊八井"><a href="#西藏高海拔试验基地-西藏羊八井" class="headerlink" title="西藏高海拔试验基地/西藏羊八井"></a>西藏高海拔试验基地/西藏羊八井</h3><p>在高海拔地区进行有关试验，也是为设备外输做准备。<br><img src="EE-002-UHV/20190108_144051.jpg" alt="感觉高海拔基地是最小的诶"><br>感觉高海拔基地是最小的诶  </p>
+<h3 id="特高压杆塔试验基地-河北霸州"><a href="#特高压杆塔试验基地-河北霸州" class="headerlink" title="特高压杆塔试验基地/河北霸州"></a>特高压杆塔试验基地/河北霸州</h3><p>看展示，这个很暴力，检验杆塔是否满足结构强度和经济设计指标，暴力拉断杆塔。。。0.0<br><img src="EE-002-UHV/20190108_143646.jpg" alt="据说铁塔倒下就像拉断的面条？？？"><br>据说铁塔倒下就像拉断的面条？？？  </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>嗯，有一点搞懂了，原来磁暴线圈的圈圈是均压环？？<br>那</p>
+<ul>
+<li>为什么连接机械机构的固定线缆上要有好多间隔的圆圆的片子呢？？</li>
+<li>为什么在试验线段的很多线路连接部分的末端也会有很多小圆圈，也是均压环吗？？</li>
+<li>还有广东的负荷中心为啥还没有接特高压线路(哈哈哈哈为什么觉得好惨)</li>
+<li>那么海南岛也会/必要/可能接上特高压线路吗🤔</li>
+<li>还有进行过暴露试验后的鱼还好吃不emmm(°ー°〃)</li>
+</ul>
+<p><img src="EE-002-UHV/20190105122509.jpg" alt="/我懂了/我明白了/我学会了/"><br>↑”我懂了/我明白了/我学会了”</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Phantom T 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="Phantom T 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Phantom T</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://phantomT.github.io/2019/05/02/EE-002-UHV/" title="参观国家电网公司特高压直流试验基地/认识实习">https://phantomT.github.io/2019/05/02/EE-002-UHV/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/EE/" rel="tag"># EE</a>
+          
+            <a href="/tags/HVDC/" rel="tag"># HVDC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/02/EE-001-TAIYANGGONG/" rel="next" title="参观北京太阳宫燃气热电有限公司/认识实习">
+                <i class="fa fa-chevron-left"></i> 参观北京太阳宫燃气热电有限公司/认识实习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/02/Book-000-Mckinsey/" rel="prev" title="麦肯锡工作法/读书笔记">
+                麦肯锡工作法/读书笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Phantom T">
+            
+              <p class="site-author-name" itemprop="name">Phantom T</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/phantomT" title="GitHub &rarr; https://github.com/phantomT" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:bobphantom@126.com" title="E-Mail &rarr; mailto:bobphantom@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为何要使用特高压输电"><span class="nav-number">1.</span> <span class="nav-text">为何要使用特高压输电</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#满足大规模远距离电力输送要求"><span class="nav-number">1.1.</span> <span class="nav-text">满足大规模远距离电力输送要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保护生态环境"><span class="nav-number">1.2.</span> <span class="nav-text">保护生态环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提高电网运行安全性和社会综合效益"><span class="nav-number">1.3.</span> <span class="nav-text">提高电网运行安全性和社会综合效益</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提高能源输送保障能力"><span class="nav-number">1.4.</span> <span class="nav-text">提高能源输送保障能力</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参观"><span class="nav-number">2.</span> <span class="nav-text">参观</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#室内外各种实验室"><span class="nav-number">2.1.</span> <span class="nav-text">室内外各种实验室</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#试验线段-amp-amp-电晕笼"><span class="nav-number">2.2.</span> <span class="nav-text">试验线段&amp;&amp;电晕笼</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#展馆"><span class="nav-number">3.</span> <span class="nav-text">展馆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目前的四大特高压基地（的模型-￣▽￣-”）"><span class="nav-number">4.</span> <span class="nav-text">目前的四大特高压基地（的模型(￣▽￣)”）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特高压直流试验基地-北京昌平"><span class="nav-number">4.1.</span> <span class="nav-text">特高压直流试验基地/北京昌平</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特高压交流试验基地-湖北武汉"><span class="nav-number">4.2.</span> <span class="nav-text">特高压交流试验基地/湖北武汉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#西藏高海拔试验基地-西藏羊八井"><span class="nav-number">4.3.</span> <span class="nav-text">西藏高海拔试验基地/西藏羊八井</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特高压杆塔试验基地-河北霸州"><span class="nav-number">4.4.</span> <span class="nav-text">特高压杆塔试验基地/河北霸州</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phantom T</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'b6dcc47c3c7ef6e52002',
+    clientSecret: '4b1bd615b27b373815e57080ed022051b759ea8c',
+    repo: 'hexo-gitalk',
+    owner: 'phantomT',
+    admin: ['phantomT'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

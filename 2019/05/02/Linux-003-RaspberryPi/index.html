@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="2019-02-01   引408考研的课本已经学完了第一遍了，对计算机的体系也有一定的认识了，通过这本书从树莓派的实例来重新了解一下体系结构的内容。顺带回忆一下自己学过的东西(感觉什么也不记得了😒)，争取年前写完ORZ。。。说实话，翻译的出来的不像中文= =，读起来怪别扭的。。。">
+<meta name="keywords" content="读书笔记,Linux,Raspberry Pi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Raspberry Pi学习计算机体系结构 | 笔记">
+<meta property="og:url" content="https://phantomT.github.io/2019/05/02/Linux-003-RaspberryPi/index.html">
+<meta property="og:site_name" content="欢迎来到本尊的鱼缸">
+<meta property="og:description" content="2019-02-01   引408考研的课本已经学完了第一遍了，对计算机的体系也有一定的认识了，通过这本书从树莓派的实例来重新了解一下体系结构的内容。顺带回忆一下自己学过的东西(感觉什么也不记得了😒)，争取年前写完ORZ。。。说实话，翻译的出来的不像中文= =，读起来怪别扭的。。。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/orghome.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/S01E04.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/S01E05.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/bug.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/iwritecode.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/ibm.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/local.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/unix.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/rtx2080.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/brain.png">
+<meta property="og:updated_time" content="2019-05-02T11:40:02.173Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Raspberry Pi学习计算机体系结构 | 笔记">
+<meta name="twitter:description" content="2019-02-01   引408考研的课本已经学完了第一遍了，对计算机的体系也有一定的认识了，通过这本书从树莓派的实例来重新了解一下体系结构的内容。顺带回忆一下自己学过的东西(感觉什么也不记得了😒)，争取年前写完ORZ。。。说实话，翻译的出来的不像中文= =，读起来怪别扭的。。。">
+<meta name="twitter:image" content="https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/orghome.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://phantomT.github.io/2019/05/02/Linux-003-RaspberryPi/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>使用Raspberry Pi学习计算机体系结构 | 笔记 | 欢迎来到本尊的鱼缸</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">欢迎来到本尊的鱼缸</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Nothing is true and everything is permitted.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-记录">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>记录</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://phantomT.github.io/2019/05/02/Linux-003-RaspberryPi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Phantom T">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到本尊的鱼缸">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">使用Raspberry Pi学习计算机体系结构 | 笔记
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-02 19:38:56 / 修改时间：19:40:02" itemprop="dateCreated datePublished" datetime="2019-05-02T19:38:56+08:00">2019-05-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>2019-02-01  </p>
+<h2 id="引"><a href="#引" class="headerlink" title="引"></a>引</h2><p>408考研的课本已经学完了第一遍了，对计算机的体系也有一定的认识了，通过这本书从树莓派的实例来重新了解一下体系结构的内容。<br>顺带回忆一下自己学过的东西(感觉什么也不记得了😒)，争取年前写完ORZ。。。<br>说实话，翻译的出来的不像中文= =，读起来怪别扭的。。。</p>
+<p><img src="orghome.jpg" alt> </p>
+<a id="more"></a>
+<p><strong><code>将硬件和软件独立为两个学科只是达到了方便的目的，任何真正对计算感兴趣的人都需要学好这两个方面。</code></strong></p>
+<h2 id="WILEY-《Learing-Computer-Architecture-with-Raspberry-Pi》"><a href="#WILEY-《Learing-Computer-Architecture-with-Raspberry-Pi》" class="headerlink" title="WILEY 《Learing Computer Architecture with Raspberry Pi》"></a>WILEY <strong>《Learing Computer Architecture with Raspberry Pi》</strong></h2><p>作者:[美]</p>
+<ul>
+<li>Eben Upton  </li>
+<li>Jeff Duntemann</li>
+<li>Ralph Roberts</li>
+<li>Tim Mamtora</li>
+<li>Ben Everard</li>
+<li>清华大学出版社</li>
+</ul>
+<h2 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h2><p>看看有什么有趣的东西🧐</p>
+<h3 id="第1章-计算机漫谈"><a href="#第1章-计算机漫谈" class="headerlink" title="第1章 | 计算机漫谈"></a>第1章 | 计算机漫谈</h3><ul>
+<li>“浓缩的都是精品”，这句老话形象地描述了raspberry pi，也同样强调了计算机体系结构的一个发展方向————<strong>System-on-a-Chip</strong>(SoC)。</li>
+<li>树莓派的主要创新在于降低了进入嵌入式Linux的门槛：低廉的价格解决了价格门槛，SoC解决了复杂性门槛。</li>
+<li>树莓派以其能够连接PC机所不能连接的设备而备受人们的喜爱，能够控制现实世界可以说是非常愉快了。</li>
+<li>当然能够连接现实世界设备不是Pi独有的特性，嵌入式计算机设备都可以做到，比如STM32、Arduino等。</li>
+<li>嵌入式设备变得越来越普及，树莓派不仅激励着刚刚学习的人，同样也是接触过计算机的人能够了解更多，在嵌入式时代，能够连接实体设备的需求会变得越来越重要，树莓派可以帮你从头开始。</li>
+</ul>
+<p><img src="S01E04.jpg" alt="在美剧《黑客军团》第一季中出现了树莓派|十分安利这部美剧😆"></p>
+<p><img src="S01E05.jpg" alt="用来完成硬件hack in"></p>
+<h3 id="第2章-计算概述"><a href="#第2章-计算概述" class="headerlink" title="第2章 | 计算概述"></a>第2章 | 计算概述</h3><ul>
+<li>“程序是计算机要执行的东西，数据就是计算机知晓的东西”————Tom Swan</li>
+<li>“程序就是数据”————John Von Neumann</li>
+<li>[操作系统的主要工作]  <ol>
+<li>进程管理</li>
+<li>存储器管理</li>
+<li>文件管理</li>
+<li>外设管理</li>
+<li>网络管理</li>
+<li>用户管理</li>
+<li>系统安全</li>
+<li>交互界面管理 | Shell</li>
+</ol>
+</li>
+<li>Linux内核拥有对计算机硬件的完全控制权，它通过具体的设备代码以<strong>可加载内核模块(Loadable Kernel Modules, LKM)</strong>的形式扩展内核，以此来适应硬件的差异性。</li>
+</ul>
+<h3 id="第3章-电子存储器"><a href="#第3章-电子存储器" class="headerlink" title="第3章 | 电子存储器"></a>第3章 | 电子存储器</h3><p><strong><code>~~计组+操作系统~~</code></strong>  </p>
+<h4 id="CPU为中心-存储器为中心？"><a href="#CPU为中心-存储器为中心？" class="headerlink" title="CPU为中心 | 存储器为中心？"></a><strong>CPU为中心 | 存储器为中心？</strong></h4><ul>
+<li>存储器的处理速度限制和决定了整个系统运行的速度，所以是存储器为中心？？？🤔</li>
+<li>电子存储器是受物理学支配的，基础研究决定上层技术？？🤔</li>
+</ul>
+<h4 id="SRAM"><a href="#SRAM" class="headerlink" title="SRAM"></a>SRAM</h4><ol>
+<li>基本逻辑元件是触发器，除了一些要求访问时间尽可能短的特殊领域，SRAM已经被DRAM取代。[魔鬼数电0.0]</li>
+<li>速度很快，是迄今为止设计出的市场上畅销的<strong>速度最快的</strong>存储器技术。<strong>[作为缓存使用]</strong></li>
+<li>每个数位占用的空间很大 | 不能更好地压缩</li>
+</ol>
+<h4 id="DRAM"><a href="#DRAM" class="headerlink" title="DRAM"></a>DRAM</h4><ol>
+<li>需要周期性刷新——&gt;动态</li>
+<li>刷新在工作时序中的位置影响效率</li>
+<li>异步DRAM的主要缺点是一次只能执行一次存储器访问操作。</li>
+<li>同步DRAM(SDRAM)使用了流水线技术，能够避免吞吐量浪费</li>
+<li>对于SDRAM，工作延迟的时间参数会<strong>以设备在最高时钟频率工作时的若干时钟周期来描述</strong>，而不是直接以纳秒的形式来描述。<ul>
+<li>地址线——&gt;多维寻址，少变多——&gt;译码器 | 位扩展 | 字扩展</li>
+<li>SDR | DDR | DDR2 | DDR3 | DDR4  </li>
+</ul>
+</li>
+<li>SDR：每个时钟周期只传输一个<strong>数据字</strong> (上升沿传输)</li>
+<li>DDR：传输速率翻倍(上升沿+下降沿传输)</li>
+<li>DDR之后通过预取相邻的几个地址，进行短时突发式运行，以解决内部工作速度不够快的问题。</li>
+<li>若后面的地址内数据字不需要，存储控制器会取消他们。</li>
+<li>随着CPU缓存容量的增加，“随机”读取变得罕见，现代计算机绝大部分从系统存储器内读取到的内容是以缓存行的形式加载到CPU缓存中的。</li>
+<li>更低的操作电压：发热量更低，节能</li>
+<li>难道和操作系统文件管理中的分页与分段有关？？🤔</li>
+<li>单纯依靠时钟频率提速<del>吃枣💊</del>(摩尔定律)<ul>
+<li>纠错码存储器  </li>
+</ul>
+</li>
+<li>事实上，存储器中的位值有时会毫无征兆地自己改变(这可太贱了= =)</li>
+<li>来自宇宙的高速中子撞击也会造成出错？？？</li>
+<li><strong>汉明码</strong>，ECC纠错码存储器，第九个芯片(汉明码真的强😐)<ul>
+<li>树莓派采用球栅阵列(Ball-Grid Array, BGA)的封装技术。</li>
+</ul>
+</li>
+</ol>
+<p><span id="smallpart"></span></p>
+<h4 id="程序的局部性原理：空间局部性-时间局部性"><a href="#程序的局部性原理：空间局部性-时间局部性" class="headerlink" title="程序的局部性原理：空间局部性 | 时间局部性"></a>程序的<strong>局部性原理</strong>：空间局部性 | 时间局部性</h4><ul>
+<li>访问的局部性：  <ol>
+<li>当前访问的数据在不久之后还会被再次访问</li>
+<li>短时间内，数据访问（读|写）更倾向于聚集在同一块存储器区域内。</li>
+<li>存储器地址倾向于按顺序读写。  </li>
+</ol>
+</li>
+</ul>
+<h4 id="缓存映射：-令人头大的计组🤒"><a href="#缓存映射：-令人头大的计组🤒" class="headerlink" title="缓存映射：(令人头大的计组🤒)"></a>缓存映射：(令人头大的计组🤒)</h4><ol>
+<li><strong>直接映射</strong>的严格数学描述是：系统存储器中的给定块总是存储在高速缓存的相同位置。[极端1:高速而紧凑+毫无灵活性]</li>
+<li><span id="swap"></span>替换策略的主要目的是避免缓存颠簸，<strong>通用的策略</strong>：FIFO | LRU | RANDOM | NMRU</li>
+<li>在大多数情况下替换策略是随机的，有违直觉但最廉价也最有效</li>
+<li><strong>相联存储器</strong>技术用来解决依次查找缓存行会耗尽性能的问题，其存储位置通过存储的信息来编址的。[极端2:灵活+占用超大宝贵空间]</li>
+<li>上面那玩意儿需要大量的专用逻辑电路，会大量占用CPU的裸片空间。</li>
+<li>在大规模芯片设计中，裸片空间和芯片功能之间的权衡是一项最古老的挑战😐</li>
+<li>[折中的灵活度+高速紧凑]-&gt;<strong>组相联映射</strong></li>
+</ol>
+<h4 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h4><ul>
+<li>高速缓冲存储器和虚拟存储器都是因为RAM的局限性而产生的：  <ol>
+<li>高速缓存的出现是因为RAM很慢</li>
+<li>虚拟存储器的出现则是因为RAM容量很小</li>
+<li>(RAM：怪我咯🤨)</li>
+</ol>
+</li>
+<li>虚拟存储器由OS和几乎与CPU处在同一片芯片上的MMU共同管理</li>
+<li>树莓派使用SD卡，SD卡在设计上就不是为了频繁写入写出设计的，因此树莓派的交换空间应被看成是一种防止冲击的安全机制(内存冲击？？)，而不是性能提升机制。有关工具-&gt;vmstat(cli)</li>
+<li>交换分区(也就是swap)来自于分页的机制，同样使用替换策略，同样的<a href="#swap">四种常见方式</a></li>
+<li>假装每个进程都感觉拥有了独立于其他进程的属于自己的专用系统存储器空间(俗称内存)</li>
+</ul>
+<h3 id="第4章-ARM处理器与片上系统"><a href="#第4章-ARM处理器与片上系统" class="headerlink" title="第4章 | ARM处理器与片上系统"></a>第4章 | ARM处理器与片上系统</h3><ul>
+<li>晶体管预算限制芯片设计师实现功能</li>
+</ul>
+<h4 id="系统栈"><a href="#系统栈" class="headerlink" title="系统栈"></a>系统栈</h4><ul>
+<li>少量数据结构使用非常频繁，以至于一些CPU对于它们的机器指令有硬件上的支持，其中最重要的就是栈</li>
+<li>栈在管理嵌套子程序调用时非常有用</li>
+</ul>
+<h4 id="时钟与流水线-超标量与并行"><a href="#时钟与流水线-超标量与并行" class="headerlink" title="时钟与流水线 | 超标量与并行"></a>时钟与流水线 | 超标量与并行</h4><ul>
+<li>时序电路中运行的一切，都需要和一个称为时钟的脉冲发生器同步(数电😒)</li>
+<li>更多的晶体管预算允许更多的硬线指令。</li>
+<li>CPU架构的终极目标就是将所有的机器指令在一个时钟周期内执行完毕😯</li>
+<li>大多数架构都会试图通过两个互相关联的机制来缓和流水线阻塞的影响：分支预测和预测执行</li>
+<li>哈佛结构通过分离数据和指令缓存来缓解资源冲突</li>
+<li>在超标量CPU中，指令的执行超越了重叠方式，真正实现了<strong>并行化</strong>。</li>
+<li>具有<strong>数据依赖</strong>关系的指令不能同时发送</li>
+<li>现代CPU可以支持另一种并行：同时操作多个数据项的指令——&gt;SIMD指令  <ol>
+<li>SIMD指令在向量的基础上操作。在很多计算机架构中，SIMD指令可以一次并行地完成4个操作(+-×÷)，在一些架构中也可能超过4个操作。</li>
+<li>SIMD的核心优势在于(从时间和能耗成本看)取指和译码的SIMD指令能够在多个计算过程中共享。</li>
+<li>SIMD不需要昂贵的互锁逻辑来检测不会再发生的依赖性问题。</li>
+<li>SIMD指令可以从根本上提高代码性能，使其能够胜任诸如音视频的编码解码工作以及3D图像的管理任务。</li>
+</ol>
+</li>
+</ul>
+<h4 id="CPU架构与指令集"><a href="#CPU架构与指令集" class="headerlink" title="CPU架构与指令集"></a>CPU架构与指令集</h4><h5 id="CISC-RISC"><a href="#CISC-RISC" class="headerlink" title="CISC | RISC"></a>CISC | RISC</h5><ol>
+<li>二八法则：20%的指令会在80%的时间用到，而很多指令根本用不到🤨</li>
+<li>有趣的是，编译器使用的“精简指令集”与CPU内部提供的微指令有相似之处</li>
+<li>RISC的一个显著特征是几乎所有的指令都有硬连线逻辑实现。</li>
+<li>RISC指令集的扩展与CISC加入类似RISC的微指令，使得二者曾经最明显的界限————代码密度，被完全模糊了。</li>
+<li>哈佛型架构性能提升的原因在于<a href="#smallpart">访问的局部性</a>，相互独立的代码和数据高速缓存允许实现不同的<a href="#swap">替换策略</a>以及适合每种高速缓存访问模式的缓存行大小。</li>
+<li>包括CISC的主导架构————Intel x86，也拥有很多RISC的特征。</li>
+</ol>
+<h5 id="ARM"><a href="#ARM" class="headerlink" title="ARM"></a>ARM</h5><ul>
+<li>第一款艾康RISC架构(<strong>Acorn Risc Machine, ARM</strong>)CPU诞生于1985年中期。</li>
+<li>1990年，ARM CPU的开发被剥离出来，成为一家独立的公司。从那时起，ARM的全程变为Advanced RISC Machine(高级RISC机器)。1998年，它成为ARM控股公司。(向ARM势力低头😳)</li>
+<li>Thumb指令集是32位ARM指令集的16位实现，是为了更有效地利用16位的系统总线(低端设备使用的)。</li>
+<li>Thumb指令在存储器或高速缓存中被预取后，会被CPU内部的专用逻辑扩展为普通的ARMv6指令。进入指令流水线后，它们就不再是Thumb指令了(!!!???🤨)</li>
+<li>RISC CPU设计的一条基本准则是将尽可能多的寄存器放到CPU内(唔🤔)</li>
+<li>ARM协处理器接口的首要目标之一是不能拖慢CPU内核的速度(。。。)</li>
+</ul>
+<h5 id="SoC"><a href="#SoC" class="headerlink" title="SoC"></a>SoC</h5><ul>
+<li>库和内核会以知识产权(<strong>Intellectual Property, IP</strong>)的形式授权，而IC设计师会习惯性地将任何数字逻辑区块授权成为“IP”。</li>
+</ul>
+<h3 id="第5章-程序设计"><a href="#第5章-程序设计" class="headerlink" title="第5章 | 程序设计"></a>第5章 | 程序设计</h3><ul>
+<li><strong>将硬件和软件独立为两个学科只是达到了方便的目的，任何真正对计算感兴趣的人都需要学好这两个方面。</strong></li>
+<li>[这部分已经了解的东西相对多一些，就没太多笔记🤔]</li>
+<li>软件开发过程遵循一张漂亮而又和谐的流程图:</li>
+</ul>
+<p><img src="bug.jpg" alt="找bug可一点也不和谐😟"></p>
+<ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%95%8F%E6%8D%B7%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91" target="_blank" rel="noopener">敏捷软件开发</a>的目标：<ol>
+<li>人员和交互而不是过程和工具</li>
+<li>软件的可用性而不是泛泛的文档</li>
+<li>消费者协作而不是合同约定</li>
+<li>响应变化而不是遵循计划</li>
+</ol>
+</li>
+<li>FORTRAN、COBOL、BASIC代表了深深根植于计算的三种文化：科学、商业和教育。<br>[我直接跳到了5.8-GNU编译器工具集概览]</li>
+<li>Linux make：一般而言，make工具是一项软件机制，它协调编译过程并将多个源代码文件链接成单个可执行文件。</li>
+</ul>
+<p><img src="iwritecode.jpg" alt="en"></p>
+<h3 id="第6章-非易失性存储器"><a href="#第6章-非易失性存储器" class="headerlink" title="第6章 | 非易失性存储器"></a>第6章 | 非易失性存储器</h3><p>[这部分感觉。。不是很重要就略了]</p>
+<h4 id="分区和文件系统"><a href="#分区和文件系统" class="headerlink" title="分区和文件系统"></a>分区和文件系统</h4><ul>
+<li>分区设备的第一个扇区包含MBR(Master Boot Record)，MBR包含被称作引导装载程序(bootloader)的简短的可执行代码。</li>
+</ul>
+<h4 id="FLASH"><a href="#FLASH" class="headerlink" title="FLASH"></a>FLASH</h4><ul>
+<li>FLASH存储设备在结构上与DRAM拥有很多相似之处</li>
+<li>FLASH存储器单元具有在SRMA或DRAM存储器单元中未曾出现的局限性：<strong>FLASH存储器单元可以被写入或擦除的次数是有限的。</strong>(1000-100000次写入/擦除次数之间)</li>
+<li>多层单元通过多个电压等级可以在一个单元中存储多个位(编码)，但寿命低于单层单元。</li>
+<li>NOR Flash：擦写速度慢，存储密度低，读取速度快————&gt;嵌入式设备固件存储</li>
+<li>NAND Flash：擦写速度快，存储密度高，读取速度慢————&gt;大容量存储器</li>
+<li>防止Flash单元的任何单个存储块过快地接近耐久性极限点，同时从Flash设备的可用存储空间中移除不安全的存储块，采取了被称作Flash转换层(Flash Translation Layer, FTL)的机制。</li>
+<li>非易失性存储器的总体发展趋势很明显：旋转磁盘正在衰落，<strong>无移动部件的固态存储设备</strong>正在兴起。</li>
+</ul>
+<p><img src="ibm.jpg" alt="😒"></p>
+<h3 id="第7章-有线和无线以太网"><a href="#第7章-有线和无线以太网" class="headerlink" title="第7章 | 有线和无线以太网"></a>第7章 | 有线和无线以太网</h3><p>[精简版的计算机网络🤔]</p>
+<ul>
+<li>1971年，美国夏威夷大学成功部署了ALOHAnet网，并利用无线电信号连接了大学里遍布多个岛屿的计算机。</li>
+<li>ALOHAnet是最早的分组网络之一，当然也是第一个<strong>无线网络</strong>😳</li>
+<li>ALOHAnet是以太网的灵感之一。</li>
+<li>由于48位可以识别281万亿台不同设备，因此MAC地址不会很快耗尽。即便如此，错误还是导致MAC地址的重复，对于一些设备，改变MAC地址去模仿另一台设备是可能的。<br><strong>[哦，以太网编码系统看起来就像电力系统的电力线路模型一样难吃🤨]</strong></li>
+<li>冲突不会通过网桥传播，允许两个桥接网段中的每一个具有比单个网段可处理的更多节点(<strong>&lt;————这念出来是中国话???</strong>)</li>
+<li>Wi-Fi系列标准使用各种扩频技术来应对干扰。与不扩频相比，使信号跨越更宽的带宽，提供改进的抗干扰性，并且减少功率谱密度。<ol>
+<li>跳频扩频(FHSS)</li>
+<li>直接序列扩频(DSSS)</li>
+<li>正交频分复用(OFDM)</li>
+<li>(我记得网通考试的时候我这个选错了，没在书上看到这个啊🤨)</li>
+</ol>
+</li>
+</ul>
+<p><img src="local.jpg" alt="咕噜噜噜"></p>
+<h3 id="第8章-操作系统"><a href="#第8章-操作系统" class="headerlink" title="第8章 | 操作系统"></a>第8章 | 操作系统</h3><ul>
+<li>操作系统是控制计算机的工作方式并确保其他程序正常运行的计算机主程序。</li>
+<li>操作系统组成：<ol>
+<li>内核</li>
+<li>网络子系统</li>
+<li>安全子系统</li>
+<li>用户界面</li>
+</ol>
+</li>
+<li>外行或几十年来受到不良科幻小说影响的人，往往认为CPU是计算机的“大脑”。事实并非如此，真正的老板是操作系统————控制来自其他软件的输入输出请求，将其转换为数据处理指令并填鸭到CPU。(emmm😯)</li>
+<li>如今的多核CPU锦上添花……使得任务的各个部分可以并行处理，以此提升速度。(CPU每个核都开花🐵)</li>
+<li>成百上千件事看起来在同一时刻发生————嗯，就是这样。</li>
+<li>我记得操作系统的目标之一就是提高有效性，其中包括了提高系统吞吐量。</li>
+<li>并发是操作系统的<strong>基本特性</strong>之一，并发和并行的区别在于，并发是在同一<strong>时间间隔</strong>，而并行是在<strong>同一时刻</strong><br><code>帕金森定律：“你给程序再多内存，程序也会想尽办法耗光”</code>  </li>
+<li>当然，时间分片是关键。</li>
+<li>那些被设计出来进行控制、监视和处理各类数据并且嵌入到设备中的非易失性存储媒介中的软件被称作固件。</li>
+</ul>
+<p><img src="unix.jpg" alt="The power of shell is in your hands"></p>
+<h3 id="第9、10、11章-视频编解码器和视频压缩-3D图形-音频"><a href="#第9、10、11章-视频编解码器和视频压缩-3D图形-音频" class="headerlink" title="第9、10、11章 | 视频编解码器和视频压缩 | 3D图形 | 音频"></a>第9、10、11章 | 视频编解码器和视频压缩 | 3D图形 | 音频</h3><h4 id="视频编解码器和视频压缩"><a href="#视频编解码器和视频压缩" class="headerlink" title="视频编解码器和视频压缩"></a>视频编解码器和视频压缩</h4><ul>
+<li>H.264还允许更高效的熵编码方法，包括基于上下文的自适应二进制算术编码(Context Adaptive Binary Arithmetic Coding, CABAC)和基于上下文的自适应可变长编码(Context Adaptive Variable Length Coding, CAVLC)。</li>
+<li>与H.264相比，H.265的目标是将恒定质量的比特率降低50%，而不显著增加解码过程的计算复杂度。</li>
+<li>为了实现↑目标，H.265使用了一种新的结构来存储信息。为了取代宏块，它使用了编码树单元(Coding Tree Unit, CTU)。</li>
+<li>我们需要一种可计算的方法来估计质量，最常见的方法是峰值信噪比(Peak Signal to Noise Ratio, PSNR)。</li>
+<li>PSNR想计算机一样看图像：作为网格数据。结构相似性(Structural SImilarity, SSIM)索引是一种尝试像人一样看待图像的替代方法(亮度、对比度和结构)</li>
+</ul>
+<h4 id="3D图形"><a href="#3D图形" class="headerlink" title="3D图形"></a>3D图形</h4><p>图形学，我真的是。。。一脸懵逼好吧😐AWSL</p>
+<ul>
+<li>毫不起眼的GPU已经从简单的线条绘图加速器一跃成为高度并行的多线程独立子系统，其计算能力是如此强大，以至于已经成为现代计算机体系结构中必不可少的组成部分。</li>
+<li>OpenGL与Direct X的爱恨纠葛。。。</li>
+<li>OpenGL既不要求通过专用硬件对任何功能加速，也不指定任何最低性能目标，他只是规定了任何应用都必须满足的规范要求。</li>
+<li>计算机图形学中的变换基本上是对每个对象所在坐标系的改变。</li>
+<li>为了应对减小的带宽和更小的功率包络，设计了基于瓦片的渲染(移动端)</li>
+</ul>
+<p><img src="rtx2080.png" alt></p>
+<h4 id="音频"><a href="#音频" class="headerlink" title="音频"></a>音频</h4><ul>
+<li>嗯。。里面还有Adobe Audition CC 2015，这很硬核😐</li>
+<li>I2S的四种写法。。。这是一种彼此连接数字音频设备的串行总线接口标准。</li>
+<li>多媒体设备这三张看起来真是难受啊。。。划了划了。。。</li>
+</ul>
+<h3 id="第12章-输入-输出"><a href="#第12章-输入-输出" class="headerlink" title="第12章 | 输入/输出"></a>第12章 | 输入/输出</h3><ul>
+<li>两个发明改变了计算机的面貌：GUI和现在无所不在的鼠标</li>
+<li>有点令人惊讶的是先出现的是鼠标，他曾经是一个军事秘密！(what???🤨)</li>
+<li>SATA和。。。PATA???(还有这玩意???🤨)</li>
+<li>GPIO，连接现实世界的大门。(单片机时间)<ol>
+<li><code>sudo apt-get install rpi.gpio</code></li>
+<li><code>import RPI.GPIO as GPIO</code></li>
+<li>……</li>
+<li><strong>小心短路</strong></li>
+</ol>
+</li>
+</ul>
+<p><img src="brain.png" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看完一遍感觉就像看嵌入式三级的书一样???🤔<br>不过里面还是有很多硬核的内容的，太硬核了，计算机体系结构好难吼😟<br>鉴于内容太多太杂还是基本了解下知识框架，更多具体的实现细节可以去学习相关的书。(其实是这个翻译的太难受了)<br>里面对ARM结构的介绍好多看着真让人头大= =，幸好考过嵌入式还有一丢丢印象😟</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Phantom T 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="Phantom T 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Phantom T</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://phantomT.github.io/2019/05/02/Linux-003-RaspberryPi/" title="使用Raspberry Pi学习计算机体系结构 | 笔记">https://phantomT.github.io/2019/05/02/Linux-003-RaspberryPi/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Raspberry-Pi/" rel="tag"># Raspberry Pi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/02/Linux-002-intro/" rel="next" title="Linux简介 | 学习杂记">
+                <i class="fa fa-chevron-left"></i> Linux简介 | 学习杂记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/02/STM32-000-CubeMX/" rel="prev" title="接触STM32与进入STM32CubeMX">
+                接触STM32与进入STM32CubeMX <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Phantom T">
+            
+              <p class="site-author-name" itemprop="name">Phantom T</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/phantomT" title="GitHub &rarr; https://github.com/phantomT" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:bobphantom@126.com" title="E-Mail &rarr; mailto:bobphantom@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引"><span class="nav-number">1.</span> <span class="nav-text">引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WILEY-《Learing-Computer-Architecture-with-Raspberry-Pi》"><span class="nav-number">2.</span> <span class="nav-text">WILEY 《Learing Computer Architecture with Raspberry Pi》</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#笔记"><span class="nav-number">3.</span> <span class="nav-text">笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第1章-计算机漫谈"><span class="nav-number">3.1.</span> <span class="nav-text">第1章 | 计算机漫谈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第2章-计算概述"><span class="nav-number">3.2.</span> <span class="nav-text">第2章 | 计算概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第3章-电子存储器"><span class="nav-number">3.3.</span> <span class="nav-text">第3章 | 电子存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CPU为中心-存储器为中心？"><span class="nav-number">3.3.1.</span> <span class="nav-text">CPU为中心 | 存储器为中心？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SRAM"><span class="nav-number">3.3.2.</span> <span class="nav-text">SRAM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DRAM"><span class="nav-number">3.3.3.</span> <span class="nav-text">DRAM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序的局部性原理：空间局部性-时间局部性"><span class="nav-number">3.3.4.</span> <span class="nav-text">程序的局部性原理：空间局部性 | 时间局部性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存映射：-令人头大的计组🤒"><span class="nav-number">3.3.5.</span> <span class="nav-text">缓存映射：(令人头大的计组🤒)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#虚拟存储器"><span class="nav-number">3.3.6.</span> <span class="nav-text">虚拟存储器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第4章-ARM处理器与片上系统"><span class="nav-number">3.4.</span> <span class="nav-text">第4章 | ARM处理器与片上系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#系统栈"><span class="nav-number">3.4.1.</span> <span class="nav-text">系统栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时钟与流水线-超标量与并行"><span class="nav-number">3.4.2.</span> <span class="nav-text">时钟与流水线 | 超标量与并行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CPU架构与指令集"><span class="nav-number">3.4.3.</span> <span class="nav-text">CPU架构与指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CISC-RISC"><span class="nav-number">3.4.3.1.</span> <span class="nav-text">CISC | RISC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ARM"><span class="nav-number">3.4.3.2.</span> <span class="nav-text">ARM</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SoC"><span class="nav-number">3.4.3.3.</span> <span class="nav-text">SoC</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第5章-程序设计"><span class="nav-number">3.5.</span> <span class="nav-text">第5章 | 程序设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第6章-非易失性存储器"><span class="nav-number">3.6.</span> <span class="nav-text">第6章 | 非易失性存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分区和文件系统"><span class="nav-number">3.6.1.</span> <span class="nav-text">分区和文件系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FLASH"><span class="nav-number">3.6.2.</span> <span class="nav-text">FLASH</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第7章-有线和无线以太网"><span class="nav-number">3.7.</span> <span class="nav-text">第7章 | 有线和无线以太网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第8章-操作系统"><span class="nav-number">3.8.</span> <span class="nav-text">第8章 | 操作系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第9、10、11章-视频编解码器和视频压缩-3D图形-音频"><span class="nav-number">3.9.</span> <span class="nav-text">第9、10、11章 | 视频编解码器和视频压缩 | 3D图形 | 音频</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#视频编解码器和视频压缩"><span class="nav-number">3.9.1.</span> <span class="nav-text">视频编解码器和视频压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3D图形"><span class="nav-number">3.9.2.</span> <span class="nav-text">3D图形</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#音频"><span class="nav-number">3.9.3.</span> <span class="nav-text">音频</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第12章-输入-输出"><span class="nav-number">3.10.</span> <span class="nav-text">第12章 | 输入/输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phantom T</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'b6dcc47c3c7ef6e52002',
+    clientSecret: '4b1bd615b27b373815e57080ed022051b759ea8c',
+    repo: 'hexo-gitalk',
+    owner: 'phantomT',
+    admin: ['phantomT'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
