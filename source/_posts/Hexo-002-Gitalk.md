@@ -139,8 +139,8 @@ console.log("开始初始化评论...");
                 return item.body.includes(link);
             });
         });
-
-        for(var i=0;i<notInitIssueLinks.length;i++)
+        
+        for(let i=0;i<notInitIssueLinks.length;i++)
         {
             if(notInitIssueLinks[i].endsWith("tags/index.html"))
             {
@@ -152,10 +152,10 @@ console.log("开始初始化评论...");
         if (notInitIssueLinks.length > 0) {
             console.log(`本次有${notInitIssueLinks.length}个链接需要初始化issue：`);
             console.log(notInitIssueLinks);
-            console.log("开始提交初始化请求, 大约需要20秒...");
+            console.log("开始提交初始化请求, 大约需要40秒...");
             /**
              * 部署好网站后，直接执行start，新增文章并不会生成评论
-             * 经测试，最少需要等待20秒，才可以正确生成， 怀疑跟github的api有关系，没有找到实锤
+             * 经测试，最少需要等待40秒，才可以正确生成， 怀疑跟github的api有关系，没有找到实锤
              */
             setTimeout(async ()=>{
                 let initRet = await notInitIssueLinks.map(async (item) => {
@@ -164,13 +164,12 @@ console.log("开始初始化评论...");
                     let desc = item + "\n\n" + cheerio.load(html)("meta[name='description']").attr("content");
                     let pathLabel = url.parse(item).path;
                     let label = crypto.createHash('md5').update(pathLabel,'utf-8').digest('hex');
-                    //let body = `${item}<br><br>${websiteConfig.description}`;
-                    let form = JSON.stringify({ desc, labels: [config.kind, label], title });
+                    let form = JSON.stringify({ "body": desc, "labels": [config.kind, label], "title": title });
                     return send({ ...requestPostOpt, form });
                 });
                 console.log(`已完成${initRet.length}个！`);
                 console.log("可以愉快的发表评论了！");
-            },20000);
+            },40000);
         } else {
             console.log("本次发布无新增页面，无需初始化issue!!");
         }
