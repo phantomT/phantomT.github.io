@@ -82,7 +82,7 @@ deploy:
 
 ## Sitemap
 sitemap:
-  path: sitemap.xml 
+  path: sitemap.xml
 
 ## Search
 search:
