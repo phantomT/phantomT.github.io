@@ -81,7 +81,7 @@ Sitemap: https://phantomT.github.io/sitemap.xml
 然后可以`hexo g -d`提交一下
 
 ## Google Search Console
-- [Google Search Console](https://www.google.com/webmasters/tools/home)
+- [Google Search Console](https://search.google.com/search-console)
 * 注册完成后，添加自己的域名。
   ![添加属性](Hexo-001-sitemap/add.png)
 
