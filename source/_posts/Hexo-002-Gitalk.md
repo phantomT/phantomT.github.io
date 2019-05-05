@@ -1,6 +1,6 @@
 ---
-title: 鱼缸更新与Gitalk插件初始化
-date: 2019-05-02 19:24:24
+title: 博客更新与Gitalk插件初始化
+date: 2019-05-05 16:08:32
 tags:
     - hexo
 	- git
@@ -15,6 +15,7 @@ tags:
 ![](Hexo-002-Gitalk\demo.png)
 
 <!-- more -->
+
 # [Gitalk](https://github.com/gitalk/gitalk#install) 模块
 `Gitalk is a modern comment component based on GitHub Issue and Preact.`  
 
