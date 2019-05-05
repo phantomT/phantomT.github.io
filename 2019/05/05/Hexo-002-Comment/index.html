@@ -99,31 +99,21 @@
 
 
 
-  <meta name="description" content="2018-02-02STM32作为常见的MCU与嵌入式开发的基础，也是作为苯宝宝接触计算机层次思想的平台，是值得学习下甚至是好好学习下的&amp;gt;_&amp;lt;[更新]因为Cube MX更新到了5.1.0甚至更高，因此也对一些影响较大的界面截图做出了更新。苯宝宝常用的芯片大概有  STM32F103C8T6 STM32F429IGT6 STM32F429BIT6">
-<meta name="keywords" content="STM32,HAL,STM32CubeMX,Keil">
+  <meta name="description" content="因为看原来的那个博客主题有些审美疲劳，因此决定换一个主题，虽然以前我比较嫌弃NEXT（可能是其他的场景太丑），不过现在看感觉Mist场景还挺好看的（真香）   除此之外还加入了Gitalk评论模块并搞了一个自动初始化文章的脚本，省的要一个一个点开初始化（虽然效果还达不到手动初始化那么好）。">
+<meta name="keywords" content="hexo,git,node.js,GitHub,JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="接触STM32与进入STM32CubeMX">
-<meta property="og:url" content="https://phantomT.github.io/2019/05/02/STM32-000-CubeMX/index.html">
+<meta property="og:title" content="博客更新与Gitalk插件初始化">
+<meta property="og:url" content="https://phantomT.github.io/2019/05/05/Hexo-002-Comment/index.html">
 <meta property="og:site_name" content="欢迎来到本尊的鱼缸">
-<meta property="og:description" content="2018-02-02STM32作为常见的MCU与嵌入式开发的基础，也是作为苯宝宝接触计算机层次思想的平台，是值得学习下甚至是好好学习下的&amp;gt;_&amp;lt;[更新]因为Cube MX更新到了5.1.0甚至更高，因此也对一些影响较大的界面截图做出了更新。苯宝宝常用的芯片大概有  STM32F103C8T6 STM32F429IGT6 STM32F429BIT6">
+<meta property="og:description" content="因为看原来的那个博客主题有些审美疲劳，因此决定换一个主题，虽然以前我比较嫌弃NEXT（可能是其他的场景太丑），不过现在看感觉Mist场景还挺好看的（真香）   除此之外还加入了Gitalk评论模块并搞了一个自动初始化文章的脚本，省的要一个一个点开初始化（虽然效果还达不到手动初始化那么好）。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/F429.jpg">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/001.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/002.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/003.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/004.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/006.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/007.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/008.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/009.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/010.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/011.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/012.png">
-<meta property="og:updated_time" content="2019-05-02T12:08:49.948Z">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/05/Hexo-002-Comment/demo.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/05/Hexo-002-Comment/noinit.png">
+<meta property="og:updated_time" content="2019-05-05T10:00:19.914Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="接触STM32与进入STM32CubeMX">
-<meta name="twitter:description" content="2018-02-02STM32作为常见的MCU与嵌入式开发的基础，也是作为苯宝宝接触计算机层次思想的平台，是值得学习下甚至是好好学习下的&amp;gt;_&amp;lt;[更新]因为Cube MX更新到了5.1.0甚至更高，因此也对一些影响较大的界面截图做出了更新。苯宝宝常用的芯片大概有  STM32F103C8T6 STM32F429IGT6 STM32F429BIT6">
-<meta name="twitter:image" content="https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/F429.jpg">
+<meta name="twitter:title" content="博客更新与Gitalk插件初始化">
+<meta name="twitter:description" content="因为看原来的那个博客主题有些审美疲劳，因此决定换一个主题，虽然以前我比较嫌弃NEXT（可能是其他的场景太丑），不过现在看感觉Mist场景还挺好看的（真香）   除此之外还加入了Gitalk评论模块并搞了一个自动初始化文章的脚本，省的要一个一个点开初始化（虽然效果还达不到手动初始化那么好）。">
+<meta name="twitter:image" content="https://phantomt.github.io/2019/05/05/Hexo-002-Comment/demo.png">
 
 
 
@@ -131,7 +121,7 @@
 
   
   
-  <link rel="canonical" href="https://phantomT.github.io/2019/05/02/STM32-000-CubeMX/">
+  <link rel="canonical" href="https://phantomT.github.io/2019/05/05/Hexo-002-Comment/">
 
 
 
@@ -141,7 +131,7 @@
   };
 </script>
 
-  <title>接触STM32与进入STM32CubeMX | 欢迎来到本尊的鱼缸</title>
+  <title>博客更新与Gitalk插件初始化 | 欢迎来到本尊的鱼缸</title>
   
 
 
@@ -356,7 +346,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://phantomT.github.io/2019/05/02/STM32-000-CubeMX/">
+    <link itemprop="mainEntityOfPage" href="https://phantomT.github.io/2019/05/05/Hexo-002-Comment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phantom T">
@@ -373,7 +363,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">接触STM32与进入STM32CubeMX
+          <h2 class="post-title" itemprop="name headline">博客更新与Gitalk插件初始化
 
               
             
@@ -399,7 +389,7 @@
                 
               
 
-              <time title="创建时间：2019-05-02 19:41:42 / 修改时间：20:08:49" itemprop="dateCreated datePublished" datetime="2019-05-02T19:41:42+08:00">2019-05-02</time>
+              <time title="创建时间：2019-05-05 16:08:32 / 修改时间：18:00:19" itemprop="dateCreated datePublished" datetime="2019-05-05T16:08:32+08:00">2019-05-05</time>
             
 
             
@@ -445,39 +435,54 @@
       
 
       
-        <p>2018-02-02<br><strong>STM32</strong>作为常见的MCU与嵌入式开发的基础，也是作为苯宝宝接触计算机层次思想的平台，是值得学习下甚至是好好学习下的&gt;_&lt;<br>[更新]因为<strong>Cube MX</strong>更新到了5.1.0甚至更高，因此也对一些影响较大的界面截图做出了更新。<br>苯宝宝常用的芯片大概有</p>
+        <p>因为看原来的那个博客主题有些审美疲劳，因此决定换一个主题，虽然以前我比较嫌弃NEXT（可能是其他的场景太丑），不过现在看感觉Mist场景还挺好看的（真香）  </p>
+<p>除此之外还加入了Gitalk评论模块并搞了一个自动初始化文章的脚本，省的要一个一个点开初始化（虽然效果还达不到手动初始化那么好）。</p>
+<p><img src="/2019/05/05/Hexo-002-Comment/demo.png" alt></p>
+<a id="more"></a>
+<h1 id="Gitalk-模块"><a href="#Gitalk-模块" class="headerlink" title="Gitalk 模块"></a><a href="https://github.com/gitalk/gitalk#install" target="_blank" rel="noopener">Gitalk</a> 模块</h1><p><code>Gitalk is a modern comment component based on GitHub Issue and Preact.</code>  </p>
+<p>Gitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件，NEXT 7主题已经集成了这个插件，因此配置起来要更容易一些，网上的教程很多，从<strong><a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">GitHub Application</a></strong>到在theme的配置文件里加入代码段都很清楚，我就不展开了，直接进入初始化。</p>
+<h1 id="Gitalk-初始化"><a href="#Gitalk-初始化" class="headerlink" title="Gitalk 初始化"></a>Gitalk 初始化</h1><h2 id="手动初始化"><a href="#手动初始化" class="headerlink" title="手动初始化"></a>手动初始化</h2><p>Gitalk是需要一个<code>repo</code>的，并且需要创建文章对应的<code>Issue</code>进行初始化。  </p>
+<p>在未创建<code>Issue</code>的情况下会出现以下内容：  </p>
+<p><img src="/2019/05/05/Hexo-002-Comment/noinit.png" alt></p>
+<p>因此我们需要对Gitalk进行初始化，手动的方法就是在页面登录GitHub账户然后做应用关联，以后登录状态进入未初始化的文章后就会进行初始化，相应的在<code>repo</code>的<code>Issue</code>里也会有相应文章标题的<code>Issue</code>出现，此文章的每一条评论都会这个<code>Issue</code>下面出现（<code>Issue</code>下面的评论就是文章下面的评论）。  </p>
+<p>那么就会有一个问题：如果一开始文章很多，加入了Gitalk后手动初始化就意味着要点开<strong>每一篇</strong>文章，这就很麻烦，因此我想到有没有脚本可以用。  </p>
+<h2 id="脚本的出现"><a href="#脚本的出现" class="headerlink" title="脚本的出现"></a>脚本的出现</h2><p>经过一番搜索，找到了两个<strong>node.js</strong>的脚本以及一些<strong>Ruby</strong>的脚本，因为我不会<strong>Ruby</strong>，所以选择了<strong>JS</strong>（虽然<strong>JS</strong>也不怎么会，但想到<strong>node.js</strong>用的是<strong>JS</strong>，还是决定用<strong>JS</strong>的脚本）。  </p>
+<h3 id="站点地图"><a href="#站点地图" class="headerlink" title="站点地图"></a>站点地图</h3><p>脚本是基于网站sitemap的批量刷新，关于sitemap我以前写过一个博文，主要内容差不多：<a href="https://phantomt.github.io/2019/05/02/Hexo-001-sitemap/">Hexo添加Sitemap</a>  </p>
+<h3 id="Personal-Access-Token"><a href="#Personal-Access-Token" class="headerlink" title="Personal Access Token"></a>Personal Access Token</h3><p>因为需要调用GitHub API因此需要一个<strong>Personal Access Token</strong>以避免<strong>Rate limiting</strong>，GitHub API对一些接口有调用限制，具体可以查看 <a href="https://developer.github.com/v3/#rate-limiting" target="_blank" rel="noopener">Rate limiting</a> 的解释。对于不同的认证方式，调用限制不同。  </p>
+<p>Gitalk使用的是GitHub的<strong>OAuth</strong>认证，请求时必须要有 <code>clientID</code> 和 <code>clientSecret</code> ，这种方式每小时的 <code>Rate limiting</code> 是 <strong>60</strong> 。如果只是发表评论，肯定是够了。  </p>
+<p>而如果要批量创建所有文章对应的<code>Issue</code>来作为这些文章的评论存储，可能就未必够了。  </p>
+<p>好在GitHub提供了另一种认证方式——<strong>Personal access token</strong>，这种方式每小时的限制高达 <strong>5000</strong> 次。所以，第一步就是申请这个<strong>token</strong>。  </p>
+<p>从GitHub的 <a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Personal access token</a> 页面，点击 <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener">Generate new token</a> 。  </p>
 <ul>
-<li>STM32F103C8T6</li>
-<li>STM32F429IGT6</li>
-<li>STM32F429BIT6<a id="more"></a>
-</li>
+<li>Token description ：描述，随意</li>
+<li>Select scopes：必选的选项为<code>repo</code>下的<code>repo:status</code>、<code>repo_deployment</code>和<code>public_repo</code>      </li>
 </ul>
-<h2 id="说在前面的历程和没什么太大用的东西"><a href="#说在前面的历程和没什么太大用的东西" class="headerlink" title="说在前面的历程和没什么太大用的东西"></a>说在前面的历程和没什么太大用的东西</h2><h3 id="学习单片机的开始"><a href="#学习单片机的开始" class="headerlink" title="学习单片机的开始"></a>学习单片机的开始</h3><p>苯宝宝在大一时加入了学院的创新创业俱乐部，并接触了单片机和一些电子技术，一开始学的TI的MSP430G2553，使用的CSS，哎，当时真是什么都不懂，什么中断之类的东西，一头雾水，430也着实给我留下了不小的心理阴影。。</p>
-<h3 id="接触STM32"><a href="#接触STM32" class="headerlink" title="接触STM32"></a>接触STM32</h3><p>大一上的寒假，实验室里的大佬们给我们萌新布置了一个叫风力摆的任务，当时小组里还是15级的学长强力carry，用430移植的STM32的 MPU6050的读取、解算的程序，后来有几个学长学姐用了当时对我们来说还比较陌生的STM32来制作，我就在好奇心的驱使下，在寒假买了一个32的F1的开发板。</p>
-<h3 id="懵逼的开始"><a href="#懵逼的开始" class="headerlink" title="懵逼的开始"></a>懵逼的开始</h3><p>那个板子也不是那两大家的，例程什么的也不是很详细，虽然有视频但是我最终还是没有看下去，也不了解流程，只看到了GPIO的部分，也不知道怎么验证，只能跟着做Keil的仿真，最后可以说算是半途而废了。</p>
-<h3 id="重拾智慧"><a href="#重拾智慧" class="headerlink" title="重拾智慧"></a>重拾智慧</h3><p>大一下在纠结要不要转到CS中茫然度过，又到了计算机等级考试的时间，思索许久，决定同时报名嵌入式和网络技术两门三级考试（最后居然都过了），树立了以学习知识为主，考试考着玩的想法。那个暑假还意外的加入了学长的电赛小组，一同准备电赛。<br>这个暑假可以说是一个转折点，不仅初步认识了<strong>嵌入式开发的概念</strong>和基于ARM的嵌入式设备的从底层电路到<strong>嵌入式系统的组成结构</strong>，还在比赛中经历了完成一整个作品的过程，包括设计机械结构、设计程序框架、完成函数编写再到最后调试参数（话说PID简直就是玄学？？？？！！！）</p>
-<h3 id="开启新的学习过程"><a href="#开启新的学习过程" class="headerlink" title="开启新的学习过程"></a>开启新的学习过程</h3><p>大二上开始了我们大创项目的实质性的工作，我们选择了STM32F429IGT6（某火）的核心板，这也是自己第一次独立完成一个不是很完善的简单项目，苯宝宝从PWM输出开始，根据三级时所学基础理论结合店家基于标准库的例程，修改、编写自己需要的函数，一直写到可以同时输出四路/八路同频率不同占空比的PWM波并可以使用蓝牙遥控。<br>到了寒假（也就是最近），接触了使用HAL层的工具（可能这么说不太准确= =）ST的CubeMX，目前用起来还挺简单的，如果对系统的效率没有很高的要求的话，这个工具还是值得推荐的，使用HAL层、走向嵌入式系统也是现在的一种趋势吧。</p>
-<p><img src="/2019/05/02/STM32-000-CubeMX/F429.jpg" alt="野火F429"></p>
-<p>如果不知道什么是HAL，可以参考以下:<a href="https://baike.baidu.com/item/%E7%A1%AC%E4%BB%B6%E6%8A%BD%E8%B1%A1%E5%B1%82/9084603?fr=aladdin&amp;fromid=9201&amp;fromtitle=HAL" target="_blank" rel="noopener">百度百科</a></p>
-<h2 id="正式开始介绍STM32CubeMX"><a href="#正式开始介绍STM32CubeMX" class="headerlink" title="正式开始介绍STM32CubeMX"></a>正式开始介绍STM32CubeMX</h2><p>首先，是获取软件，个人还是比较推荐从官网下载:<a href="http://www.st.com/content/st_com/zh/products/development-tools/software-development-tools/stm32-software-development-tools/stm32-configurators-and-code-generators/stm32cubemx.html" target="_blank" rel="noopener">ST官网</a><br>[注意:在安装前需要安装JAVA]</p>
-<blockquote>
-<p>STM32Cube 是一个全面的软件平台，包括了ST产品的每个系列。平台包括了STM32Cube硬件抽象层(一个STM32抽象层嵌入式软件，确保在STM32系列最大化的便携性)和一套的中间件组件(RTOS, USB, FatFs, TCP/IP,  Graphics, 等等).</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>直观的STM32微控制器的选择和时钟树配置</li>
-<li>微控制器图形化配置外围设备和中间件的功能模式和初始化参数</li>
-<li>C代码生成项目覆盖STM32微控制器的初始化符合IAR™，Keil的™和GCC编译器。</li>
-</ul>
-</blockquote>
-<p>这个软件简单的说就是可以自己生成芯片的配置代码，并且支持多种编译器，对于想要了解STM32 HAL库的同学，推荐使用这个软件，如果对标准库完全没有了解的话还是建议从标准库开始学习，否则可能在移植代码时出现问题或者直接写代码时不知道写在哪。</p>
-<p>好，现在开始以429为例建立一个工程（由于电脑的分辨率问题，可能有图标不是很清楚的问题）</p>
-<h3 id="新建工程-更新"><a href="#新建工程-更新" class="headerlink" title="新建工程[更新]"></a>新建工程[更新]</h3><p>打开软件，点击’New Project’，建立一个新的工程<br><img src="/2019/05/02/STM32-000-CubeMX/001.png" alt><br>然后选择使用的芯片，可以通过先选’Series’再选’Lines’的方法找到所需MCU，此处以STM32F429IGT6为例<br><img src="/2019/05/02/STM32-000-CubeMX/002.png" alt><br>建立工程后的画面如下，芯片引脚可以通过左边的’Categories’栏里所列进行自动配置也可以通过在右边直接点击进行手动配置<br><img src="/2019/05/02/STM32-000-CubeMX/003.png" alt><br>不过我们首先要先对项目进行设置，点击’Project Manager’，选择’Project’，在窗口中设置’Project’里的项目名称和项目地址，并选择<strong>MDK-ARM V5</strong>作为IDE，最后生成的代码会用项目名称作为一个完整的文件夹出现，里面的结构和Keil5的项目模板差不多。其他选项保持默认即可。<br><img src="/2019/05/02/STM32-000-CubeMX/004.png" alt><br>然后设置’Code Generator’里的选项，选择拷贝所有libraries到项目文件夹或只拷贝必须的libraries其实区别不大，毕竟每次新配置完都要重新生成代码，库也会被复制过去。<br>然后选择为外设初始化建立对应的’.h’和’.c’文件<br><img src="/2019/05/02/STM32-000-CubeMX/006.png" alt><br>设置完成即可开始配置MCU</p>
-<h3 id="配置MCU"><a href="#配置MCU" class="headerlink" title="配置MCU"></a>配置MCU</h3><p><strong>[更新]即使CubeMX更新到了5.1.0，但是这部分配置方式仍然没有变化，因此就不做出更改了</strong><br>首先是’Pinout’栏里对引脚和外设进行设置<br><img src="/2019/05/02/STM32-000-CubeMX/007.png" alt><br>由于以使用Robomodule CAN总线驱动器的麦克纳姆轮小车为例，配置了CAN总线、UART、RCC和系统调试方式（SW）<br><img src="/2019/05/02/STM32-000-CubeMX/008.png" alt><br>根据店家所给的说明书，HSE选择’Crystal’外部晶振</p>
-<p>然后对时钟’Clock Configuration’进行设置<br>这里的时钟设置来自于卖家给的核心板说明，由于HSE设置了外部晶振，因此会有下面那条时钟线，此处推荐按照熟悉的参数进行配置（参考卖家的标准库例程）<br><img src="/2019/05/02/STM32-000-CubeMX/009.png" alt></p>
-<p>最后在’Configuration’一栏中对各个外设进行配置，比如通信波特率、帧结构、端口的开启方式等，此处不进行细致介绍，后面可能会在项目中进行介绍<br><img src="/2019/05/02/STM32-000-CubeMX/010.png" alt></p>
-<h3 id="使用软件生成项目文件夹"><a href="#使用软件生成项目文件夹" class="headerlink" title="使用软件生成项目文件夹"></a>使用软件生成项目文件夹</h3><p>STM32Cube的其中一个优点就是可以自动生成项目代码<br>点击右上角的<code>GENERATE CODE</code>按钮自动生成<strong>配置</strong>代码<br><img src="/2019/05/02/STM32-000-CubeMX/011.png" alt><br>生成完毕后可以选择打开项目，打开后即可使用Keil5对函数进行编写<br><img src="/2019/05/02/STM32-000-CubeMX/012.png" alt><br>需要注意的是，生成的代码中会为用户编写函数预留位置，所有用户函数<br><strong>必须</strong><br><strong>必须</strong><br><strong>必须</strong><br>写在<strong>规定的范围</strong>内，如’USER CODE 1 BEGIN’和’USER CODE 1 END’之间，否则，下次此项目生成新配置代码，在不合法位置的用户函数将全部被覆盖！<br>由于苯宝宝对编译方式啥的理解还不是很好，所以自己的头文件的内容也就加在它已经有的’.h’文件里了<br>基本上生成的代码中都会为用户代码预留位置，看好注释就行<br>生成的代码中即使是’***_hal.h’的头文件中也会有大量注释解释函数的作用，不用担心看不懂。<br>将标准库代码移植过来时要注意对库函数的替换以及新函数的参数与使用方式~  </p>
-<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>祝大家在STM32CubeMX中开启新世界~<br>嘿嘿嘿~</p>
+<p>创建完成后，获得一个<strong>Token</strong>，<strong>一定要保存这个Token</strong></p>
+<h3 id="关于MD5"><a href="#关于MD5" class="headerlink" title="关于MD5"></a>关于MD5</h3><p>因为在配置Gitalk的时候在<code>id</code>一栏设置了对<code>pathname</code>进行<strong>MD5</strong>加密，因此在自动初始化的脚本中，也要相对的在<code>label</code>里对<code>path</code>进行<strong>MD5</strong>处理（虽然我程序里的变量名好像不是这个）。  </p>
+<p>如果脚本中不进行<strong>MD5</strong>加密，那么创建的<code>Issue</code>的<code>label</code>就会是原始的文章地址，而Gitalk并不识别这个<code>Issue</code>，还是需要手动初始化（两个<code>Issue</code>是不会合并的）。  </p>
+<p>因此，如果在Gitalk里设置了<strong>MD5</strong>，那么在脚本里同样要进行<strong>MD5</strong>，<strong>同一文件的MD5摘要是一样的。</strong>  </p>
+<h3 id="代码依赖项"><a href="#代码依赖项" class="headerlink" title="代码依赖项"></a>代码依赖项</h3><p>因为我借鉴了两篇文章给出的代码，因此需要结合一下他们的依赖项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install request --save</span><br><span class="line">npm install xml-parser --save</span><br><span class="line">npm install yamljs --save</span><br><span class="line">npm install cheerio --save</span><br></pre></td></tr></table></figure>
+<p>其实主要还是第二篇的代码做的主体🤔  </p>
+<h3 id="脚本文件"><a href="#脚本文件" class="headerlink" title="脚本文件"></a>脚本文件</h3><p>在<strong>Hexo</strong>的根目录创建文件<code>gitalk_init.js</code>，将下面的代码复制进去并修改相应的配置参数。其中<code>token</code>就是上面申请并保存的<strong>Token</strong>。这个<code>token</code>我前一天搞得第二天用不了了？？？🤔反正在搞一个就是了，没有<code>token</code>是无法使用API的，<code>token</code>错误会导致<code>issues</code>变量内容错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line">const request = require(&quot;request&quot;);</span><br><span class="line">const fs = require(&quot;fs&quot;);</span><br><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const url = require(&quot;url&quot;);</span><br><span class="line">const xmlParser = require(&quot;xml-parser&quot;);</span><br><span class="line">const YAML = require(&quot;yamljs&quot;);</span><br><span class="line">const cheerio = require(&quot;cheerio&quot;);</span><br><span class="line">const crypto = require(&apos;crypto&apos;);</span><br><span class="line">// 根据自己的情况进行配置</span><br><span class="line">const config = &#123;</span><br><span class="line">    username: &quot;YourGithubUserName&quot;, // GitHub 用户名</span><br><span class="line">    token: &quot;YourPersonalAccessToken&quot;,  // GitHub Token</span><br><span class="line">    repo: &quot;YourGitalkIssueRepo&quot;,  // 存放 issues的git仓库</span><br><span class="line">    // sitemap.xml的路径，commit.js放置在根目录下，无需修改，其他情况自行处理</span><br><span class="line">    sitemapUrl: path.resolve(__dirname, &quot;./public/sitemap.xml&quot;),</span><br><span class="line">    kind: &quot;Gitalk&quot;,  // &quot;Gitalk&quot; or &quot;Gitment&quot;</span><br><span class="line">&#125;;</span><br><span class="line">let issuesUrl = `https://api.github.com/repos/$&#123;config.username&#125;/$&#123;config.repo&#125;/issues?access_token=$&#123;config.token&#125;`;</span><br><span class="line"></span><br><span class="line">let requestGetOpt = &#123;</span><br><span class="line">    url: `$&#123;issuesUrl&#125;&amp;page=1&amp;per_page=1000`,</span><br><span class="line">    json: true,</span><br><span class="line">    headers: &#123;</span><br><span class="line">        &quot;User-Agent&quot;: &quot;github-user&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">let requestPostOpt = &#123;</span><br><span class="line">    ...requestGetOpt,</span><br><span class="line">    url:issuesUrl,</span><br><span class="line">    method: &quot;POST&quot;,</span><br><span class="line">    form: &quot;&quot;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">console.log(&quot;开始初始化评论...&quot;);</span><br><span class="line"></span><br><span class="line">(async function() &#123;</span><br><span class="line">    console.log(&quot;开始检索链接，请稍等...&quot;);</span><br><span class="line">    </span><br><span class="line">    try &#123;</span><br><span class="line">        let websiteConfig = YAML.parse(fs.readFileSync(path.resolve(__dirname, &quot;./_config.yml&quot;), &quot;utf8&quot;));</span><br><span class="line">        </span><br><span class="line">        let urls = sitemapXmlReader(config.sitemapUrl);</span><br><span class="line">        console.log(`共检索到$&#123;urls.length-1&#125;个链接`);</span><br><span class="line">        </span><br><span class="line">        console.log(&quot;开始获取已经初始化的issues:&quot;);</span><br><span class="line">        let issues = await send(requestGetOpt);</span><br><span class="line">        console.log(`已经存在$&#123;issues.length&#125;个issues`);</span><br><span class="line">        </span><br><span class="line">        let notInitIssueLinks = urls.filter((link) =&gt; &#123;</span><br><span class="line">            return !issues.find((item) =&gt; &#123;</span><br><span class="line">                link = removeProtocol(link);</span><br><span class="line">                return item.body.includes(link);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        for(let i=0;i&lt;notInitIssueLinks.length;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(notInitIssueLinks[i].endsWith(&quot;tags/index.html&quot;))</span><br><span class="line">            &#123;</span><br><span class="line">                notInitIssueLinks.splice(i,1);</span><br><span class="line">                i--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (notInitIssueLinks.length &gt; 0) &#123;</span><br><span class="line">            console.log(`本次有$&#123;notInitIssueLinks.length&#125;个链接需要初始化issue：`);</span><br><span class="line">            console.log(notInitIssueLinks);</span><br><span class="line">            console.log(&quot;开始提交初始化请求, 大约需要40秒...&quot;);</span><br><span class="line">            /**</span><br><span class="line">             * 部署好网站后，直接执行start，新增文章并不会生成评论</span><br><span class="line">             * 经测试，最少需要等待40秒，才可以正确生成， 怀疑跟github的api有关系，没有找到实锤</span><br><span class="line">             */</span><br><span class="line">            setTimeout(async ()=&gt;&#123;</span><br><span class="line">                let initRet = await notInitIssueLinks.map(async (item) =&gt; &#123;</span><br><span class="line">                    let html = await send(&#123; ...requestGetOpt, url: item &#125;);</span><br><span class="line">                    let title = cheerio.load(html)(&quot;title&quot;).text();</span><br><span class="line">                    let desc = item + &quot;\n\n&quot; + cheerio.load(html)(&quot;meta[name=&apos;description&apos;]&quot;).attr(&quot;content&quot;);</span><br><span class="line">                    let pathLabel = url.parse(item).path;</span><br><span class="line">                    let label = crypto.createHash(&apos;md5&apos;).update(pathLabel,&apos;utf-8&apos;).digest(&apos;hex&apos;);</span><br><span class="line">                    let form = JSON.stringify(&#123; &quot;body&quot;: desc, &quot;labels&quot;: [config.kind, label], &quot;title&quot;: title &#125;);</span><br><span class="line">                    return send(&#123; ...requestPostOpt, form &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">                console.log(`已完成$&#123;initRet.length&#125;个！`);</span><br><span class="line">                console.log(&quot;可以愉快的发表评论了！&quot;);</span><br><span class="line">            &#125;,40000);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            console.log(&quot;本次发布无新增页面，无需初始化issue!!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (e) &#123;</span><br><span class="line">        console.log(`初始化issue出错，错误如下：`);</span><br><span class="line">        console.log(e);</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">function sitemapXmlReader(file) &#123;</span><br><span class="line">    let data = fs.readFileSync(file, &quot;utf8&quot;);</span><br><span class="line">    let sitemap = xmlParser(data);</span><br><span class="line">    return sitemap.root.children.map(function (url) &#123;</span><br><span class="line">        let loc = url.children.filter(function (item) &#123;</span><br><span class="line">            return item.name === &quot;loc&quot;;</span><br><span class="line">        &#125;)[0];</span><br><span class="line">        return loc.content;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function removeProtocol(url) &#123;</span><br><span class="line">    return url.substr(url.indexOf(&quot;:&quot;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function send(options) &#123;</span><br><span class="line">    return new Promise(function (resolve, reject) &#123;</span><br><span class="line">        request(options, function (error, response, body) &#123;</span><br><span class="line">            if (!error) &#123;</span><br><span class="line">                resolve(body);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                reject(error);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我自己加了一个筛选文章的过程，不然连标签界面都会生成Issue。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if(notInitIssueLinks[i].endsWith(&quot;tags/index.html&quot;))</span><br><span class="line">            &#123;</span><br><span class="line">                notInitIssueLinks.splice(i,1);</span><br><span class="line">                i--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>确实是得等待40秒才<strong>可能</strong>生成正确的Issue。</p>
+<h3 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h3><p>代码写完以后在Git bash里输入<code>node gitalk_init.js</code>即可执行脚本。  </p>
+<p>当然如果想要部署博客的时候自动运行可以在Hexo根目录的<code>package.json</code>文件里加入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;deploy&quot;: &quot;hexo clean &amp;&amp; hexo g -d &amp;&amp; node gitalk_init.js&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>之后直接输入<code>npm run deploy</code>即可直接执行。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这其实是我第一次写<strong>JS</strong>代码，原来看的<strong>JS</strong>代码和别人写好的代码比起来真的是太简单了。。。<strong>JS</strong>的语言特性还不太习惯，比如函数调用和参数传递还有<code>=&gt;</code>的使用，虽然靠啃<strong>C/C++</strong>的老底强行写了一下，但是还是有点吃力，主要功夫都花在了看懂代码，实际自己补的内容没几个字母。  </p>
+<p>一开始找<code>sitemap</code>读出来的内容找了半天，然后在一个错误的地方加了网址过滤导致后面传了空字符串出错，后来大概懂了一些以后才在半路把信息截下来。  </p>
+<p>中间还因为<strong>MD5</strong>的问题出现了自动加手动的<code>Issue</code>不在一起的问题，换了另一篇文章的代码改然后发现源码就是错的，对<code>url</code>的处理规则和自己的情况不一样，又要重写<code>url</code>处理，于是还是改回了第一个用的代码，找到那个加入<strong>MD5</strong>的地方。第一次改<strong>JS</strong>代码还是挺有挑战性的。  </p>
+<p>经过晚上的测试，<code>Issue</code>的内容能基本和手动的类似了，第一行显示<code>url</code>，第二行开始显示摘要，虽然不如手动的那么精确，不过还能勉强苟一下😅</p>
+<p><code>自己写是写不出来的，只能改改代码勉强能用的样子。😕</code></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><a href="https://www.codercto.com/a/35485.html" target="_blank" rel="noopener">自动初始化Gitalk评论</a></li>
+<li><a href="https://daihaoxin.github.io/post/322747ae.html" target="_blank" rel="noopener">nodejs版本的Gitalk/Gitment评论自动初始化</a></li>
+<li><a href="https://www.codercto.com/a/39036.html" target="_blank" rel="noopener">Linux下的自动化工具配置Gitalk初始化</a></li>
+</ol>
 
       
     </div>
@@ -545,7 +550,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="https://phantomT.github.io/2019/05/02/STM32-000-CubeMX/" title="接触STM32与进入STM32CubeMX">https://phantomT.github.io/2019/05/02/STM32-000-CubeMX/</a>
+    <a href="https://phantomT.github.io/2019/05/05/Hexo-002-Comment/" title="博客更新与Gitalk插件初始化">https://phantomT.github.io/2019/05/05/Hexo-002-Comment/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -558,13 +563,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/STM32/" rel="tag"># STM32</a>
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
           
-            <a href="/tags/HAL/" rel="tag"># HAL</a>
+            <a href="/tags/git/" rel="tag"># git</a>
           
-            <a href="/tags/STM32CubeMX/" rel="tag"># STM32CubeMX</a>
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
           
-            <a href="/tags/Keil/" rel="tag"># Keil</a>
+            <a href="/tags/GitHub/" rel="tag"># GitHub</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           
         </div>
       
@@ -577,8 +584,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/02/Linux-003-RaspberryPi/" rel="next" title="使用Raspberry Pi学习计算机体系结构 | 笔记">
-                <i class="fa fa-chevron-left"></i> 使用Raspberry Pi学习计算机体系结构 | 笔记
+              <a href="/2019/05/05/Why42-190505/" rel="next" title="Why42?仰望星空2">
+                <i class="fa fa-chevron-left"></i> Why42?仰望星空2
               </a>
             
           </div>
@@ -586,10 +593,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/02/STM32-001-Serial/" rel="prev" title="STM32串口通信上位机">
-                STM32串口通信上位机 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -825,7 +828,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说在前面的历程和没什么太大用的东西"><span class="nav-number">1.</span> <span class="nav-text">说在前面的历程和没什么太大用的东西</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#学习单片机的开始"><span class="nav-number">1.1.</span> <span class="nav-text">学习单片机的开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接触STM32"><span class="nav-number">1.2.</span> <span class="nav-text">接触STM32</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懵逼的开始"><span class="nav-number">1.3.</span> <span class="nav-text">懵逼的开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重拾智慧"><span class="nav-number">1.4.</span> <span class="nav-text">重拾智慧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启新的学习过程"><span class="nav-number">1.5.</span> <span class="nav-text">开启新的学习过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正式开始介绍STM32CubeMX"><span class="nav-number">2.</span> <span class="nav-text">正式开始介绍STM32CubeMX</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建工程-更新"><span class="nav-number">2.1.</span> <span class="nav-text">新建工程[更新]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置MCU"><span class="nav-number">2.2.</span> <span class="nav-text">配置MCU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用软件生成项目文件夹"><span class="nav-number">2.3.</span> <span class="nav-text">使用软件生成项目文件夹</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结尾"><span class="nav-number">3.</span> <span class="nav-text">结尾</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Gitalk-模块"><span class="nav-number">1.</span> <span class="nav-text">Gitalk 模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gitalk-初始化"><span class="nav-number">2.</span> <span class="nav-text">Gitalk 初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#手动初始化"><span class="nav-number">2.1.</span> <span class="nav-text">手动初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本的出现"><span class="nav-number">2.2.</span> <span class="nav-text">脚本的出现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#站点地图"><span class="nav-number">2.2.1.</span> <span class="nav-text">站点地图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Personal-Access-Token"><span class="nav-number">2.2.2.</span> <span class="nav-text">Personal Access Token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于MD5"><span class="nav-number">2.2.3.</span> <span class="nav-text">关于MD5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码依赖项"><span class="nav-number">2.2.4.</span> <span class="nav-text">代码依赖项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#脚本文件"><span class="nav-number">2.2.5.</span> <span class="nav-text">脚本文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行脚本"><span class="nav-number">2.2.6.</span> <span class="nav-text">执行脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">2.3.</span> <span class="nav-text">后记</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>
