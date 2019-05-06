@@ -12,6 +12,9 @@ tags:
 - Linux的应用场合非常多，学习Linux也就十分必要了。
 - 这篇博文仅仅是简单介绍一下Linux以及相关的内容，后面夹杂一些这个星期的总结。  
 <!-- more -->
+
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=18524172&auto=1&height=66"></iframe>
+
 ## Linux 简介
 Linux是一种自由和开放源代码的类UNIX操作系统。该操作系统的**内核**由林纳斯·托瓦兹在1991年10月5日首次发布，在加上用户空间的应用程序之后，成为Linux操作系统。Linux也是自由软件和开放源代码软件发展中最著名的例子。**只要遵循GNU通用公共许可证（GPL），任何个人和机构都可以自由地使用Linux的所有底层源代码，也可以自由地修改和再发布，任何人都可以创建一个匹配自己需求的Linux发行版。**
 
