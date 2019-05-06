@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://phantomT.github.io/2019/05/02/Linux-001-OpenWrt/</loc>
+    
+    <lastmod>2019-05-06T11:00:57.816Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://phantomT.github.io/2019/05/02/Linux-002-intro/</loc>
     
     <lastmod>2019-05-06T10:50:08.093Z</lastmod>
@@ -96,13 +103,6 @@
     <loc>https://phantomT.github.io/2019/05/02/Linux-003-RaspberryPi/</loc>
     
     <lastmod>2019-05-02T11:40:02.173Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://phantomT.github.io/2019/05/02/Linux-001-OpenWrt/</loc>
-    
-    <lastmod>2019-05-02T11:35:56.660Z</lastmod>
     
   </url>
   
