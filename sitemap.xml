@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://phantomT.github.io/2019/05/02/Linux-002-intro/</loc>
+    
+    <lastmod>2019-05-06T10:50:08.093Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://phantomT.github.io/2019/05/05/Hexo-002-Comment/</loc>
     
-    <lastmod>2019-05-05T10:00:19.914Z</lastmod>
+    <lastmod>2019-05-05T10:03:02.948Z</lastmod>
     
   </url>
   
@@ -89,13 +96,6 @@
     <loc>https://phantomT.github.io/2019/05/02/Linux-003-RaspberryPi/</loc>
     
     <lastmod>2019-05-02T11:40:02.173Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://phantomT.github.io/2019/05/02/Linux-002-intro/</loc>
-    
-    <lastmod>2019-05-02T11:38:26.771Z</lastmod>
     
   </url>
   
