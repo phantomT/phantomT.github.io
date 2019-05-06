@@ -379,7 +379,7 @@ wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -
 那么到这里配置就全部完成了，可以进行IPv6网络测试，
 ### 测试
 下面有几个测试网站：
-[keme](www.keme.net)，这个网站中如果能够使用IPv6则能看到一只动态的小乌龟，如果不能使用则是静止的。
+[kame](http://www.kame.net/)，这个网站中如果能够使用IPv6则能看到一只动态的小乌龟，如果不能使用则是静止的。
 ![keme](Linux-001-OpenWrt/testv6.png)
 [ipv6-test](http://ipv6-test.com/)，测试带宽以及连接状况
 ![ipv6test](Linux-001-OpenWrt/speedtest.png)
