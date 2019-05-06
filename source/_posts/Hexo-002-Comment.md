@@ -12,9 +12,9 @@ tags:
 
 除此之外还加入了Gitalk评论模块并搞了一个自动初始化文章的脚本，省的要一个一个点开初始化（虽然效果还达不到手动初始化那么好）。
 
-![](Hexo-002-Comment/demo.png)
-
 <!-- more -->
+
+![](Hexo-002-Comment/demo.png)
 
 # [Gitalk](https://github.com/gitalk/gitalk#install) 模块
 `Gitalk is a modern comment component based on GitHub Issue and Preact.`  

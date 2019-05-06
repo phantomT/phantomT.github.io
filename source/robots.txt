@@ -4,8 +4,8 @@ Allow: /home/
 Allow: /archives/
 Allow: /tags/
 
-Disallow: /js/
-Disallow: /css/
-Disallow: /fonts/
+Allow: /js/
+Allow: /css/
+Allow: /fonts/
 
 Sitemap: https://phantomT.github.io/sitemap.xml
