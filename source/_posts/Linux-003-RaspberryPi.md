@@ -12,9 +12,20 @@ tags:
 顺带回忆一下自己学过的东西(感觉什么也不记得了😒)，争取年前写完ORZ。。。
 说实话，翻译的出来的不像中文= =，读起来怪别扭的。。。
 
-![](orghome.jpg) 
+![](Linux-003-RaspberryPi/orghome.jpg) 
 
 <!-- more -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+<meting-js
+	server="netease"
+	type="song"
+	id="4068368"
+    autoplay="true">
+</meting-js>
 
 **`将硬件和软件独立为两个学科只是达到了方便的目的，任何真正对计算感兴趣的人都需要学好这两个方面。`**
 
@@ -36,9 +47,10 @@ tags:
 - 当然能够连接现实世界设备不是Pi独有的特性，嵌入式计算机设备都可以做到，比如STM32、Arduino等。
 - 嵌入式设备变得越来越普及，树莓派不仅激励着刚刚学习的人，同样也是接触过计算机的人能够了解更多，在嵌入式时代，能够连接实体设备的需求会变得越来越重要，树莓派可以帮你从头开始。
   
-![在美剧《黑客军团》第一季中出现了树莓派|十分安利这部美剧😆](S01E04.jpg)
 
-![用来完成硬件hack in](S01E05.jpg)
+![在美剧《黑客军团》第一季中出现了树莓派|十分安利这部美剧😆](Linux-003-RaspberryPi/S01E04.jpg)
+
+![用来完成硬件hack in](Linux-003-RaspberryPi/S01E05.jpg)
 
 ### 第2章 | 计算概述
 - “程序是计算机要执行的东西，数据就是计算机知晓的东西”————Tom Swan
@@ -160,7 +172,7 @@ tags:
 - 软件开发过程遵循一张漂亮而又和谐的流程图:
   
 
-![找bug可一点也不和谐😟](bug.jpg)
+![找bug可一点也不和谐😟](Linux-003-RaspberryPi/bug.jpg)
 
 - [敏捷软件开发](https://zh.wikipedia.org/wiki/%E6%95%8F%E6%8D%B7%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91)的目标：
   1. 人员和交互而不是过程和工具
@@ -171,7 +183,7 @@ tags:
 [我直接跳到了5.8-GNU编译器工具集概览]
 - Linux make：一般而言，make工具是一项软件机制，它协调编译过程并将多个源代码文件链接成单个可执行文件。
 
-![en](iwritecode.jpg)
+![en](Linux-003-RaspberryPi/iwritecode.jpg)
 
 ### 第6章 | 非易失性存储器
 [这部分感觉。。不是很重要就略了]
@@ -187,7 +199,7 @@ tags:
 - 防止Flash单元的任何单个存储块过快地接近耐久性极限点，同时从Flash设备的可用存储空间中移除不安全的存储块，采取了被称作Flash转换层(Flash Translation Layer, FTL)的机制。
 - 非易失性存储器的总体发展趋势很明显：旋转磁盘正在衰落，**无移动部件的固态存储设备**正在兴起。
 
-![😒](ibm.jpg)
+![😒](Linux-003-RaspberryPi/ibm.jpg)
 
 ### 第7章 | 有线和无线以太网
 [精简版的计算机网络🤔]
@@ -203,7 +215,7 @@ tags:
   3. 正交频分复用(OFDM)
   4. (我记得网通考试的时候我这个选错了，没在书上看到这个啊🤨)
 
-![咕噜噜噜](local.jpg)
+![咕噜噜噜](Linux-003-RaspberryPi/local.jpg)
 
 ### 第8章 | 操作系统
 - 操作系统是控制计算机的工作方式并确保其他程序正常运行的计算机主程序。
@@ -221,7 +233,7 @@ tags:
 - 当然，时间分片是关键。
 - 那些被设计出来进行控制、监视和处理各类数据并且嵌入到设备中的非易失性存储媒介中的软件被称作固件。
 
-![The power of shell is in your hands](unix.jpg)
+![The power of shell is in your hands](Linux-003-RaspberryPi/unix.jpg)
 
 ### 第9、10、11章 | 视频编解码器和视频压缩 | 3D图形 | 音频
 #### 视频编解码器和视频压缩
@@ -239,7 +251,7 @@ tags:
 - 计算机图形学中的变换基本上是对每个对象所在坐标系的改变。
 - 为了应对减小的带宽和更小的功率包络，设计了基于瓦片的渲染(移动端)
 
-![](rtx2080.png)
+![](Linux-003-RaspberryPi/rtx2080.png)
 
 #### 音频
 - 嗯。。里面还有Adobe Audition CC 2015，这很硬核😐
@@ -256,7 +268,7 @@ tags:
   3. ……
   4. **小心短路**
 
-![](brain.png)
+![](Linux-003-RaspberryPi/brain.png)
 
 ## 总结
 看完一遍感觉就像看嵌入式三级的书一样???🤔  

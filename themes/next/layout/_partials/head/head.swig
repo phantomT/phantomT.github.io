@@ -126,3 +126,6 @@
   {% set custom_head = '../../_custom/head.swig' %}
 {% endif %}
 {% include custom_head %}
+
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>

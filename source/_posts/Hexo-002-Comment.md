@@ -14,7 +14,15 @@ tags:
 
 <!-- more -->
 
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=27514423&auto=1&height=66"></iframe>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+	server="netease"
+	type="song"
+	id="27514423"
+    autoplay="true">
+</meting-js>
 
 ![](Hexo-002-Comment/demo.png)
 
