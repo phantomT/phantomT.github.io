@@ -109,7 +109,7 @@
 <meta property="og:site_name" content="欢迎来到本尊的鱼缸">
 <meta property="og:description" content="本文讲述了如何为远程服务器设置SSH Key的登录方式，并简单了解了下什么是RSA算法，我也初步学习了下那看起来挺复杂的数学关系😳">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-08T12:19:12.206Z">
+<meta property="og:updated_time" content="2019-05-08T12:21:36.989Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH Key登录与初识RSA加密">
 <meta name="twitter:description" content="本文讲述了如何为远程服务器设置SSH Key的登录方式，并简单了解了下什么是RSA算法，我也初步学习了下那看起来挺复杂的数学关系😳">
@@ -388,7 +388,7 @@
                 
               
 
-              <time title="创建时间：2019-05-08 17:57:39 / 修改时间：20:19:12" itemprop="dateCreated datePublished" datetime="2019-05-08T17:57:39+08:00">2019-05-08</time>
+              <time title="创建时间：2019-05-08 17:57:39 / 修改时间：20:21:36" itemprop="dateCreated datePublished" datetime="2019-05-08T17:57:39+08:00">2019-05-08</time>
             
 
             
@@ -495,9 +495,9 @@
 <h2 id="生成公钥和私钥"><a href="#生成公钥和私钥" class="headerlink" title="生成公钥和私钥"></a>生成公钥和私钥</h2><ul>
 <li><p>随意选择两个大的质数$p$和$q$，$p$不等于$q$，计算$N=pq$。</p>
 </li>
-<li><p>根据欧拉函数，求得${ r=\varphi (N)=\varphi (p)\varphi (q)=(p-1)(q-1)}$</p>
+<li><p>根据<a href="https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">欧拉函数</a>，求得${ r=\varphi (N)=\varphi (p)\varphi (q)=(p-1)(q-1)}$</p>
 </li>
-<li><p>选择一个小于$r$的整数$e$，使$e$与$r$互质。并求得$e$关于$r$的模反元素，命名为$d$（求$d$令$ed≡1\quad(modr)ed≡1\quad(modr)$）。（模反元素存在，当且仅当$e$与$r$互质）</p>
+<li><p>选择一个小于$r$的整数$e$，使$e$与$r$互质。并求得$e$关于$r$的<a href="https://zh.wikipedia.org/wiki/%E6%A8%A1%E5%8F%8D%E5%85%83%E7%B4%A0" target="_blank" rel="noopener">模反元素</a>，命名为$d$（求$d$令$ed≡1\quad(modr)ed≡1\quad(modr)$）。（模反元素存在，当且仅当$e$与$r$互质）</p>
 </li>
 <li><p>将$p$和$q$的记录销毁。</p>
 </li>
