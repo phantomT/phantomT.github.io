@@ -102,7 +102,7 @@
 <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
   <meta name="description" content="2018-08-12用闲鱼上淘的Netgear路由器刷Openwrt系统，设置IPv6，尝试shadowsocks，实现校园网加速/不完美免费免流，路由器的ss感觉并不能达到要求。。ss代理  支持Windows 10/Linux 支持安卓(测试Android 8，三丧OEM) iOS需要购买代理软件IPv6仅对于pc端使用有效，安卓能获取IPv6地址但不知道为啥连不上v6的代理？？">
-<meta name="keywords" content="IPv6,shadowsocks,Linux,校园网,OpenWrt,路由器,Netgear">
+<meta name="keywords" content="IPv6,Shadowsocks,Linux,校园网,OpenWrt,路由器,Netgear">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索">
 <meta property="og:url" content="https://phantomT.github.io/2019/05/02/Linux-001-OpenWrt/index.html">
@@ -124,7 +124,7 @@
 <meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/speedtest.png">
 <meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/pingtest.png">
 <meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/phonev6.jpg">
-<meta property="og:updated_time" content="2019-05-06T11:00:57.816Z">
+<meta property="og:updated_time" content="2019-05-08T10:16:14.437Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索">
 <meta name="twitter:description" content="2018-08-12用闲鱼上淘的Netgear路由器刷Openwrt系统，设置IPv6，尝试shadowsocks，实现校园网加速/不完美免费免流，路由器的ss感觉并不能达到要求。。ss代理  支持Windows 10/Linux 支持安卓(测试Android 8，三丧OEM) iOS需要购买代理软件IPv6仅对于pc端使用有效，安卓能获取IPv6地址但不知道为啥连不上v6的代理？？">
@@ -421,7 +421,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-06 19:00:57" itemprop="dateModified" datetime="2019-05-06T19:00:57+08:00">2019-05-06</time>
+                <time title="修改时间：2019-05-08 18:16:14" itemprop="dateModified" datetime="2019-05-08T18:16:14+08:00">2019-05-08</time>
               
             
           </span>
@@ -513,8 +513,8 @@
 <p>固件版本：Openwrt Chaos Calmer 15.05.1，使用官方提供的固件。<br>固件可以从<a href="https://wiki.openwrt.org/toh/hwdata/netgear/netgear_wndr3700_v4" target="_blank" rel="noopener">OpenWrt的Wiki</a>中获得。</p>
 <h3 id="先前的尝试"><a href="#先前的尝试" class="headerlink" title="先前的尝试"></a>先前的尝试</h3><ul>
 <li>因为前一段时间刷过一个小的路由器，TP-Link的WR720N V4，但是ROM太小了没有加什么插件之类的。</li>
-<li>那个路由器先刷的解锁Bootloader的openwrt固件，<br><img src="/2019/05/02/Linux-001-OpenWrt/barrier.png" alt="barrierbreaker"></li>
-<li>然后刷了Breed的Bootloader，最后在用Breed升级的正常的openwrt。<br><img src="/2019/05/02/Linux-001-OpenWrt/calmer.png" alt="chaoscalmer"></li>
+<li>那个路由器先刷的解锁Bootloader的OpenWrt固件，<br><img src="/2019/05/02/Linux-001-OpenWrt/barrier.png" alt="barrierbreaker"></li>
+<li>然后刷了Breed的Bootloader，最后在用Breed升级的正常的OpenWrt。<br><img src="/2019/05/02/Linux-001-OpenWrt/calmer.png" alt="chaoscalmer"></li>
 <li>期间，变砖一次，抢救一下午，一开始以为没救了，直到一次偶然启动发现灯亮了，于是抢救一下，也不知道是怎么搞得就不停的传最后就救回来的。<br>总的来说就是安全模式感天动地。= =</li>
 <li>救砖的时候不小心还用 <strong><em>？？？码</em></strong> 进入了楼里的一个华为路由器(/交换机？？)，平时检测不到大概是因为ip地址与路由器的局域网地址冲突了，也许这就是为什么学校通告里写的要关闭路由器的DHCP服务(虽然不关也能用诶)。<br><img src="/2019/05/02/Linux-001-OpenWrt/huawei.jpg" alt="huawei"></li>
 </ul>
@@ -620,7 +620,7 @@
 </li>
 </ul>
 <p><strong>那么！为了避免后面的步骤出问题又要重来的尴尬，现在去系统的<code>备份与升级</code>界面中将现在的系统备份下载下来</strong><br><strong>一定要做这一步！！！</strong><br>完成以后重启试试~</p>
-<h2 id="过渡段落"><a href="#过渡段落" class="headerlink" title="过渡段落"></a>过渡段落</h2><p><strong>警示：</strong> 从原理上说，目前在笔记本电脑和手机已经可以像<a href="https://phantomt.github.io/2018/08/07/VPS-SSR/">上一篇文章</a>中设置的那样使用ss进行校园网穿透了，也就是说以下步骤并不必要。<br>我是为了试验才进行的下面步骤。<br><strong>以下步骤不一定可以成功，仅供参考，如发生意外情况，请还原到上面备份好的系统使用。</strong></p>
+<h2 id="过渡段落"><a href="#过渡段落" class="headerlink" title="过渡段落"></a>过渡段落</h2><p><strong>警示：</strong> 从原理上说，目前在笔记本电脑和手机已经可以像<a href="https://phantomt.github.io/2019/05/02/Linux-000-VPS/">上一篇文章</a>中设置的那样使用ss进行校园网穿透了，也就是说以下步骤并不必要。<br>我是为了试验才进行的下面步骤。<br><strong>以下步骤不一定可以成功，仅供参考，如发生意外情况，请还原到上面备份好的系统使用。</strong></p>
 <h2 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h2><p><em>以下步骤均需要完成<code>opkg update</code>后进行。</em></p>
 <h3 id="方案一-部分一"><a href="#方案一-部分一" class="headerlink" title="方案一/部分一"></a>方案一/部分一</h3><h4 id="一次配置"><a href="#一次配置" class="headerlink" title="一次配置"></a>一次配置</h4><ul>
 <li>下载<a href="https://sourceforge.net/projects/openwrt-dist/files/shadowsocks-libev/" target="_blank" rel="noopener">shadowsocks-libev-spec</a>和<a href="https://sourceforge.net/projects/openwrt-dist/files/luci-app/shadowsocks-spec/" target="_blank" rel="noopener">luci-app-shadowsocks-spec</a></li>
@@ -776,7 +776,7 @@
           
             <a href="/tags/IPv6/" rel="tag"># IPv6</a>
           
-            <a href="/tags/shadowsocks/" rel="tag"># shadowsocks</a>
+            <a href="/tags/Shadowsocks/" rel="tag"># Shadowsocks</a>
           
             <a href="/tags/Linux/" rel="tag"># Linux</a>
           
@@ -886,7 +886,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -971,11 +971,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1596,6 +1592,13 @@
   
 
   
+  
+
+  
+  
+
+  
+
 
   
 
