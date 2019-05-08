@@ -109,7 +109,7 @@
 <meta property="og:site_name" content="欢迎来到本尊的鱼缸">
 <meta property="og:description" content="本文讲述了如何为远程服务器设置SSH Key的登录方式，并简单了解了下什么是RSA算法，我也初步学习了下那看起来挺复杂的数学关系😳">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-08T12:14:26.016Z">
+<meta property="og:updated_time" content="2019-05-08T12:19:12.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH Key登录与初识RSA加密">
 <meta name="twitter:description" content="本文讲述了如何为远程服务器设置SSH Key的登录方式，并简单了解了下什么是RSA算法，我也初步学习了下那看起来挺复杂的数学关系😳">
@@ -388,7 +388,7 @@
                 
               
 
-              <time title="创建时间：2019-05-08 17:57:39 / 修改时间：20:14:26" itemprop="dateCreated datePublished" datetime="2019-05-08T17:57:39+08:00">2019-05-08</time>
+              <time title="创建时间：2019-05-08 17:57:39 / 修改时间：20:19:12" itemprop="dateCreated datePublished" datetime="2019-05-08T17:57:39+08:00">2019-05-08</time>
             
 
             
@@ -510,7 +510,7 @@
 <p>得到$n$后，可以将原来的信息$m$重新复原。  </p>
 <p>解码的原理是：<br>$$<br>c^d≡n^{e⋅d} (mod N)<br>$$</p>
 <p>已知$ed≡1\quad(mod r)$，即$ed=1+h\varphi(N)$。由欧拉定理得：</p>
-<p>$$<br>n^{ed}=n^{1+hφ(N)}=n(nφ(N))^h≡n(1)^h\quad(modN)≡n\quad(modN)<br>$$</p>
+<p>$$<br>n^{ed}=n^{1+hφ(N)}=n(n^{φ(N)})^h≡n(1)^h\quad(modN)≡n\quad(modN)<br>$$</p>
 <h2 id="签名消息"><a href="#签名消息" class="headerlink" title="签名消息"></a>签名消息</h2><p>RSA 也可以用来为一个消息签名。  </p>
 <p>对消息字符串的散列值（Message digest，用 MD5、SHA256 等算法求得的长度较短且固定的字符串）使用 RSA 的私钥计算签名（实际上仍然是加密消息）后，得到一个签名字符串，将其附加在消息字符串的合适位置后，一并发送。接收方使用对应的公钥可以从签名字符串中解密出原来的散列值，同时对原始消息再计算一次散列值。二者相比较，假如两者相符的话，则认为发信人持有正确的私钥，并且这个消息在传播路径上没有被篡改过。  </p>
 <h2 id="密钥长度"><a href="#密钥长度" class="headerlink" title="密钥长度"></a>密钥长度</h2><p>用户应使用 1024 位密钥，证书认证机构应用 2048 位或以上。  </p>
