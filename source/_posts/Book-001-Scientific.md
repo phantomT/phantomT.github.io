@@ -25,7 +25,12 @@ tags:
 
 所以我现在这种层次，只能争取找找框架，找找重点之类的记录一下。🤔  
 
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=51661150&cid=90430254&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" autoplay="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div>
+
+**放个鬼畜压压惊**
+
 ## 导读与序
+
 - 《科学革命的结构》或许更相关于科学史上已经过去了的那个时代，而不尽然是今天被实践着的科学。
 - 科学革命的结构如下：  
   1. 具有一个范式和致力于解谜的常规科学
