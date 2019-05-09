@@ -29,7 +29,7 @@ tags:
 # [Gitalk](https://github.com/gitalk/gitalk#install) 模块
 `Gitalk is a modern comment component based on GitHub Issue and Preact.`  
 
-Gitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件，NEXT 7主题已经集成了这个插件，因此配置起来要更容易一些，网上的教程很多，从**[GitHub Application](https://github.com/settings/applications/new)**到在theme的配置文件里加入代码段都很清楚，我就不展开了，直接进入初始化。
+Gitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件，NEXT 7主题已经集成了这个插件，因此配置起来要更容易一些，网上的教程很多，从**[GitHub Application](https://github.com/settings/applications/new)**到在`theme`的配置文件里加入代码段都很清楚，我就不展开了，直接进入初始化。
 
 # Gitalk 初始化
 

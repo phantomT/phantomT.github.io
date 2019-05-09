@@ -34,7 +34,7 @@ tags:
 ---
 
 ### 安装hexo-generator-sitemap
-* 常规操作，在git bush中输入
+* 常规操作，在Git Bash中输入
 ```
 npm install hexo-generator-sitemap --save
 ```
@@ -59,7 +59,7 @@ __格式一定要正确，空格和缩进要有，不然会出错。__
 `url: https://yourwebsite.github.io`
 *这个一定要做，我因为忘记了第一次写错了网址(写了仨'/')导致后面抓取不到*
 * 配置好后，使用`hexo g`生成命令就能在`yourwebsite.github.io\public`中生成`sitemap.xml`了(百度的还会有`baidusitemap.xml`)这个是要提交给Google的;
-* 然后再在`yourwebsite.github.io\source`中新建一个`robots.txt`，这个是Robots协议的文件，可以告诉引擎哪些页面可以抓取，哪些不能。
+* 然后再在`yourwebsite.github.io\source`中新建一个`robots.txt`，这个是**Robots协议**的文件，可以告诉引擎哪些页面可以抓取，哪些不能。
 内容可以参考一下：
 ```
 User-agent: *
@@ -74,7 +74,7 @@ Disallow: /fonts/
 
 Sitemap: https://phantomT.github.io/sitemap.xml
 ```
-1. `Allow: `后面的是可以抓取的内容，是menu的内容;
+1. `Allow: `后面的是可以抓取的内容，是`menu`的内容;
 2. `Disallow: `后面的是禁止抓取的内容;
 3. 如果使用百度sitemap则最后一行还要添加：`Sitemap: http://yourwebsite.github.io/baidusitemap.xml`。
 
@@ -87,7 +87,7 @@ Sitemap: https://phantomT.github.io/sitemap.xml
 
 * **[更新2019.5.2]**NEXT主题标记加入位置：`yourwebsite.github.io\themes\indigo\layout\_partial\head`中的`head.swig`，NEXT主题已经加入了代码模板了，因此只需要加入`yourverification`即可。
   
-* 添加域名进行验证，我选择的是备用方案，也就是HTML 标记进行验证；
+* 添加域名进行验证，我选择的是备用方案，也就是HTML标记进行验证；
     验证时要往`yourwebsite.github.io\themes\indigo\layout\_partial`中的`head.ejs`添加验证代码；
     
     ```
@@ -100,7 +100,7 @@ Sitemap: https://phantomT.github.io/sitemap.xml
 * 验证完成后，点击域名进入管理：
   ![管理](Hexo-001-sitemap/manage.png)
 
-* 点击左侧的robots.txt测试工具，根据提示提交自己的`robots.txt`，提交过了的会进行测试。
+* 点击左侧的`robots.txt`测试工具，根据提示提交自己的`robots.txt`，提交过了的会进行测试。
 ![robots](Hexo-001-sitemap/robots.png)
 
 __如果有错误要修改，要0错误才可以通过。__
