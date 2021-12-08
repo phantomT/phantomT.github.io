@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"phantomt.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true,"dimmer":true},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="苯宝宝假期呆在学校学习，然而校园网实在坑爹。。所以通过一些教程了解了搭建代理服务器的方式通过IPv6来上网，效果还不错，虽然也有一些问题QAQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网">
+<meta property="og:url" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/index.html">
+<meta property="og:site_name" content="欢迎来到本尊的鱼缸">
+<meta property="og:description" content="苯宝宝假期呆在学校学习，然而校园网实在坑爹。。所以通过一些教程了解了搭建代理服务器的方式通过IPv6来上网，效果还不错，虽然也有一些问题QAQ">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/Linux-000-VPS/taocan.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/Linux-000-VPS/SSRclient.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/Linux-000-VPS/icon.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/Linux-000-VPS/proxyserver.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/Linux-000-VPS/proxyrule.png">
+<meta property="article:published_time" content="2019-05-02T11:32:35.000Z">
+<meta property="article:modified_time" content="2021-12-08T05:53:27.532Z">
+<meta property="article:author" content="Phantom T">
+<meta property="article:tag" content="IPv6">
+<meta property="article:tag" content="Shadowsocks">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="校园网">
+<meta property="article:tag" content="VPS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/Linux-000-VPS/taocan.png">
+
+
+<link rel="canonical" href="https://phantomt.github.io/2019/05/02/Linux-000-VPS/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://phantomt.github.io/2019/05/02/Linux-000-VPS/","path":"2019/05/02/Linux-000-VPS/","title":"搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网 | 欢迎来到本尊的鱼缸</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">欢迎来到本尊的鱼缸</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Nothing is true and everything is permitted.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-主页"><a href="/" rel="section"><i class="home fa-fw"></i>主页</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-记录"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>记录</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VPS"><span class="nav-number">3.</span> <span class="nav-text">VPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA"><span class="nav-number">4.</span> <span class="nav-text">搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSR%E7%9A%84%E6%90%AD%E5%BB%BA"><span class="nav-number">4.1.</span> <span class="nav-text">SSR的搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSR%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E8%AE%BE%E7%BD%AE-Windows%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.2.</span> <span class="nav-text">SSR客户端的设置&#x2F;Windows系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Proxifier%E8%BF%9B%E8%A1%8C%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86"><span class="nav-number">4.3.</span> <span class="nav-text">使用Proxifier进行全局代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8BBR%E8%BF%9B%E8%A1%8C%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">使用BBR进行速度优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7%E6%96%B9%E6%B3%95"><span class="nav-number">5.1.</span> <span class="nav-text">内核升级方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85BBR"><span class="nav-number">5.2.</span> <span class="nav-text">安装BBR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9D%9F"><span class="nav-number">6.</span> <span class="nav-text">结束</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E9%81%97%E7%95%99"><span class="nav-number">6.1.</span> <span class="nav-text">问题遗留</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5-%E6%9B%B4%E6%96%B0"><span class="nav-number">6.2.</span> <span class="nav-text">参考链接[更新]</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Phantom T"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Phantom T</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/phantomT" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;phantomT" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bobphantom@126.com" title="E-Mail → mailto:bobphantom@126.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://phantomt.github.io/2019/05/02/Linux-000-VPS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Phantom T">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到本尊的鱼缸">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-05-02 19:32:35" itemprop="dateCreated datePublished" datetime="2019-05-02T19:32:35+08:00">2019-05-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-08 13:53:27" itemprop="dateModified" datetime="2021-12-08T13:53:27+08:00">2021-12-08</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>苯宝宝假期呆在学校学习，然而校园网实在坑爹。。所以通过一些教程了解了搭建代理服务器的方式通过IPv6来上网，效果还不错，虽然也有一些问题QAQ</p>
+<span id="more"></span>
+
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li><p>苯宝宝所在华北某校，校园网是IPv6+IPv4；</p>
+</li>
+<li><p>校园网目前针对IPv4收费，IPv6暂时免费，但经过路由器无法使用IPv6；</p>
+</li>
+<li><p>校园网坑爹限速，即使假期也日均200KB/s，GitHub访问速度一度达到11KiB/s,而IPv6速度贼快，Youtube等墙外网站基本1080P+的清晰度随便看，墙内即使是Bilibili，对于一些没有地区限制的视频(非剧集等)，基本上也是1080P+的清晰度流畅观看，下载资源基本满速；</p>
+</li>
+<li><p>校园网网络认证收费，试图使用路由器尝试多拨等(OpenWRT，以后写这个)，但并未破解成功，也未能实现路由器转发IPv6。校园网收费具体如下:</p>
+<blockquote>
+<ul>
+<li>10元/30天(100小时)</li>
+<li>30元/30天(200小时)  <del>没错，你没有看错，三倍的价格只有两倍的时间</del></li>
+<li>50元/30天(无限时长) <del>但是网速并没有任何改变</del></li>
+</ul>
+</blockquote>
+</li>
+<li><p>截图为证:<br><img src="Linux-000-VPS/taocan.png"></p>
+</li>
+<li><p>一般宿舍都是组团买50元的套餐，但是目前学校好像按照账号限速！！！也就是说我们特么6个人分一个号的速度！！！本来网口只有100兆！而且50块钱也太贵了！更多的吐槽不能乱说了，怕水表。</p>
+</li>
+<li><p><strong>下面开始正题</strong></p>
+</li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>IPv6环境，大概就是一个支持IPv6的网口，Windows可以通过网络设置查看，若IPv6显示无网络连接，就是不支持了。</li>
+<li>支持IPv6的服务器，我选的是Vultr的，因为有一个比较便宜。。。大概每个月两顿食堂的饭钱不到，还有更便宜的但是配置实在太低了。。。搬瓦工的VPS有个问题就是他家KVM架构不支持。</li>
+<li>SSH工具，我选择putty</li>
+<li>电脑和脑子还有搜索引擎</li>
+</ul>
+<h2 id="VPS"><a href="#VPS" class="headerlink" title="VPS"></a>VPS</h2><ul>
+<li>VPS可以选择去<a target="_blank" rel="noopener" href="http://www.vultr.com注册一个账号然后买一个鹰酱/%E8%84%9A%E7%9B%86%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8(%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B%E5%93%AA%E4%B8%AA%E5%BB%B6%E6%97%B6%E4%BD%8E%E5%92%8C%E9%80%9F%E5%BA%A6%E5%BF%AB%E9%80%89%E5%93%AA%E4%B8%AA)%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%94%AF%E4%BB%98%E5%AE%9D%E4%BB%98%E6%AC%BE%E7%9A%84%E3%80%82">www.vultr.com注册一个账号然后买一个鹰酱/脚盆的服务器(测试一下哪个延时低和速度快选哪个)，可以使用支付宝付款的。</a><br>推广一下我的<a target="_blank" rel="noopener" href="https://www.vultr.com/?ref=7480130">分享链接</a>，<strong>如果要购买这个再考虑点</strong>，不然别说苯宝宝坑。。。</li>
+<li><del>安装系统，根据教程我装的是CentOS 6，和以前用的Debian内核的不一样，话说好像6和7都不一样= =；</del></li>
+<li>安装系统，我选择了CentOS 7，其实装Debian/Ubuntu也可以，后面的<strong>脚本</strong>支持的发行版挺多的。<blockquote>
+<p>另:搭建服务器时一定要选择”Enable IPv6”选项。</p>
+</blockquote>
+</li>
+<li>购买完成后从Vultr的后台获取服务器的IP地址和root密码，使用<a target="_blank" rel="noopener" href="https://www.putty.org/">putty</a>连接服务器，putty界面中鼠标右键为粘贴。Linux命令行的基本操作要会一些，避免出些基础的错误。</li>
+</ul>
+<h2 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h2><h3 id="SSR的搭建"><a href="#SSR的搭建" class="headerlink" title="SSR的搭建"></a>SSR的搭建</h3><ol>
+<li>使用<a target="_blank" rel="noopener" href="https://teddysun.com/486.html">秋水逸冰</a>提供的一键安装脚本，可以一键安装Shadowsocks-Python， ShadowsocksR， Shadowsocks-Go， Shadowsocks-libev 版（四选一）服务端；</li>
+<li>使用root登录服务器，并运行一下命令:</li>
+<li>SSR是SS的一个改进版本<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh</span><br><span class="line">chmod +x shadowsocks-all.sh</span><br><span class="line">./shadowsocks-all.sh 2&gt;&amp;1 | tee shadowsocks-all.log</span><br></pre></td></tr></table></figure>
+按需求选择shadowsocksR，然后选择端口什么的，</li>
+</ol>
+<ul>
+<li><p>服务器端口:自己设定（如不设定，默认从 9000-19999 之间随机生成）</p>
+</li>
+<li><p>密码:自己设定（如不设定，默认为 teddysun.com）</p>
+</li>
+<li><p>加密方式:自己设定（如不设定，Python 和 libev 版默认为 aes-256-gcm，R 和 Go 版默认为 aes-256-cfb）</p>
+</li>
+<li><p>协议（protocol）:自己设定（如不设定，默认为 origin）（仅限 ShadowsocksR 版）</p>
+</li>
+<li><p>混淆（obfs）:自己设定（如不设定，默认为 plain）（仅限 ShadowsocksR 版）</p>
+</li>
+<li><p><em>备注:脚本默认创建单用户配置文件，如需配置多用户，请手动修改相应的配置文件后重启即可。</em></p>
+</li>
+<li><p>安装完成后，会提示如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Congratulations, your_shadowsocks_version install completed!</span><br><span class="line">Your Server IP        :your_server_ip</span><br><span class="line">Your Server Port      :your_server_port</span><br><span class="line">Your Password         :your_password</span><br><span class="line">Your Encryption Method:your_encryption_method</span><br><span class="line"></span><br><span class="line">Your QR Code: (For Shadowsocks Windows, OSX, Android and iOS clients)</span><br><span class="line"> ss://your_encryption_method:your_password@your_server_ip:your_server_port</span><br><span class="line">Your QR Code has been saved as a PNG file path:</span><br><span class="line"> your_path.png</span><br><span class="line"></span><br><span class="line">Welcome to visit:https://teddysun.com/486.html</span><br><span class="line">Enjoy it!</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>卸载方式请看<a target="_blank" rel="noopener" href="https://teddysun.com/486.html">秋水逸冰</a>的原文</strong></p>
+<ol start="3">
+<li>下载ShadowsocksR的客户端</li>
+</ol>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks-windows/releases">常规版 Windows 客户端</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/shadowsocksrr/shadowsocksr-csharp/releases">ShadowsocksR 版 Windows 客户端</a></p>
+</li>
+</ul>
+<p><em>更多版本请到仓库内自行搜索</em></p>
+<ol start="4">
+<li>开启SSR<br><code>/etc/init.d/shadowsocks-r start | stop | restart | status</code></li>
+</ol>
+<ul>
+<li><p>修改配置文件<br><code>vi /etc/init.d/shadowsocks-r.json</code><br>将”server”:”0.0.0.0”修改为”server”:”::”，然后重启SSR<br><code>/etc/init.d/shadowsocks-r restart</code></p>
+</li>
+<li><p>放行IPv6端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/sbin/ip6tables -I INPUT -p tcp --dport &quot;yourport&quot; -j ACCEPT    #将这里的&quot;yourport&quot;改成在上面搭建过程中设置的端口</span><br><span class="line">/etc/rc.d/init.d/ip6tables save    #保存端口放行设置</span><br><span class="line">/etc/init.d/ip6tables restart    #重启ip6tables，应用放行设置</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="SSR客户端的设置-Windows系统"><a href="#SSR客户端的设置-Windows系统" class="headerlink" title="SSR客户端的设置/Windows系统"></a>SSR客户端的设置/Windows系统</h3><p>将SSR客户端下载后解压缩，文件夹大致如图:<br><img src="Linux-000-VPS/SSRclient.png"><br>双击 <strong>ShadowsocksR-dotnet4.0.exe</strong> 启动<br>这时任务栏会出现一个小飞机图标，<img src="Linux-000-VPS/icon.png"><br>双击小飞机，填入服务器数据，如果使用IPv6，则将IP一栏填写成服务器的IPv6地址。<br>例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">服务器IP: #服务器的ip地址</span><br><span class="line">服务器端口: 8388   #前面设置的服务器端口</span><br><span class="line">密码: #前面设置的SSR密码</span><br><span class="line">加密: aes-256-cfb</span><br><span class="line">协议: 默认的 origin 就行</span><br><span class="line">协议参数: 不用管</span><br><span class="line">混淆: 默认的 plain 就行</span><br><span class="line">混淆参数: 不用管</span><br><span class="line">备注: 随意</span><br><span class="line">Group: 随意</span><br></pre></td></tr></table></figure>
+<p>右键小飞机，将系统代理模式设置为PAC模式，代理规则为全局，这时小飞机就会变成绿色，像上面的图片一样。<br><em>更多SSR的使用请上网自行搜索，包括二维码、绕行规则什么的</em></p>
+<h3 id="使用Proxifier进行全局代理"><a href="#使用Proxifier进行全局代理" class="headerlink" title="使用Proxifier进行全局代理"></a>使用Proxifier进行全局代理</h3><ul>
+<li>下载安装<a target="_blank" rel="noopener" href="http://www.proxifier.com/">Proxifier</a>，注册码啥的靠搜索引擎；</li>
+<li>设置代理服务器:<ol>
+<li>点击Profile-&gt;Proxy Servers，然后点击右侧添加服务器;</li>
+<li>Address填:127.0.0.1;</li>
+<li>Port填:1080;</li>
+<li>Protocol选择:SOCKS Version 5;</li>
+<li>确定。<br><img src="Linux-000-VPS/proxyserver.png"></li>
+</ol>
+</li>
+<li>添加代理规则:<ol>
+<li>点击Profile-&gt;Proxification Rules，逐一添加;</li>
+<li>将ShadowsocksR-dotnet4.0.exe添加到直连;</li>
+<li>将localhost添加到直连;</li>
+<li>将默认设置为Proxy SOCKS5 127.0.0.1。<br><img src="Linux-000-VPS/proxyrule.png"></li>
+</ol>
+</li>
+</ul>
+<h2 id="使用BBR进行速度优化"><a href="#使用BBR进行速度优化" class="headerlink" title="使用BBR进行速度优化"></a>使用BBR进行速度优化</h2><p><em>核心方法来自<a target="_blank" rel="noopener" href="https://teddysun.com/489.html">秋水逸冰</a></em><br>此方法在苯宝宝的服务器上测试通过</p>
+<ul>
+<li>在TCP连接中，由于需要维持连接的可靠性，引入了拥塞控制和流量管理的方法。Google BBR就是谷歌公司提出的一个 <strong>开源TCP拥塞控制的算法</strong> 。在最新的linux 4.9及以上的内核版本中已被采用。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/dog250/article/details/52830576">BBR算法解析</a></li>
+<li>由于Google BBR非常新，<strong>任何低于4.9的linux内核版本都需要升级到4.9及以上才能使用</strong>，故若VPS本身内核版本较低的话，只有KVM架构的VPS才能使用，<strong>openvz的VPS用户若内核版本较低则无法使用！</strong></li>
+</ul>
+<hr>
+<p><strong>由于是使用最新版系统内核，最好请勿在生产环境安装，以免产生不可预测之后果。</strong></p>
+<hr>
+<h3 id="内核升级方法"><a href="#内核升级方法" class="headerlink" title="内核升级方法"></a>内核升级方法</h3><p>首先查看内核版本:<br><code>uname -r</code><br>若符合条件则可以继续<br><del>一般Vultr新安装的的CentOS 6都是新内核的</del></p>
+<p><strong>我新安装的都是CentOS 7</strong></p>
+<p>否则请升级内核。</p>
+<ul>
+<li>CentOS 系统，执行以下命令即可升级内核:<br><code>yum --enablerepo=elrepo-kernel -y install kernel-ml kernel-ml-devel</code></li>
+<li>CentOS 6:<br><code>sed -i &#39;s/^default=.*/default=0/g&#39; /boot/grub/grub.conf</code></li>
+<li>CentOS 7:<br><code>grub2-set-default 0</code></li>
+</ul>
+<h3 id="安装BBR"><a href="#安装BBR" class="headerlink" title="安装BBR"></a>安装BBR</h3><p>使用root用户登录，运行以下命令:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh</span><br><span class="line">chmod +x bbr.sh</span><br><span class="line">./bbr.sh</span><br></pre></td></tr></table></figure>
+<p>安装完成后，脚本会提示需要重启 VPS，输入 y 并回车后重启。</p>
+<p>重启后，进入VPS，验证安装是否成功，分别输入以下命令:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br><span class="line">sysctl net.core.default_qdisc</span><br><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
+<p>这些命令的返回值一般为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_available_congestion_control = reno cubic bbr</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">tcp_bbr                20480  8</span><br></pre></td></tr></table></figure>
+<p>如与以上结果类似或相同，则BBR已经启动。</p>
+<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><p>那么，使用IPv6的VPS就搭建完成了，可以打开<del>Youtube</del>等不存在的网站试验以下hhh</p>
+<h3 id="问题遗留"><a href="#问题遗留" class="headerlink" title="问题遗留"></a>问题遗留</h3><p><del>其实还是有一些问题的，比如路由器不能转换IPv6地址(好像是这么描述的)就是连接路由器以后就无法使用IPv6了，也就是说Wi-fi与IPv6不能一起用诶。</del></p>
+<p>关于路由器不能转换IPv6地址的问题，已经有<strong>后面的日志</strong><a href="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/">Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索</a>进行解决。</p>
+<p>希望自己也可以成为大佬&gt;_&lt;</p>
+<h3 id="参考链接-更新"><a href="#参考链接-更新" class="headerlink" title="参考链接[更新]"></a>参考链接[更新]</h3><p><a target="_blank" rel="noopener" href="https://www.iamzs.top/archives/ssr-ipv6-proxifier.html">某前辈的博客</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Phantom T 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="Phantom T 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Phantom T
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://phantomt.github.io/2019/05/02/Linux-000-VPS/" title="搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网">https://phantomt.github.io/2019/05/02/Linux-000-VPS/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/IPv6/" rel="tag"># IPv6</a>
+              <a href="/tags/Shadowsocks/" rel="tag"># Shadowsocks</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/%E6%A0%A1%E5%9B%AD%E7%BD%91/" rel="tag"># 校园网</a>
+              <a href="/tags/VPS/" rel="tag"># VPS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/05/02/HVDC-002-Converter/" rel="prev" title="高压直流输电——HVDC工程中两类换流器之综合比较">
+                  <i class="fa fa-chevron-left"></i> 高压直流输电——HVDC工程中两类换流器之综合比较
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/05/02/Linux-001-OpenWrt/" rel="next" title="Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索">
+                  Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phantom T</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"phantomT","repo":"hexo-gitalk","client_id":"b6dcc47c3c7ef6e52002","client_secret":"4b1bd615b27b373815e57080ed022051b759ea8c","admin_user":"phantomT","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"a42f63798ef3e806726784d4f5531443"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

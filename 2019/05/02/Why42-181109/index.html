@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"phantomt.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true,"dimmer":true},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="2018-11-09这个系列不知道会写几篇，主要内容也都是自己（瞎想的）思考结果&#x2F;想法。这一篇的大概内容是我对权力来源的简单认识、计算机科学的个人认识、创新创业的个人认识。这个系列的一个分类叫”Why42”，”42”来自电影《银河系漫游指南》。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why42?仰望星空1">
+<meta property="og:url" content="https://phantomt.github.io/2019/05/02/Why42-181109/index.html">
+<meta property="og:site_name" content="欢迎来到本尊的鱼缸">
+<meta property="og:description" content="2018-11-09这个系列不知道会写几篇，主要内容也都是自己（瞎想的）思考结果&#x2F;想法。这一篇的大概内容是我对权力来源的简单认识、计算机科学的个人认识、创新创业的个人认识。这个系列的一个分类叫”Why42”，”42”来自电影《银河系漫游指南》。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-05-02T12:38:28.000Z">
+<meta property="article:modified_time" content="2019-05-07T09:46:15.876Z">
+<meta property="article:author" content="Phantom T">
+<meta property="article:tag" content="CS">
+<meta property="article:tag" content="Why42">
+<meta property="article:tag" content="创新">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://phantomt.github.io/2019/05/02/Why42-181109/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://phantomt.github.io/2019/05/02/Why42-181109/","path":"2019/05/02/Why42-181109/","title":"Why42?仰望星空1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Why42?仰望星空1 | 欢迎来到本尊的鱼缸</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">欢迎来到本尊的鱼缸</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Nothing is true and everything is permitted.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-主页"><a href="/" rel="section"><i class="home fa-fw"></i>主页</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-记录"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>记录</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%9D%83%E5%8A%9B%E6%9D%A5%E6%BA%90%E7%9A%84%E4%B8%AA%E4%BA%BA%E8%AE%A4%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">对权力来源的个人认识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%90%AF%E5%8F%91"><span class="nav-number">1.1.</span> <span class="nav-text">问题启发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E7%9A%84%E6%83%B3%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">个人的想法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%96%99%E6%9F%A5%E9%98%85"><span class="nav-number">1.3.</span> <span class="nav-text">资料查阅</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%83%E5%8A%9B%EF%BC%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">权力：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%EF%BC%9A"><span class="nav-number">1.3.2.</span> <span class="nav-text">资源：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%EF%BC%9A"><span class="nav-number">1.3.3.</span> <span class="nav-text">关系：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%83%B3%E6%B3%95%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-number">1.4.</span> <span class="nav-text">个人想法的联系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E7%9F%A5%E9%81%93%E8%AF%B4%E4%BB%80%E4%B9%88"><span class="nav-number">1.4.1.</span> <span class="nav-text">不知道说什么</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E7%9A%84%E8%A7%81%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">对计算机科学的见解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6"><span class="nav-number">2.1.</span> <span class="nav-text">计算机科学</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3"><span class="nav-number">2.2.</span> <span class="nav-text">个人理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E6%96%B0%E5%88%9B%E4%B8%9A%E7%9A%84%E8%AE%A4%E8%AF%86"><span class="nav-number">3.</span> <span class="nav-text">创新创业的认识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E6%96%B0"><span class="nav-number">3.1.</span> <span class="nav-text">创新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E4%B8%9A"><span class="nav-number">3.2.</span> <span class="nav-text">创业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%B8%8E%E6%8E%A8%E8%8D%90%E7%9A%84%E4%B9%A6"><span class="nav-number">3.3.</span> <span class="nav-text">其他与推荐的书</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Phantom T"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Phantom T</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/phantomT" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;phantomT" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bobphantom@126.com" title="E-Mail → mailto:bobphantom@126.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://phantomt.github.io/2019/05/02/Why42-181109/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Phantom T">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到本尊的鱼缸">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Why42?仰望星空1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-05-02 20:38:28" itemprop="dateCreated datePublished" datetime="2019-05-02T20:38:28+08:00">2019-05-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2019-05-07 17:46:15" itemprop="dateModified" datetime="2019-05-07T17:46:15+08:00">2019-05-07</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>2018-11-09<br>这个系列不知道会写几篇，主要内容也都是自己（瞎想的）思考结果/想法。这一篇的大概内容是我对权力来源的简单认识、计算机科学的个人认识、创新创业的个人认识。<br>这个系列的一个分类叫”Why42”，”42”来自电影《银河系漫游指南》。</p>
+<span id="more"></span>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+    server="netease"
+    type="song"
+    id="18267037"
+    autoplay="true">
+</meting-js>
+
+<h2 id="对权力来源的个人认识"><a href="#对权力来源的个人认识" class="headerlink" title="对权力来源的个人认识"></a>对权力来源的个人认识</h2><h3 id="问题启发"><a href="#问题启发" class="headerlink" title="问题启发"></a>问题启发</h3><p>上大学已经两年半了，也对于社会和世界有一定的认识了，其中有一个让我疑惑很久的问题就是权力是从哪里来的，<strong>是权力，不是权利</strong>。<br>上级对下级的权力，集体对个人的权力，到底是来自于什么？<br>为什么人们会服从于他们的命令呢？</p>
+<h3 id="个人的想法"><a href="#个人的想法" class="headerlink" title="个人的想法"></a>个人的想法</h3><p>我自己的一个粗浅的想法是：</p>
+<ul>
+<li>权力来源于对资源的的掌控</li>
+<li>权力的大小可以用能够控制的资源的多少来衡量。</li>
+<li>人们对权力的服从是对契约的遵守。</li>
+</ul>
+<p>当然会有人提出反对或者质疑，比如我的舍友就提出，资源的定义问题。为此我也查阅了维基百科，有关权力和资源的词条，知乎上也有类似的回答。</p>
+<h3 id="资料查阅"><a href="#资料查阅" class="headerlink" title="资料查阅"></a>资料查阅</h3><h4 id="权力："><a href="#权力：" class="headerlink" title="权力："></a>权力：</h4><blockquote>
+<p>权力是一种广泛存在的社会现象，是政治学、国际关系与国际政治学的核心概念。权力是影响、甚至控制别人行为的能力。</p>
+</blockquote>
+<blockquote>
+<p>在政治学与国际关系研究中，对“权力”的可能有四种甚至以上的定义：</p>
+<ul>
+<li>“权力”作为个人或国家的追求目标（power as a goal）。</li>
+<li>“权力”作为影响力（influences）的度量（measurement）尺度[1]，即资源的内容与多寡。</li>
+<li>“权力”作为政治斗争的结果（results）。</li>
+<li>“权力”作为一种宰制（domination）与被宰制关系的表述。<br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%AC%8A%E5%8A%9B">“维基百科——权力”</a></li>
+</ul>
+</blockquote>
+<h4 id="资源："><a href="#资源：" class="headerlink" title="资源："></a>资源：</h4><blockquote>
+<p>资源是指任何一种有形或者无形、可利用性有限的物体，或者是任何有助于维持生计的事物。在大多数情况下，在商业上或者甚至出于道德规范方面的因素会要求通过资源管理来实现资源分配。<br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B5%84%E6%BA%90">“维基百科——资源”</a></p>
+</blockquote>
+<h4 id="关系："><a href="#关系：" class="headerlink" title="关系："></a>关系：</h4><p>知乎的讨论：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38673172">人类（或其他物种）社会，权力（权威）的来源是什么？</a></p>
+<h3 id="个人想法的联系"><a href="#个人想法的联系" class="headerlink" title="个人想法的联系"></a>个人想法的联系</h3><ul>
+<li>权力的来源可能是暴力（对资源的一种控制手段），这也是唯物主义的推演结果，需要满足生存和物质的基本需求，暴力也是基础性质的控制力。</li>
+<li>权力的来源可能是契约（利益最大化和生存的约束力），为了实现个体或集体的利益最大化，会有有形和无形的契约，契约的约束力可能会归结于暴力。</li>
+<li>从我仅有的一点点心理学概念来看，权力的来源可能有部分源于心理依赖，也可以被认为是一种想象，对力量的想象。这种控制力可能来自于个体做出的有利于集体的决策，在契约和利益最大化之外可能会因为对其能力的依赖使得做出决策的个体获得权力。<blockquote>
+<ul>
+<li>假如都处在没有权力的初始状态，那么人们会根据个人或集体的依赖建立关系，久而久之就会出现能够控制别人行动的个体，此个体就获得了权力。</li>
+<li>假如权力关系已经建立，新出现的个体在环境中受到上一代的影响会根据权力的表现而发现权力的实施手段，在建立自己的社会关系时也会无形中加强原有的权力，并且可以通过契约获得自己的权力，逐渐建立新的权力关系。</li>
+<li>权力的消失，当个体的暴力控制能力以及契约实现能力不足时，将失去权力，权力关系也将变化。</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h4 id="不知道说什么"><a href="#不知道说什么" class="headerlink" title="不知道说什么"></a>不知道说什么</h4><p>因为没有社会科学相关知识的支撑，对有关内容的关系可能并不清楚，只能尽力写明自己的逻辑。</p>
+<hr>
+<h2 id="对计算机科学的见解"><a href="#对计算机科学的见解" class="headerlink" title="对计算机科学的见解"></a>对计算机科学的见解</h2><h3 id="计算机科学"><a href="#计算机科学" class="headerlink" title="计算机科学"></a>计算机科学</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E7%9A%84%E9%A2%86%E5%9F%9F">计算机科学</a>（英语：computer science，有时缩写为CS）是系统性研究信息与计算的理论基础以及它们在计算机系统中如何实现与应用的实用技术的学科。<br>它通常被形容为对那些创造、描述以及转换信息的算法处理的系统研究。<br>计算机科学包含很多分支领域；有些强调特定结果的计算，比如计算机图形学；而有些是探讨计算问题的性质，比如计算复杂性理论；还有一些领域专注于怎样实现计算，比如编程语言理论是研究描述计算的方法，而程序设计是应用特定的编程语言解决特定的计算问题，人机交互则是专注于怎样使计算机和计算变得有用、好用，以及随时随地为人所用。<br>著名计算机科学家Edsger Dijkstra曾经指出：“计算机科学并不只是关于计算机，就像天文学并不只是关于望远镜一样。”（”Computer science is no more about computers than astronomy is about telescopes.”）<br>    设计、部署计算机和计算机系统通常被认为是非计算机科学学科的领域。例如，研究计算机硬件被看作是计算机工程的一部分，而对于商业计算机系统的研究和部署被称为信息技术或者信息系统。</p>
+</blockquote>
+<blockquote>
+<p>为一个学科，计算机科学涵盖了从 <strong>算法的理论研究和计算的极限，到如何通过硬件和软件实现计算系统</strong> 。<br>CSAB（以前被叫做Computing Sciences Accreditation Board），由Association for Computing Machinery（ACM）和IEEE计算机协会（IEEE-CS）的代表组成，确立了计算机科学学科的4个主要领域：<br>    1. 计算理论<br>    2. 算法与数据结构<br>    3. 编程方法与编程语言<br>    4. 计算机组成与架构<br>CSAB还确立了其它一些重要领域，如软件工程，人工智能，计算机网络与通信，数据库系统，并行计算，分布式计算，人机交互，计算机图形学，操作系统，以及数值和符号计算。</p>
+</blockquote>
+<h3 id="个人理解"><a href="#个人理解" class="headerlink" title="个人理解"></a>个人理解</h3><p>计算机科学和其他工程学一样，是应用科学的一部分，而应用科学就是将各种自然科学的知识应用到实践中的，而且其中还会包含很多实践性的内容。计算机是一个工具，而如何能够让这种工具发挥更大的作用，利用效率更高，就是计算机科学研究的范围，也就是集中于计算和数据处理。<br>之所以个人想要学习计算机，一方面是对计算机应用技术和计算机系统领域感兴趣，另一方面也是实现对自己心理控制感的满足。<br>现在我学习的是电气专业，主要集中在了强电领域，更多的则是利用计算机科学领域取得的成果来完成电气工程的研究。电力工程研究的范围主要集中在能量传输、转换上，是能量领域的研究，涉及大量电磁学和电子学的内容，仅仅少量控制工程的内容于信息有关，而我对物理方向是完全没有兴趣的，不过电气工程中使用到的复变函数与积分变换相关的数学知识可能会对未来有所帮助，信号与系统和自动控制理论的内容对于工程学来说也是很重要的。<br>对比来看，电力工程更多的要考虑复杂的物理环境，而计算机科学则可以更多的服从于数学的安排。其他专业中，也许会用到机器学习和其他人工智能手段，但是他们集中的目标是应用技术。可能他们会因为现有技术无法满足需要而自己研究算法，但是更多的还是集中于该方向问题的解决。而计算机科学中的除了利用人工智能外，更多的还有对新人工智能算法的研究以及对机器认知的研究，正如其研究的核心：计算与数据处理。<br>在工程的实践方向上，计算机科学集中于解决计算和数据处理问题，而电气工程中的信息部分则是要实现计算机科学设计的系统和运行环境，电力工程则更多是为各个方向提供可靠的能量供应。当然计算机科学的技术需要在实践中使用，而实践除了本学科的实践外，在其他工程中的使用时就需要该领域的知识，如果需要连接物理世界与数字世界，信号与系统、自动控制等内容会非常重要。<br>在未来的构想中，计算机科学的顶层设计可以忽略底层的变动，也学未来会有其他架构的计算机：量子计算机、生物计算机等等，但是最后要执行的运算和数据处理过程应当是类似的。而电气工程则更多的集中在电这一物理基础上，虽然会用到很多和其他工程学科类似的数学内容，但是就其根本来讲，是受到物理方向的约束的，相比计算机科学而言，能够结合的领域就会很大程度限制在其发展必要依赖的几个学科中，如：材料等。</p>
+<h2 id="创新创业的认识"><a href="#创新创业的认识" class="headerlink" title="创新创业的认识"></a>创新创业的认识</h2><p>创新创业现在一直是国家着力发展的精神，但是现在个人感觉这里已经成为了泡沫最严重的地方之一。</p>
+<h3 id="创新"><a href="#创新" class="headerlink" title="创新"></a>创新</h3><p>创新固然是重要的，但是创新并不是件容易的是，为何要创新，又如何创新，又真的需要创新吗？这些都是需要考虑的问题，而如果仔细观察就会发现，绝大部分参加创新大赛、参加创新训练的项目又真的是创新了吗？很多无非是直接使用别人的成果，又或者是利用开源产品。</p>
+<blockquote>
+<p>创新来源于实践，是在实践中发现了问题，在解决问题的过程中，发现现有的方法无法有效解决问题，因此需要新的方案，出现创新。创新是一个一直不断的过程，实践不停止，创新也不会结束。创新的成果不一定是一个看得见摸得着的东西，可以是一种算法、一种管理方式等等，也不一定是与原有方案又多大的不同，哪怕是一个微小的改进都是创新。<br>创新的方式，在《读懂中国制造2025》一书中提到，创新有原始创新、集成创新和引进吸收再创新，对于领先的行业应当着重于原始创新，发现新的需求，解决新的问题；对于一般的行业，应当更多着力于利用已有的技术进行改进、集成和提高，这也是学生参与创新的重要的方式；对于落后的行业，应当在引进学习再创新上发力，当然引进学习不意味着要抄袭，需要结合自身的特殊性进行改进，毕竟世界上极少具有可以套用的方案。<br>创新真的新了吗？又真的需要创新吗？很多时候怕不是重复造轮子，如果效率和收益上（近期、长期）没有本质的提高，用现有的方法又何尝不可，如果涉及到核心技术问题创新又真的是新了吗，别人的技术是否形成了行业垄断，是否又触碰了一些人的产权问题。创新的目的是提高效率、扩大收益、巩固地位等等，若创新的结果是低效和低收益甚至丢失市场，那么这种创新就是浪费资源。</p>
+</blockquote>
+<h3 id="创业"><a href="#创业" class="headerlink" title="创业"></a>创业</h3><p>创业一直和创新一同出现，也是现在很热门的话题。创业相比创新要更加残酷，不仅要考虑知识产权问题，还要考虑残酷的市场竞争。创业的本质就是将自己的核心技术转化成收益，那么就要明确：自己的核心技术和核心基因是什么，如何启动创业，如何将技术转化为收益，在市场竞争中如何获得自己的地位，今后的发展中又如何持续盈利？如果这其中之一不明确或者出现问题，那么这个创业就是失败的，即使短期之内取得成功也会很快死亡。</p>
+<blockquote>
+<p>创业能够启动所依靠的就是自己的核心技术，核心技术可能是一项生产技术亦或是一种经营模式，不管是那种，都需要是新的，必须要和市场上现存的独立开来，获得自己的独特点，或是成本极低，或是效率极高，一旦是与现有产品发生碰撞，创业的团队就只能依赖于自己的核心技术取得胜利，否则将是整体的失败。创业团队的核心基因也很重要，这一点与团队运作和管理有关，否则创业一旦脱离小团队进入大规模发展将会出现运行断层，可能以前能够运行良好的部分发生各种错误，这都需要创业团队做好提前的准备，遇到再解决很有可能会影响运营。<br>创业需要启动资金，资金或多或少来自于投资人，创业团体需要考虑自己的的运作能为投资人带来多少收益，是否具有突破性，能否在市场上占领一席之地，不然投资人凭什么要投资这个项目？<br>创业的本质就是通过自己的核心技术进行运作来获得收益，经营模式可以是传统的也可以是自己创造的，但是必须具有持久性，否则一旦平衡被打破，经营会变得很困难。一些看起来很理想的运行模式运行起来可能并不是那么回事，尤其是使用集成创新技术进行创业的团队，集成创新的缺陷就在于，一旦集成的那部分核心技术不是自己的，自己的集成将会受制于人，可能会被很快挤出市场，因此这种团队需要明确确实可行的运作方式才可能盈利。<br>创业最难受的地方就在于可能会与市场份额很大的公司撞击，这种情况一般来说都会被击败或者被收购。因此在创业时就要挑选好进入的行业市场，这一点就非常困难，有一句话叫：“微软做的事创业者不能做，微软不做的事创业者也不能做。”这就描述了创业者在挑选行业的时候面临的困境，一头是和大企业碰撞，一头是和失败或不存在的市场碰撞，只有中间一个狭窄的灰色地区可以选择，而这部分又将面临创业者之间的决斗。创业者如果不知道自己如何能够建立自己的市场地位，是不可能在残酷的竞争中生还的。<br>时间对于大小企业都是公平的，没有人可以逃离时间的制裁，如何能够让企业运行的更长久，如何能够在创业时的核心技术过时后依然还能有新的突破口进行盈利，这就是最后发展的问题。大部分创业的人是不会考虑这个的，这也就是创业能够持续下去的成功者极少的原因，大部分人都是走一步看一步，而要能发展扩大，必须要比行业远见一步，这也与团队的基因有关，人才和决策的继承会是发展的关键。</p>
+</blockquote>
+<h3 id="其他与推荐的书"><a href="#其他与推荐的书" class="headerlink" title="其他与推荐的书"></a>其他与推荐的书</h3><p>其实一开始是想对现有的创新创业项目和环境批判一番的，但是感觉这样没有意义，不如写出自己的想法，寻找真正有效的方法和有用的东西，所以上面写的都是我在看过一些书以后结合自己的所见所想总结出来的，只是非常主观的内容。<br>关于创新和创业的书，我自己看过的（虽然有的内容记不得了）有很多，不过主要都是凯文凯利和吴军的书，还有一本有关中国制造2025的，这些书很大程度扩展了我对市场和商业运行的认识。<br>想要了解现在应当先了解造成现状的历史，推荐阅读凯文凯利的著作：失控、科技元素、必然等，吴军的著作：硅谷之谜、浪潮之巅等，还有就是对与中国制造2025战略的解读，各家解读都可以看看，<strong>一个人的命运，当然要靠自我奋斗，但是也要考虑到历史的行程</strong>。<br>具体的可以在网上找到很多，其他的书我买了还没看，以后慢慢看。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Phantom T 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="Phantom T 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Phantom T
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://phantomt.github.io/2019/05/02/Why42-181109/" title="Why42?仰望星空1">https://phantomt.github.io/2019/05/02/Why42-181109/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/CS/" rel="tag"># CS</a>
+              <a href="/tags/Why42/" rel="tag"># Why42</a>
+              <a href="/tags/%E5%88%9B%E6%96%B0/" rel="tag"># 创新</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/05/02/Book-001-Scientific/" rel="prev" title="科学革命的结构/读书笔记">
+                  <i class="fa fa-chevron-left"></i> 科学革命的结构/读书笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/05/05/Why42-190505/" rel="next" title="Why42?仰望星空2">
+                  Why42?仰望星空2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phantom T</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"phantomT","repo":"hexo-gitalk","client_id":"b6dcc47c3c7ef6e52002","client_secret":"4b1bd615b27b373815e57080ed022051b759ea8c","admin_user":"phantomT","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"19908f12e8cbb763cf6bddc084ff7488"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

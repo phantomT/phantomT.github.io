@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"phantomt.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true,"dimmer":true},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="2018-08-12用闲鱼上淘的Netgear路由器刷Openwrt系统，设置IPv6，尝试shadowsocks，实现校园网加速&#x2F;不完美免费免流，路由器的ss感觉并不能达到要求。。ss代理  支持Windows 10&#x2F;Linux 支持安卓(测试Android 8，三丧OEM) iOS需要购买代理软件IPv6仅对于pc端使用有效，安卓能获取IPv6地址但不知道为啥连不上v6的代理？？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索">
+<meta property="og:url" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/index.html">
+<meta property="og:site_name" content="欢迎来到本尊的鱼缸">
+<meta property="og:description" content="2018-08-12用闲鱼上淘的Netgear路由器刷Openwrt系统，设置IPv6，尝试shadowsocks，实现校园网加速&#x2F;不完美免费免流，路由器的ss感觉并不能达到要求。。ss代理  支持Windows 10&#x2F;Linux 支持安卓(测试Android 8，三丧OEM) iOS需要购买代理软件IPv6仅对于pc端使用有效，安卓能获取IPv6地址但不知道为啥连不上v6的代理？？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/hardware.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/open1.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/open2.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/open3.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/open4.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/barrier.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/calmer.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/huawei.jpg">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/index.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/login.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/success.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/testv6.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/speedtest.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/pingtest.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/phonev6.jpg">
+<meta property="article:published_time" content="2019-05-02T11:34:36.000Z">
+<meta property="article:modified_time" content="2019-05-08T10:16:14.437Z">
+<meta property="article:author" content="Phantom T">
+<meta property="article:tag" content="IPv6">
+<meta property="article:tag" content="Shadowsocks">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="OpenWrt">
+<meta property="article:tag" content="路由器">
+<meta property="article:tag" content="Netgear">
+<meta property="article:tag" content="校园网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/Linux-001-OpenWrt/hardware.png">
+
+
+<link rel="canonical" href="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/","path":"2019/05/02/Linux-001-OpenWrt/","title":"Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索 | 欢迎来到本尊的鱼缸</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">欢迎来到本尊的鱼缸</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Nothing is true and everything is permitted.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-主页"><a href="/" rel="section"><i class="home fa-fw"></i>主页</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-记录"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>记录</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">设备介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">硬件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E7%AE%B1"><span class="nav-number">1.2.</span> <span class="nav-text">开箱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B7%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">刷机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%88%E5%89%8D%E7%9A%84%E5%B0%9D%E8%AF%95"><span class="nav-number">2.2.</span> <span class="nav-text">先前的尝试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.3.</span> <span class="nav-text">物理连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E5%90%8E%E5%8F%B0"><span class="nav-number">2.4.</span> <span class="nav-text">进入后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AFwifi"><span class="nav-number">2.5.</span> <span class="nav-text">开启wifi</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%BD%91%E7%BB%9C%E5%B9%B6%E5%BC%80%E5%90%AFIPv6"><span class="nav-number">3.</span> <span class="nav-text">设置网络并开启IPv6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFIPv6"><span class="nav-number">3.1.</span> <span class="nav-text">什么是IPv6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv6%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text">IPv6的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8EIPv4%E5%88%B0IPv6"><span class="nav-number">3.3.</span> <span class="nav-text">从IPv4到IPv6</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%B8%A1"><span class="nav-number">3.3.1.</span> <span class="nav-text">过渡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IPv6%E7%9A%84%E9%93%BE%E8%B7%AF%E6%96%B9%E5%BC%8F"><span class="nav-number">3.3.2.</span> <span class="nav-text">IPv6的链路方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.4.</span> <span class="nav-text">添加设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%B8%A1%E6%AE%B5%E8%90%BD"><span class="nav-number">4.</span> <span class="nav-text">过渡段落</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85shadowsocks"><span class="nav-number">5.</span> <span class="nav-text">安装shadowsocks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80-%E9%83%A8%E5%88%86%E4%B8%80"><span class="nav-number">5.1.</span> <span class="nav-text">方案一&#x2F;部分一</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E6%AC%A1%E9%85%8D%E7%BD%AE"><span class="nav-number">5.1.1.</span> <span class="nav-text">一次配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0"><span class="nav-number">5.1.2.</span> <span class="nav-text">自动更新</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C-%E9%83%A8%E5%88%86%E4%BA%8C"><span class="nav-number">5.2.</span> <span class="nav-text">方案二&#x2F;部分二</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E6%AC%A1%E9%85%8D%E7%BD%AE-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">一次配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0list"><span class="nav-number">5.2.2.</span> <span class="nav-text">自动更新list</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9D%9F"><span class="nav-number">6.</span> <span class="nav-text">结束</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">6.1.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">6.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9F%E5%8F%97%E4%B8%8E%E5%90%90%E6%A7%BD"><span class="nav-number">7.</span> <span class="nav-text">感受与吐槽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">8.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Phantom T"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Phantom T</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/phantomT" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;phantomT" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bobphantom@126.com" title="E-Mail → mailto:bobphantom@126.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Phantom T">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到本尊的鱼缸">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-05-02 19:34:36" itemprop="dateCreated datePublished" datetime="2019-05-02T19:34:36+08:00">2019-05-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2019-05-08 18:16:14" itemprop="dateModified" datetime="2019-05-08T18:16:14+08:00">2019-05-08</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>2018-08-12<br>用闲鱼上淘的Netgear路由器刷Openwrt系统，设置IPv6，尝试shadowsocks，实现校园网加速/不完美免费免流，路由器的ss感觉并不能达到要求。。<br>ss代理</p>
+<ul>
+<li>支持Windows 10/Linux</li>
+<li>支持安卓(测试Android 8，三丧OEM)</li>
+<li>iOS需要购买代理软件<br>IPv6仅对于pc端使用有效，安卓能获取IPv6地址但不知道为啥连不上v6的代理？？</li>
+</ul>
+<span id="more"></span>
+
+
+<h2 id="设备介绍"><a href="#设备介绍" class="headerlink" title="设备介绍"></a>设备介绍</h2><p>网件WNDR3700V4路由器，大概是14年出的，价位大概300+左右，配置还是很豪华的，毕竟是专业的厂家，和某些贴牌的不一样。</p>
+<h3 id="硬件配置"><a href="#硬件配置" class="headerlink" title="硬件配置"></a>硬件配置</h3><pre><code>&gt; latform:  Atheros AR9344
+&gt; Target:   ar71xx
+&gt; Instruction Set:  MIPS32
+&gt; Sub Instruction Set:  MIPS32 74K series
+&gt; Bootloader:   U-Boot
+&gt; CPU MHz:  560
+&gt; Flash MB: 128NAND
+&gt; RAM MB:   128
+&gt; Ethernet 100M ports:  -
+&gt; Ethernet GBit ports:  5
+&gt; Modem:    No
+&gt; Comments network ports:   1 WAN + 4x LAN
+&gt; VLAN: Yes
+&gt; WLAN Hardware:    AR9582 [an 2x2:2] + AR9344 [bgn 2x2:2]
+&gt; WLAN 2.4GHz:  b/g/n
+&gt; WLAN 5.0GHz:  a/n
+&gt; WLAN Comments:    2x2:2 MIMO
+&gt; Detachable Antennas:  -
+&gt; USB ports:    1x 2.0
+&gt; SATA ports:   -
+&gt; Serial:   Yes
+&gt; JTAG: Yes
+</code></pre>
+<p>数据来自<a target="_blank" rel="noopener" href="https://wiki.openwrt.org/toh/hwdata/netgear/netgear_wndr3700_v4">OpenWrt的Wiki</a>，刷机固件等也来自于此。<br><a target="_blank" rel="noopener" href="https://wiki.openwrt.org/toh/netgear/wndr3700#tab__hardware_details">WNDR3700各个版本的对比</a></p>
+<blockquote>
+<p><img src="Linux-001-OpenWrt/hardware.png" alt="对比图局部"></p>
+</blockquote>
+<h3 id="开箱"><a href="#开箱" class="headerlink" title="开箱"></a>开箱</h3><p>在闲鱼上花了100块钱淘到的：</p>
+<blockquote>
+<p><img src="Linux-001-OpenWrt/open1.jpg" alt="开箱1"><br><img src="Linux-001-OpenWrt/open2.jpg" alt="开箱2"><br><img src="Linux-001-OpenWrt/open3.jpg" alt="开箱3"><br><img src="Linux-001-OpenWrt/open4.jpg" alt="开箱4"></p>
+</blockquote>
+<h2 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a>刷机</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+<li>OpenWrt的官方固件(其实是因为我不会自己编译emmmm)</li>
+<li>路由器</li>
+<li>电脑(Windows 10)</li>
+<li>网线</li>
+<li>SSH工具(我选择putty)</li>
+<li>SCP传输工具(我选择WinSCP)</li>
+<li>牙签(避免变砖应急用的)</li>
+<li>tftp工具和Netgear的官方固件(同上，救砖)</li>
+</ul>
+<p>固件版本：Openwrt Chaos Calmer 15.05.1，使用官方提供的固件。<br>固件可以从<a target="_blank" rel="noopener" href="https://wiki.openwrt.org/toh/hwdata/netgear/netgear_wndr3700_v4">OpenWrt的Wiki</a>中获得。</p>
+<h3 id="先前的尝试"><a href="#先前的尝试" class="headerlink" title="先前的尝试"></a>先前的尝试</h3><ul>
+<li>因为前一段时间刷过一个小的路由器，TP-Link的WR720N V4，但是ROM太小了没有加什么插件之类的。</li>
+<li>那个路由器先刷的解锁Bootloader的OpenWrt固件，<br><img src="Linux-001-OpenWrt/barrier.png" alt="barrierbreaker"></li>
+<li>然后刷了Breed的Bootloader，最后在用Breed升级的正常的OpenWrt。<br><img src="Linux-001-OpenWrt/calmer.png" alt="chaoscalmer"></li>
+<li>期间，变砖一次，抢救一下午，一开始以为没救了，直到一次偶然启动发现灯亮了，于是抢救一下，也不知道是怎么搞得就不停的传最后就救回来的。<br>总的来说就是安全模式感天动地。= =</li>
+<li>救砖的时候不小心还用 <strong><em>？？？码</em></strong> 进入了楼里的一个华为路由器(/交换机？？)，平时检测不到大概是因为ip地址与路由器的局域网地址冲突了，也许这就是为什么学校通告里写的要关闭路由器的DHCP服务(虽然不关也能用诶)。<br><img src="Linux-001-OpenWrt/huawei.jpg" alt="huawei"></li>
+</ul>
+<p>准备好固件和路由器还有救砖的准备就可以开始了。</p>
+<p>因为现在系统就是原版的，可以直接用后台上传固件。</p>
+<h3 id="物理连接"><a href="#物理连接" class="headerlink" title="物理连接"></a>物理连接</h3><p>第一步是物理连接，路由器是原版的系统，因为为了避免在刷机过程中没有网，于是我把正在用的另一个路由器的地址改成了<code>10.0.0.1</code></p>
+<p>使用时我先试的将Internet口，也就是WAN口与笔记本的网口进行连接，然后使用cmd进行<code>ping</code>连接测试，</p>
+<p>登录<code>192.168.1.1</code>，输入默认用户名和密码，进入后台。</p>
+<p>上传固件。<br>重新启动。</p>
+<h3 id="进入后台"><a href="#进入后台" class="headerlink" title="进入后台"></a>进入后台</h3><ul>
+<li><p>启动后依然输入<code>192.168.1.1</code>进入管理界面，这是会自动跳转至Openwrt的Web界面(Luci)。<br>用户名：<code>root</code><br>密码：随意设置</p>
+</li>
+<li><p>然后页面上方会有一段提示未设置密码的英文，点进去设置一下就行，<strong>这步必须做</strong> 否则SSH可能无法登录。</p>
+</li>
+<li><p>设置完密码后，Luci界面的概况如下：<br><img src="Linux-001-OpenWrt/index.png" alt="home"></p>
+</li>
+<li><p>使用putty登入路由器后台，就会显示以下界面：<br><img src="Linux-001-OpenWrt/login.png" alt="login in"></p>
+</li>
+<li><p>首先要更新配置源，也就是安装包的来源：<br><code>opkg update</code></p>
+</li>
+<li><p>然后可(yi)能(ding)会出现类似以下的报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opkg_conf_load: Could not lock /var/lock/opkg.lock: Resource temporarily unavailable.</span><br></pre></td></tr></table></figure></li>
+<li><p>这时就要依次输入以下并重新更新源：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;nameserver 114.114.114.114&quot;&gt;/tmp/resolv.conf</span><br><span class="line">rm -f /var/lock/opkg.lock</span><br><span class="line">opkg update</span><br></pre></td></tr></table></figure>
+<p>以上可以看为添加国内域名解析到临时分区，并且对安装源的锁解锁/删除，然后更新的命令</p>
+</li>
+<li><p>等源更新完后，再次出现root命令输入时，输入：<br><code>opkg install wget</code><br>安装GNU wget模块，为后面做准备。</p>
+</li>
+</ul>
+<p>然后可以选择从web界面中添加软件包也可以选择从命令行(CLI)添加。</p>
+<ul>
+<li>如果英文界面看着不爽，可以安装<code>luci-i18n-base-zh-cn</code>简中的界面语言包，安装完成后，到<code>系统-系统-语言与界面</code>中更换中文界面。<br>在同一级界面中可以将路由器时间改到<code>Asia/Shanghai</code>。</li>
+</ul>
+<h3 id="开启wifi"><a href="#开启wifi" class="headerlink" title="开启wifi"></a>开启wifi</h3><p>可以选择现在开启wifi，也可以最后配置完再开启，因为wifi直接桥接的<code>lan</code>口，所以应该时无所谓的。<br>直接在<code>网络-无线</code>界面中配置即可，802.11an协议的是5G信号的wifi，另一个则是2.4G的。<br>添加前可以使用扫描来查看现有环境中的所有广播的Wifi信号以及它们的信息如信道等。<br>设置的时候选择一个使用人数最少的信道，功率可以调到最大，一定不要<code>隐藏ESSID</code>，SSID相当与Wifi的名字，默认都是广播的，隐藏了就只能手动输入添加连接了。<br>安全设置中加密方式选择<code>WPA2-PSK</code>，算法自动，添加密码。</p>
+<h2 id="设置网络并开启IPv6"><a href="#设置网络并开启IPv6" class="headerlink" title="设置网络并开启IPv6"></a>设置网络并开启IPv6</h2><h3 id="什么是IPv6"><a href="#什么是IPv6" class="headerlink" title="什么是IPv6"></a>什么是IPv6</h3><ul>
+<li>IPv6是Internet Protocol Version 6的缩写。IPv6是IETF（互联网工程任务组，Internet Engineering Task Force）设计的用于替代现行版本IP协议（IPv4）的下一代IP协议。IPv6的允许的庞大地址数量也使得其成为物联网时代的关键，最近我国也出台了相应的IPv6发展计划，将大力推动IPv4向v6过渡。</li>
+<li>IPv6对于普通用户来说和IPv4是一样的，只是地址表示不同，IPv6网速快其一是用的人少，加上本身的网络层次扁平，使得链路拥塞较少(因为IPv6的设定是全球每台设备都有唯一的地址，因此 <strong><em>就像</em></strong> 一个局域网一样);其二是基础设备建设更优秀，带宽更大，因此网速也就会快一些，据说将现有的IPv4用户全部转移至IPv6网络，网速依然可以提高10倍。</li>
+</ul>
+<h3 id="IPv6的特点"><a href="#IPv6的特点" class="headerlink" title="IPv6的特点"></a>IPv6的特点</h3><p>IPv6有诸多不同，也使得其配置方式和IPv4不一样。</p>
+<ul>
+<li><p>具有更大的地址空间：128位</p>
+</li>
+<li><p>使用更小的路由表</p>
+</li>
+<li><p>增强的组播支持以及对流的控制</p>
+</li>
+<li><p>无状态自动配置</p>
+</li>
+<li><p>强制使用IPSec加密通讯，更安全</p>
+</li>
+<li><p>···更多具体内容参见维基百科与计算机网络书籍</p>
+</li>
+<li><p><em>如果是windows系统，为了保护mac地址会额外生成一个临时IPv6地址，并使用这个临时地址通信，禁用这个临时地址使用命令：netsh interface IPv6 set privacy state=disable</em></p>
+</li>
+</ul>
+<h3 id="从IPv4到IPv6"><a href="#从IPv4到IPv6" class="headerlink" title="从IPv4到IPv6"></a>从IPv4到IPv6</h3><h4 id="过渡"><a href="#过渡" class="headerlink" title="过渡"></a>过渡</h4><ol>
+<li><p>隧道<br> 隧道（Tunneling）是另一个用来链接IPv4与IPv6的机制。为了连通IPv6互联网，一个孤立主机或网络需要使用现存IPv4的基础设施来携带IPv6数据包。这可由将IPv6数据包装入IPv4数据包的隧道协议来完成，实际上就是将IPv4当成IPv6的链接层。<br> IP协议号码的41号用来标示将IPv6数据讯框直接装入IPv4数据包。IPv6亦能加入UDP数据包，如为了跨过一些会阻挡协议41流量的路由器或NAT设备。其它流行的封装机制则有AYIYA和GRE。 </p>
+</li>
+<li><p>双堆栈<br> 双堆栈（Dual IP stack implementation）是将IPv6视为一种IPv4的延伸，以共享代码的方式去实现网络堆栈，其可以同时支持IPv4和IPv6，如此是相对较为容易的。如此的实现称为“双堆栈”，并且，一个实现双堆栈的主机称为“双堆栈主机”。这步骤描述于RFC 4213。<br> 目前大部分IPv6的实现使用双堆栈。一些早期实验性实现使用独立的IPv4和IPv6堆栈。 </p>
+<h4 id="IPv6的链路方式"><a href="#IPv6的链路方式" class="headerlink" title="IPv6的链路方式"></a>IPv6的链路方式</h4><p>一方面可以看成过渡，另一方可以看成IPv6协议所在的链路环境</p>
+</li>
+<li><p>NATIVE<br> 这个需要运营商（ISP）支持，这种方式允许路由器下级的客户端与拨号服务器直接通信并获取原生IPv6地址，如果在支持的ISP下，选择路由器上的NATIVE就可以了，NATIVE下可以配置无状态配置IPv6或者静态IPv6或者DHCP分配IPv6。</p>
+</li>
+<li><p>PASSTHROUGH/RELAY(中继模式)<br> 在这个模式下，路由器成为下一跳，与NAT的区别是，路由器只会转发数据包，并不会修改源地址。<br> 在这种模式下，可以使用客户端无状态自动生成的IPv6地址，也可以停用本机接受RA广播并使用自己配置的地址，比如拨号获取了<code>2001：250：7801：7788：</code>的前缀，你可以把设备配置成<code>2001：250：7801：7788：：2</code>并且可以通信。但是一定要关闭RA广播防止设备通过DHCP来获取地址，与IPv4不同，在IPv6协议中，网卡可以同时有多个IPv6地址，并且DHCP获取地址的优先级高于静态地址。<strong>路由器配置也着重讲这个方法</strong><br> 理论上说，如果你有一台支持IPv6的足够强大的路由器（使用relay方式），你可以将 <strong>65536^4</strong> 个设备都连接到路由器上共享你的带宽，而且可以实现全球可达。</p>
+</li>
+<li><p>NAT<br> 这种方式就是像在IPv4模式下一样，路由器替换源地址，并且分配给你的是内网的IPv6地址，也就是前缀第一部分在2000-3FFF之外的地址。<br> 个人比较抵制这种方式，除了因为尝试了这个方案并失败了的原因以外，</p>
+<ol>
+<li>新版本的固件已经不再支持有关的依赖包;</li>
+<li>NAT本身是一种IPv4地址不够用而IPv6协议还未推广时的 <strong>妥协</strong> 方案，是IPv4的<del>续命</del>方式，也是阻碍推广IPv6的一大因素;</li>
+<li>NAT会使得本身扁平化的网络结构被强行分层，增加路由表长度;</li>
+<li>NAT获得的地址 <strong>全球不可达</strong> ，而长远来看全球可达地址对于游戏、PT下载等需要外网可达地址才能发挥高性能的程序有巨大意义。</li>
+</ol>
+</li>
+</ol>
+<h3 id="添加设置"><a href="#添加设置" class="headerlink" title="添加设置"></a>添加设置</h3><p>考虑到学校网络貌似不资瓷NATIVE，以及地址分配针对设备分配，和针对NAT的看法和尝试失败后，我选择使用中继方式使路由器可以”分发”IPv6地址。</p>
+<ul>
+<li><p>进入路由器后台，可以使用WinSCP软件登录后台，直接双击目标文件打开编辑，<code>Ctrl+S</code>保存。<br>  如果会用vim，直接用vim编辑即可。</p>
+</li>
+<li><p><code>/etc/config/dhcp</code>: 配置好relay</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">config dhcp &#x27;lan&#x27;</span><br><span class="line">    option interface &#x27;lan&#x27;</span><br><span class="line">    option start &#x27;100&#x27;</span><br><span class="line">    option limit &#x27;150&#x27;</span><br><span class="line">    option leasetime &#x27;12h&#x27;</span><br><span class="line">    option ra &#x27;relay&#x27;</span><br><span class="line">    option dhcpv6 &#x27;relay&#x27;</span><br><span class="line">    option ndp &#x27;relay&#x27;</span><br><span class="line"></span><br><span class="line">config dhcp &#x27;wan&#x27;</span><br><span class="line">    option interface &#x27;wan&#x27;</span><br><span class="line">    option ignore &#x27;1&#x27;</span><br><span class="line"></span><br><span class="line">config dhcp &#x27;wan6&#x27;</span><br><span class="line">    option interface &#x27;wan&#x27;</span><br><span class="line">    option ra &#x27;relay&#x27;</span><br><span class="line">    option dhcpv6 &#x27;relay&#x27;</span><br><span class="line">    option ndp &#x27;relay&#x27;</span><br><span class="line">    option master 1</span><br></pre></td></tr></table></figure></li>
+<li><p><code>/etc/config/network</code> 在wan口启用IPv6并设置wan6口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">config interface wan</span><br><span class="line">    option IPv6 1</span><br><span class="line"></span><br><span class="line">config interface &#x27;wan6&#x27;</span><br><span class="line">    option ifname &#x27;eth0.2&#x27;</span><br><span class="line">    option proto &#x27;dhcpv6&#x27;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>/etc/config/firewall</code> 在防火墙中禁用对IPv6的过滤，防止LAN口IPv6配置信息被过滤<br><code>option disable_IPv6 &#39;1&#39;</code></p>
+</li>
+<li><p>以上设置就可以实现向设备分配IPv6了。</p>
+</li>
+<li><p>对于openwrt+脚本存在这样的问题，就是路由表不正确，就是路由表把本应该路由到lan口地址路由到wan口，形成loop直至ttl耗尽。<br>为了解决这个问题使用了大佬的脚本：</p>
+</li>
+</ul>
+<ol>
+<li><p>新建/usr/sbin/route6并输入以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">while true</span><br><span class="line">do</span><br><span class="line">    pfix=`ip -6 route| grep default| grep ::/64|cut -d &quot; &quot; -f 3`</span><br><span class="line">    result=`ip -6 route|grep pppoe-wan |grep $pfix | grep -v &#x27;default&#x27;`</span><br><span class="line">if [[ &quot;$result&quot; != &quot;&quot; ]]</span><br><span class="line">then</span><br><span class="line">    ip -6 route del $pfix</span><br><span class="line">    ip -6 route add $pfix dev br-lan</span><br><span class="line">fi</span><br><span class="line">sleep 1</span><br><span class="line">done</span><br></pre></td></tr></table></figure></li>
+<li><p>chmod +x /usr/sbin/route6</p>
+</li>
+<li><p>新建/etc/init.d/route6并输入以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh /etc/rc.common</span><br><span class="line"># /init.d/route6</span><br><span class="line"></span><br><span class="line">START=99</span><br><span class="line"></span><br><span class="line">start() &#123;</span><br><span class="line">    route6 &gt;/dev/null 2&gt;&amp;1 &amp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stop() &#123;</span><br><span class="line">    killall route6</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /usr/sbin/route6</span><br><span class="line">chmod +x /etc/init.d/route6</span><br></pre></td></tr></table></figure></li>
+<li><p><code>ln -s /etc/init.d/route6 S99route6</code></p>
+</li>
+</ol>
+<ul>
+<li><p>这样的设置能使出错的路由表在1s内被修正，实测占用cpu不高，也不影响通信。</p>
+</li>
+<li><p>以上是IPv6的设置部分，设置完成后，电脑的网络设置中应该可以获得如下信息：<br><img src="Linux-001-OpenWrt/success.png" alt="success"></p>
+</li>
+</ul>
+<p><strong>那么！为了避免后面的步骤出问题又要重来的尴尬，现在去系统的<code>备份与升级</code>界面中将现在的系统备份下载下来</strong><br><strong>一定要做这一步！！！</strong><br>完成以后重启试试~</p>
+<h2 id="过渡段落"><a href="#过渡段落" class="headerlink" title="过渡段落"></a>过渡段落</h2><p><strong>警示：</strong> 从原理上说，目前在笔记本电脑和手机已经可以像<a href="https://phantomt.github.io/2019/05/02/Linux-000-VPS/">上一篇文章</a>中设置的那样使用ss进行校园网穿透了，也就是说以下步骤并不必要。<br>我是为了试验才进行的下面步骤。<br><strong>以下步骤不一定可以成功，仅供参考，如发生意外情况，请还原到上面备份好的系统使用。</strong></p>
+<h2 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h2><p><em>以下步骤均需要完成<code>opkg update</code>后进行。</em></p>
+<h3 id="方案一-部分一"><a href="#方案一-部分一" class="headerlink" title="方案一/部分一"></a>方案一/部分一</h3><h4 id="一次配置"><a href="#一次配置" class="headerlink" title="一次配置"></a>一次配置</h4><ul>
+<li><p>下载<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/openwrt-dist/files/shadowsocks-libev/">shadowsocks-libev-spec</a>和<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/openwrt-dist/files/luci-app/shadowsocks-spec/">luci-app-shadowsocks-spec</a></p>
+</li>
+<li><p>还需要已经默认安装的<code>dnsmasq</code>为子网提供DHCP和DNS，和一开始下载的GNU wget来完成https下载。</p>
+</li>
+<li><p>将下载完的文件使用WinSCP上传到路由器的<code>/tmp</code>目录中，并使用putty进入<code>/tmp</code>：<br><code>cd /tmp</code></p>
+</li>
+<li><p>然后就可以使用<code>opkg install xx.ipk</code>来安装了。</p>
+</li>
+<li><p>Linux命令行使用技巧：1. 先使用<code>ls</code>命令查看文件夹内的文件; 2. 填写文件名时使用<code>Tab</code>键尝试自动补全*</p>
+</li>
+<li><p>安装完成后便可以在Luci的界面看到<code>服务</code>下的shadowsocks了。</p>
+</li>
+<li><p>暂时先不开启ShadowSocks，接着配置dns避开DNS污染。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir /etc/dnsmasq.d</span><br><span class="line">//新建一个dnsmasq.d的目录</span><br><span class="line">//这里边存放dns规则</span><br><span class="line"> </span><br><span class="line">echo &quot;conf-dir=/etc/dnsmasq.d&quot; &gt;&gt; /etc/dnsmasq.conf</span><br><span class="line">//使dnsmasq.d目录内的规则生效</span><br></pre></td></tr></table></figure></li>
+<li><p>下载UDP有关的包<br><code>opkg install iptables-mod-tproxy</code></p>
+</li>
+<li><p>依次使用如下命令来下载国内域名加速列表和污染地址屏蔽列表，这两个列表一个是用来设定国内访问白名单，一个是用来屏蔽污染IP的黑名单，具体内容你也可以来<a target="_blank" rel="noopener" href="https://github.com/felixonmars/dnsmasq-china-list">这里</a>瞧瞧。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget -4 --no-check-certificate -O /etc/dnsmasq.d/accelerated-domains.china.conf https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf</span><br><span class="line"> </span><br><span class="line">wget -4 --no-check-certificate -O /etc/dnsmasq.d/bogus-nxdomain.china.conf https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/bogus-nxdomain.china.conf</span><br><span class="line"> </span><br><span class="line">echo &quot;server=/#/127.0.0.1#7913&quot; &gt; gfwlist.conf</span><br><span class="line">//最后一句是让其他不在列表中（即国外域名）都走代理解析，端口7913。</span><br></pre></td></tr></table></figure></li>
+<li><p>下面进入shadowsocks界面添加自己的代理，注意：要添加服务器的 <strong>IP地址</strong> ，填写域名可能导致无法解析。</p>
+</li>
+<li><p>然后配置UDP转发，如果刚才没有安装<code>iptables-mod-tproxy</code>，则会显示其缺失。<br>勾选，然后根据前边<code>dnsmasq</code>的配置，我们设置 <strong>本地端口为对应的7913</strong> 以接收DNS查询包，然后填写转发地址，我们让这些查询包通过SS代理，然后访问到谷歌的公共DNS <strong><code>8.8.4.4</code>的53端口</strong> 上(<code>8.8.8.8</code>也行)。</p>
+</li>
+<li><p>这样一来，就实现了国内国外智能选用DNS(查看<code>accelerated-domains.china.conf</code>以确认哪些域名会被发送到国内的<code>114.114.114.114</code>解析。)</p>
+</li>
+<li><p>开启ShadowSocks，然后在CLI界面输入<code>/etc/init.d/dnsmasq restart</code>以重启dnsmasq服务。</p>
+</li>
+</ul>
+<h4 id="自动更新"><a href="#自动更新" class="headerlink" title="自动更新"></a>自动更新</h4><ul>
+<li><p>建立更新那两个列表的脚本</p>
+</li>
+<li><p>在<code>/usr/bin</code>目录下做如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">touch updatednsmasq</span><br><span class="line">//创建一个空文件</span><br><span class="line">chmod +x updatednsmasq</span><br><span class="line">//给予执行权限</span><br></pre></td></tr></table></figure></li>
+<li><p>编辑updatednsmasq：<br>(可以使用vim，也可以直接用WinSCP打开修改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cnlist() &#123;</span><br><span class="line">    wget -4 --no-check-certificate -O /etc/dnsmasq.d/accelerated-domains.china.conf https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf</span><br><span class="line">    wget -4 --no-check-certificate -O /etc/dnsmasq.d/bogus-nxdomain.china.conf https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/bogus-nxdomain.china.conf</span><br><span class="line">&#125;</span><br><span class="line">cnlist</span><br></pre></td></tr></table></figure></li>
+<li><p>新建一个计划任务，让它每天中午12点跑一次。</p>
+</li>
+<li><p>在Luci界面中，打开<code>系统-计划任务</code>，输入：<br><code>* 12 * * * /usr/bin/updatednsmasq</code></p>
+</li>
+<li><p>这样每天中午12点，只要有网，那么DNS这两个列表就都会更新一次。</p>
+</li>
+</ul>
+<h3 id="方案二-部分二"><a href="#方案二-部分二" class="headerlink" title="方案二/部分二"></a>方案二/部分二</h3><p>方案二是用另外的方式来制定转发规则的，<strong>如果两种方案一起用可能会出现问题</strong>。</p>
+<h4 id="一次配置-1"><a href="#一次配置-1" class="headerlink" title="一次配置"></a>一次配置</h4><ul>
+<li><p>同样安装那两个包以及后面的UDP相关的包</p>
+</li>
+<li><p>下载忽略文件列表，忽略国内网站，避免过度代理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O- &#x27;http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest&#x27; | awk -F\| &#x27;/CN\|ipv4/ &#123; printf(&quot;%s/%d\n&quot;, $4, 32-log($5)/log(2)) &#125;&#x27; &gt; /etc/ignore.list</span><br></pre></td></tr></table></figure></li>
+<li><p>进入Luci界面的shadowsocks界面，将底部的访问控制中，在<code>被忽略IP列表</code>填写第1步下载的<code>/etc/ignore.list</code>。</p>
+</li>
+<li><p>到<code>网络-DHCP/DNS-基本设置</code>，把DNS转发地址填上<code>127.0.0.1#7913</code></p>
+</li>
+<li><p>到<code>网络-DHCP/DNS-host和解析文件里</code>把<code>忽略解析文件</code>勾上。</p>
+</li>
+</ul>
+<p><strong>苯宝宝只进行到这里，因为后面的加入了出现了问题如无法联网，甚至连<code>202.204.67.15</code>都打不开的问题，因此下面的脚本请谨慎使用</strong></p>
+<h4 id="自动更新list"><a href="#自动更新list" class="headerlink" title="自动更新list"></a>自动更新list</h4><ul>
+<li><p>在<code>/etc/</code>目录下新建一个<code>ignore.list.update.sh</code>脚本文件，内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget -O- &#x27;http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest&#x27; | awk -F\| &#x27;/CN\|ipv4/ &#123; printf(&quot;%s/%d\n&quot;, $4, 32-log($5)/log(2)) &#125;&#x27; &gt; /etc/ignore.list</span><br><span class="line">/etc/init.d/shadowsocks restart</span><br></pre></td></tr></table></figure></li>
+<li><p>给予执行权限:<br><code>chmod +x /etc/ignore.list.update.sh</code></p>
+</li>
+<li><p>可以用<code>sh ignore.list.update.sh</code>命令执行看看有没有正确执行。</p>
+</li>
+<li><p>同样使用计划任务是其每天12点执行一次更新：<br><code>* 12 * * *sh /etc/ignore.list.update.sh</code></p>
+</li>
+</ul>
+<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><p>那么到这里配置就全部完成了，可以进行IPv6网络测试，</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>下面有几个测试网站：<br><a target="_blank" rel="noopener" href="http://www.kame.net/">kame</a>，这个网站中如果能够使用IPv6则能看到一只动态的小乌龟，如果不能使用则是静止的。<br><img src="Linux-001-OpenWrt/testv6.png" alt="keme"><br><a target="_blank" rel="noopener" href="http://ipv6-test.com/">ipv6-test</a>，测试带宽以及连接状况<br><img src="Linux-001-OpenWrt/speedtest.png" alt="ipv6test"><br><img src="Linux-001-OpenWrt/pingtest.png" alt="ipv6ping"><br>下面是手机在 <strong>能够连接IPv6代理时</strong> 进行测速的结果<br><img src="Linux-001-OpenWrt/phonev6.jpg" alt="phonetest"></p>
+<p>可以看到，相比于日常网速300kB/s的IPv4网络来说，IPv6网络换算的速度4MB/s快了很多，而实际使用上最快可以达到20MB/s的速度。<br>手机连接ss后可以访问谷歌全家桶以及Instagram等APP。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>坑爹的哔哩哔哩客户端居然不支持在不连校园网仅连代理免流的情况下打开，而其他的软件都可以成功打开使用，只有 <strong>哔哩哔哩客户端不行</strong> ，这一点可以说是非常不完美了。<br>iOS系统的代理软件国区被下架，剩余的软件需要花钱购买，因此不才没有进行测试。(Android大法好~)<br>如果没有ss代理，目前是不能实现完美校园网免流的，但是速度会有提升。<br>使用ss代理可以 <strong>提速并<em>基本</em>实现免流</strong> 。</p>
+<p><strong>如果有大佬能够解决这个问题，或者有更好的配置方法，请一定告诉我。</strong></p>
+<h2 id="感受与吐槽"><a href="#感受与吐槽" class="headerlink" title="感受与吐槽"></a>感受与吐槽</h2><p>为了完成这个目标，苯宝宝真是看了网上能找到的所有Openwrt以及相关开源系统的IPv6设置，其中也有一些其他学校同学的记录，<br>比如：华南理工，清华，北邮，北航，哈工大等，(清华大佬的博客居然要用代理才能连上= =)，其中NAT方案的组件一种来自北邮，要通过开始的编译加入;另一种来自西电研究生的作品，以安装形式加入。无论如何设置，理论联系实际总是充满艰辛。<br>我也看了下Openwrt的官方指导(也没怎么看懂)，大概确认了现在的方向，可能和大佬们的结果有些差距，不过我觉得还是很符合我自己的需求的，如果可能的话，再对路由器的ss进行优化修改。<br>DHCPv6和中继模式的IPv6地址应该是不一样的。</p>
+<p><strong>IPv6也是未来的趋势</strong>，随着设备和系统的更迭升级，以后的配置肯定也会越来越简单，同样随着我国网民的认知水品以及判断力的不断提高，G*W肯定也会逐渐变得宽松，上🔼网也会变得越来越方便。</p>
+<blockquote>
+<p>这把不仅好好认识了一把IPv6，还见识了Linux系统的编译，有些东西并没有想象中那么难，而有些事做起来确实很难。<br>看到了ss和ssr的命运纠葛和我们吃瓜群众的煽风点火，也许，环境与我们之间的相互作用比想象中更强。<br>和很多大佬的NAT方案不一样，也许结果也不一样。<br>理论联系实际很艰难，尤其当理论不扎实，实际问题有很多的时候。<br>真的，有的大佬是真的会玩0.0<br>计算机网络真的不仅多还很杂0.0</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="http://tieba.baidu.com/p/5640074547">哈工大大佬的帖子</a><br><a target="_blank" rel="noopener" href="https://www.logcg.com/archives/860.html">路由器刷OpenWRT安装shadowsocks使用透明代理+去DNS污染</a><br><a target="_blank" rel="noopener" href="https://www.logcg.com/archives/868.html">自动更新DNS转发列表</a><br><a target="_blank" rel="noopener" href="https://www.8dlive.com/post/314.html">网件3800路由器安装shadowsocks折腾记(二)</a><br><a target="_blank" rel="noopener" href="https://dangfan.me/zh-Hans/posts/router">清华本科生适用路由器配置指南</a><br><a target="_blank" rel="noopener" href="https://blog.blahgeek.com/2014/02/22/openwrt-ipv6-nat/">OpenWRT配置IPv6的NAT（一般结合isatap使用）</a><br><a target="_blank" rel="noopener" href="https://tang.su/2017/03/openwrt-ipv6-nat/">在OpenWrt上配置原生IPv6 NAT</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/dog250/article/details/7799398">IPv6的NAT原理以及MAP66</a><code>IPv6的标准中不建议使用NAT</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Phantom T 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="Phantom T 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Phantom T
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/" title="Netgear WNDR3700V4刷OpenWrt，对校园网IPv6使用的进一步探索">https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/IPv6/" rel="tag"># IPv6</a>
+              <a href="/tags/Shadowsocks/" rel="tag"># Shadowsocks</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/OpenWrt/" rel="tag"># OpenWrt</a>
+              <a href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" rel="tag"># 路由器</a>
+              <a href="/tags/Netgear/" rel="tag"># Netgear</a>
+              <a href="/tags/%E6%A0%A1%E5%9B%AD%E7%BD%91/" rel="tag"># 校园网</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/05/02/Linux-000-VPS/" rel="prev" title="搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网">
+                  <i class="fa fa-chevron-left"></i> 搭建VPS并安装SSR，使用Proxifier全局代理，实现校园网免支付不限时不限流上网
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/05/02/Linux-002-intro/" rel="next" title="Linux简介 | 学习杂记">
+                  Linux简介 | 学习杂记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phantom T</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"phantomT","repo":"hexo-gitalk","client_id":"b6dcc47c3c7ef6e52002","client_secret":"4b1bd615b27b373815e57080ed022051b759ea8c","admin_user":"phantomT","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"60ada20335c437c6177b282e41e93b90"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

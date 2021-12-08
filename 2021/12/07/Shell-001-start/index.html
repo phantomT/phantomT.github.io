@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"phantomt.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true,"dimmer":true},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="即便把我关在果壳之中，仍然自以为无限空间之王I could be bounded in a nutshell and count myself a king of infinite space.  这是一个非常简易的shell，是一个学习用的项目其中使用flex和bison以及语法树构建的代码改自《工程化C》课程源码模板 项目地址">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简易shell的实现 | 无信号接收版">
+<meta property="og:url" content="https://phantomt.github.io/2021/12/07/Shell-001-start/index.html">
+<meta property="og:site_name" content="欢迎来到本尊的鱼缸">
+<meta property="og:description" content="即便把我关在果壳之中，仍然自以为无限空间之王I could be bounded in a nutshell and count myself a king of infinite space.  这是一个非常简易的shell，是一个学习用的项目其中使用flex和bison以及语法树构建的代码改自《工程化C》课程源码模板 项目地址">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/prompt_exmple.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/bash%E6%A1%86%E6%9E%B6.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/Design01.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/T_bbprompt.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/result-startup.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/result-builtin.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/result-quit.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/result-bin-cmd.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/result-redo.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/result-redi.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/result-redio.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/result-pipe1.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/result-list.png">
+<meta property="og:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/result-history-fix.png">
+<meta property="article:published_time" content="2021-12-07T13:23:49.000Z">
+<meta property="article:modified_time" content="2021-12-08T07:58:48.924Z">
+<meta property="article:author" content="Phantom T">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://phantomt.github.io/2021/12/07/Shell-001-start/Shell-001-start/prompt_exmple.png">
+
+
+<link rel="canonical" href="https://phantomt.github.io/2021/12/07/Shell-001-start/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://phantomt.github.io/2021/12/07/Shell-001-start/","path":"2021/12/07/Shell-001-start/","title":"简易shell的实现 | 无信号接收版"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>简易shell的实现 | 无信号接收版 | 欢迎来到本尊的鱼缸</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">欢迎来到本尊的鱼缸</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Nothing is true and everything is permitted.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-主页"><a href="/" rel="section"><i class="home fa-fw"></i>主页</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-记录"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>记录</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#T-Shell-project"><span class="nav-number">1.</span> <span class="nav-text">T-Shell project</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">1.1.</span> <span class="nav-text">TODO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%B2%E7%BB%8F%E5%AE%9E%E7%8E%B0%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.</span> <span class="nav-text">已经实现功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">主要文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">Shell简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFShell"><span class="nav-number">2.1.</span> <span class="nav-text">什么是Shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84Shell"><span class="nav-number">2.2.</span> <span class="nav-text">常见的Shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E6%98%93%E7%89%88%E7%9A%84Shell%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">2.3.</span> <span class="nav-text">简易版的Shell的功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">主要架构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%88%9D%E5%A7%8B%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A1%86%E6%9E%B6"><span class="nav-number">3.1.</span> <span class="nav-text">最初始的设计框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A1%86%E6%9E%B6"><span class="nav-number">3.2.</span> <span class="nav-text">设计框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BAshell%E6%8F%90%E7%A4%BA%E7%AC%A6"><span class="nav-number">3.3.</span> <span class="nav-text">输出shell提示符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E8%AF%AD%E6%B3%95%E6%A0%91"><span class="nav-number">3.4.</span> <span class="nav-text">建立语法树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flex"><span class="nav-number">3.4.1.</span> <span class="nav-text">flex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bison"><span class="nav-number">3.4.2.</span> <span class="nav-text">bison</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%91%E7%9A%84%E6%9E%84%E9%80%A0"><span class="nav-number">3.5.</span> <span class="nav-text">命令树的构造</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8E%86%E5%8F%B2%E7%9A%84%E4%BF%9D%E5%AD%98"><span class="nav-number">3.6.</span> <span class="nav-text">命令历史的保存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E7%9A%84%E6%89%A7%E8%A1%8C"><span class="nav-number">3.7.</span> <span class="nav-text">命令的执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%BB%BA%E5%91%BD%E4%BB%A4"><span class="nav-number">3.7.1.</span> <span class="nav-text">内建命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#exit-quit"><span class="nav-number">3.7.1.1.</span> <span class="nav-text">exit&#x2F;quit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#about"><span class="nav-number">3.7.1.2.</span> <span class="nav-text">about</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#history"><span class="nav-number">3.7.1.3.</span> <span class="nav-text">history</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cd"><span class="nav-number">3.7.1.4.</span> <span class="nav-text">cd</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%91%BD%E4%BB%A4"><span class="nav-number">3.7.2.</span> <span class="nav-text">程序命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ATOM"><span class="nav-number">3.7.2.1.</span> <span class="nav-text">ATOM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BACK"><span class="nav-number">3.7.2.2.</span> <span class="nav-text">BACK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LIST"><span class="nav-number">3.7.2.3.</span> <span class="nav-text">LIST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PIPE"><span class="nav-number">3.7.2.4.</span> <span class="nav-text">PIPE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REDI%EF%BC%88%E8%BE%93%E5%85%A5%E9%87%8D%E5%AE%9A%E5%90%91%EF%BC%89"><span class="nav-number">3.7.2.5.</span> <span class="nav-text">REDI（输入重定向）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REDO%EF%BC%88%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91%EF%BC%89"><span class="nav-number">3.7.2.6.</span> <span class="nav-text">REDO（输出重定向）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">4.</span> <span class="nav-text">运行结果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8"><span class="nav-number">4.1.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%BB%BA%E5%91%BD%E4%BB%A4"><span class="nav-number">4.2.</span> <span class="nav-text">自建命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E9%80%80%E5%87%BA%E7%B1%BB"><span class="nav-number">4.2.1.</span> <span class="nav-text">非退出类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quit-exit"><span class="nav-number">4.2.2.</span> <span class="nav-text">quit&#x2F;exit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%91%BD%E4%BB%A4-1"><span class="nav-number">4.3.</span> <span class="nav-text">程序命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">4.4.</span> <span class="nav-text">重定向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">4.4.1.</span> <span class="nav-text">输出重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">4.4.2.</span> <span class="nav-text">输入重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">4.4.3.</span> <span class="nav-text">输入输出重定向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E9%81%93"><span class="nav-number">4.5.</span> <span class="nav-text">管道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E6%89%A7%E8%A1%8C"><span class="nav-number">4.6.</span> <span class="nav-text">连续执行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E8%BE%93%E5%85%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8D%E5%90%88%E6%B3%95%E6%97%B6%E4%BC%9A%E7%9B%B4%E6%8E%A5%E9%80%80%E5%87%BA%E5%B9%B6%E6%98%BE%E7%A4%BASytax-Error%E5%B9%B6%E9%80%80%E5%87%BA"><span class="nav-number">5.1.</span> <span class="nav-text">当输入字符串不合法时会直接退出并显示Sytax Error并退出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91-1"><span class="nav-number">5.2.</span> <span class="nav-text">重定向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90%E8%A7%A3%E5%86%B3%E3%80%91%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91%E6%89%A7%E8%A1%8C%E4%BC%9A%E5%A4%B1%E8%B4%A5"><span class="nav-number">5.2.1.</span> <span class="nav-text">【解决】同时使用输入输出重定向执行会失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%BD%E5%8A%A0%E9%87%8D%E5%AE%9A%E5%90%91-gt-gt-%E4%B8%8D%E7%9F%A5%E9%81%93%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%B0%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E4%B8%AD%E3%80%82"><span class="nav-number">5.2.2.</span> <span class="nav-text">追加重定向&gt;&gt;不知道如何添加到词法分析器中。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#history%E5%91%BD%E4%BB%A4"><span class="nav-number">5.3.</span> <span class="nav-text">history命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90%E8%A7%A3%E5%86%B3%E3%80%91%E6%98%BE%E7%A4%BA%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%8F%82%E6%95%B0%E4%B9%8B%E9%97%B4%E6%B2%A1%E6%9C%89%E7%A9%BA%E6%A0%BC"><span class="nav-number">5.3.1.</span> <span class="nav-text">【解决】显示的命令与参数之间没有空格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E6%B3%95%E4%B8%8D%E5%B8%A6%E5%8F%82%E6%95%B0%E6%89%A7%E8%A1%8C%E3%80%82"><span class="nav-number">5.3.2.</span> <span class="nav-text">无法不带参数执行。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E5%90%AB%E5%BD%93%E5%89%8D%E8%BE%93%E5%85%A5%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">5.3.3.</span> <span class="nav-text">包含当前输入的命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">6.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Phantom T"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Phantom T</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/phantomT" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;phantomT" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bobphantom@126.com" title="E-Mail → mailto:bobphantom@126.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://phantomt.github.io/2021/12/07/Shell-001-start/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Phantom T">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到本尊的鱼缸">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          简易shell的实现 | 无信号接收版
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-07 21:23:49" itemprop="dateCreated datePublished" datetime="2021-12-07T21:23:49+08:00">2021-12-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-08 15:58:48" itemprop="dateModified" datetime="2021-12-08T15:58:48+08:00">2021-12-08</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>即便把我关在果壳之中，仍然自以为无限空间之王<br>I could be bounded in a nutshell and count myself a king of infinite space.</p>
+</blockquote>
+<p>这是一个<strong>非常简易</strong>的shell，是一个学习用的项目<br>其中使用<code>flex</code>和<code>bison</code>以及语法树构建的代码改自《工程化C》<a target="_blank" rel="noopener" href="https://csslab-ustc.github.io/courses/sysprog/lab1/index.html">课程源码模板</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/phantomT/T-Shell">项目地址</a></p>
+<span id="more"></span>
+
+<h1 id="T-Shell-project"><a href="#T-Shell-project" class="headerlink" title="T-Shell project"></a>T-Shell project</h1><h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ul>
+<li><input disabled="" type="checkbox"> <code>SIG</code>系统信号捕获与处理</li>
+<li><input disabled="" type="checkbox"> <code>&gt;&gt;</code>追加写入功能【现在还没搞懂怎么加入词法分析树】<h2 id="已经实现功能"><a href="#已经实现功能" class="headerlink" title="已经实现功能"></a>已经实现功能</h2></li>
+<li>内建命令：<code>cd/about/history/exit/quit</code>等，<code>history</code>命令只能带参数执行</li>
+<li>Program指令：<code>ls/pwd/vi/grep</code>等在<code>PATH</code>中的程序</li>
+<li>用<code>;</code>分段的多命令执行</li>
+<li><code>&lt; &gt;</code>输入输出重定向</li>
+<li><code>|</code>管道</li>
+<li><code>&amp;</code>后台运行<h2 id="主要文件"><a href="#主要文件" class="headerlink" title="主要文件"></a>主要文件</h2></li>
+<li><code>main.c</code>主函数</li>
+<li><code>main.h</code>主函数的头文件，包含大部分函数声明</li>
+<li><code>scanner.l</code>使用<code>flex</code>编写的规则</li>
+<li><code>parser.y</code>使用<code>bison</code>的分词器</li>
+<li><code>read_cmd</code>包含命令树构建的代码</li>
+<li><code>type_prompt.c</code>生成命令行开头的提示符</li>
+<li><code>exec_cmd.c</code>包含主函数执行的执行命令函数和具体操作的执行命令函数</li>
+<li><code>builtin_cmd.c</code>包含比较复杂的内建命令实现，如<code>cd</code>，<code>history</code></li>
+</ul>
+<h1 id="Shell简介"><a href="#Shell简介" class="headerlink" title="Shell简介"></a>Shell简介</h1><h2 id="什么是Shell"><a href="#什么是Shell" class="headerlink" title="什么是Shell"></a>什么是Shell</h2><p>Shell 在计算机科学中指“为用户提供用户界面”的软件，通常指的是命令行界面的解析器。一般来说，这个词是指操作系统中提供访问内核所提供之服务的程序。</p>
+<p>Shell也用于泛指所有为用户提供操作界面的程序，也就是程序和用户交互的层面。因此与之相对的是内核（Kernel），内核不提供和用户的交互功能。</p>
+<p>Shell一般通过系统调用的方式为用户提供和内核的交互。</p>
+<h2 id="常见的Shell"><a href="#常见的Shell" class="headerlink" title="常见的Shell"></a>常见的Shell</h2><ul>
+<li>bash: 是GNU的Bourne Again Shell，是GNU操作系统上默认的Shell</li>
+<li>Korn Shell: 是对Bourne Shell的发展，在大部分内容上与Bourne Shell(Bash)兼容</li>
+<li>C Shell: 是SUN公司Shell的BSD版本</li>
+<li>Z Shell: Z是最后一个字母,也就是终极Shell.它集成了Bash ksh的重要特性,同时又增加了自己独有的特性.</li>
+</ul>
+<h2 id="简易版的Shell的功能"><a href="#简易版的Shell的功能" class="headerlink" title="简易版的Shell的功能"></a>简易版的Shell的功能</h2><p>Shell解释器是一个程序，接受用户输入并且分析输入的字符串，分割出命令与参数，自建命令直接执行，PATH中的命令使用<code>fork()</code>出的子进程执行。</p>
+<p>对于一个Shell还需要在每次命令输入前显示一段提示信息，提示当前的用户与路径，例如：<br><img src="Shell-001-start/prompt_exmple.png" alt="prompt_exmple.png" title="prompt_exmple.png"></p>
+<p>简易版的Shell需要能够运行Linux系统已经提供在<code>/bin</code>目录中的命令，并且至少能够运行自建的<code>cd</code>和<code>exit</code>命令。在此基础上添加管道<code>|</code>功能与输入输出重定向功能<code>&lt;</code>和<code>&gt;</code>。</p>
+<h1 id="主要架构设计"><a href="#主要架构设计" class="headerlink" title="主要架构设计"></a>主要架构设计</h1><h2 id="最初始的设计框架"><a href="#最初始的设计框架" class="headerlink" title="最初始的设计框架"></a>最初始的设计框架</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#define TRUE 1</span><br><span class="line">while(TRUE)&#123;</span><br><span class="line">    type_prompt();</span><br><span class="line">    read_command(command, parameters);</span><br><span class="line">    if(fork()!=0)</span><br><span class="line">        waitpid(-1,&amp;status,0);</span><br><span class="line">    else</span><br><span class="line">        execve(command,parameters,0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主函数是一个循环结构，每次通过<code>type_prompt()</code>功能实现输入前的提示符显示，使用<code>read_command()</code>功能读取并切分命令，最后判断命令的运行方式。</p>
+<h2 id="设计框架"><a href="#设计框架" class="headerlink" title="设计框架"></a>设计框架</h2><p><img src="Shell-001-start/bash%E6%A1%86%E6%9E%B6.png" alt="bash框架.png"><br>Linux上<code>bash</code> Shell的命令读取使用了<code>Readline</code>库，这个库提供了包括使用上箭头调取上一条命令、使用tab键补全等功能。而简易版的仅仅需要支持读取分析部分指令的功能即可。</p>
+<p><img src="Shell-001-start/Design01.png" alt="Design01.png"><br>shell的命令通过使用<code>flex</code>和<code>bison</code>进行语法分析，将输入字符串分割并按照命令格式建立不同的命令类型结点，其中<code>ATOM</code>类型的命令能够直接使用系统调用执行，因此在输入完成后需要从命令树的<code>root</code>结点开始递归查找<code>ATOM</code>类型命令。</p>
+<p>在主函数的一次循环中，如果读取到的是一个<code>ATOM</code>类型的命令，则需要判断是否是内建的，是的话可以直接进行，这个判断在递归查找命令树时还需要再进行一次。</p>
+<p>如果要记录shell的命令历史记录，则需要在<code>exec_cmd(root)</code>前，使用<code>save_history(root)</code>遍历命令树并保留本次的命令</p>
+<h2 id="输出shell提示符"><a href="#输出shell提示符" class="headerlink" title="输出shell提示符"></a>输出shell提示符</h2><p>shell的提示符输出由<code>type_prompt()</code>函数实现，我单独开了一个源文件。</p>
+<p>提示符主要由用户的用户名、主机名和路径组成，最后根据<code>uid</code>判断使用<code>$</code>或<code>#</code>。例如：<br><img src="Shell-001-start/T_bbprompt.png" alt="T_bbprompt.png" title="T_bbprompt.png"><br>其中<code>T_bb</code>是项目额外添加的字符前缀。</p>
+<p>要获取以上信息需要通过<code>getpwuid(getuid())</code>函数获取当前的<code>pwd</code>结构变量。</p>
+<ul>
+<li>用户名从获取的<code>pwd</code>变量中的<code>pw_name</code>获得</li>
+<li>主机名通过<code>gethostname()</code>获得</li>
+<li>路径名通过<code>getcwd()</code>获得，并且需要判断路径中是否包含了该用户的<code>home</code>路径，使用<code>~</code>将路径压缩。</li>
+<li>最后根据<code>uid</code>判断普通用户使用<code>$</code>提示符，<code>root</code>用户使用<code>#</code>提示符。</li>
+</ul>
+<h2 id="建立语法树"><a href="#建立语法树" class="headerlink" title="建立语法树"></a>建立语法树</h2><h3 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h3><p><code>flex</code>是用于生成扫描器的工具。 扫描器是识别文本中的词汇模式的程序。</p>
+<p><code>flex</code>描述采用成对的正则表达式和C代码（称为规则）的形式。 默认情况下会生成一个C源文件<code>lex.yy.c</code>作为输出，该文件定义了例程<code>yylex()</code>。 可以编译此文件并将其与<code>flex</code>运行时库链接以生成可执行文件。 运行可执行文件时，它将分析其输入以查找与正则表达式的匹配。 只要找到一个，它就会执行相应的C代码。</p>
+<p>具体而言，在<code>scanner.l</code>中，定义了文件结束符EOF和描述命令与参数的正则表达式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">%%</span><br><span class="line">&lt;&lt;EOF&gt;&gt;     &#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line"><span class="string">&quot;&amp;&quot;</span>|<span class="string">&quot;;&quot;</span>|<span class="string">&quot;|&quot;</span> &#123;<span class="keyword">return</span> yytext[<span class="number">0</span>];&#125;</span><br><span class="line"><span class="string">&quot;&gt;&gt;&quot;</span>        &#123;<span class="keyword">return</span> yytext[<span class="number">0</span>];&#125;</span><br><span class="line"><span class="string">&quot;&gt;&quot;</span>         &#123;<span class="keyword">return</span> yytext[<span class="number">0</span>];&#125;</span><br><span class="line"><span class="string">&quot;&lt;&quot;</span>         &#123;<span class="keyword">return</span> yytext[<span class="number">0</span>];&#125;</span><br><span class="line"><span class="string">&quot;\n&quot;</span>        &#123;<span class="keyword">return</span> yytext[<span class="number">0</span>];&#125;</span><br><span class="line">[ ]*        &#123;&#125;</span><br><span class="line">&#123;ID&#125;+       &#123;yylval = strdup(yytext); <span class="keyword">return</span> T_ARG;&#125;</span><br><span class="line">.           &#123;<span class="built_in">printf</span>(<span class="string">&quot;lex err:[%s]&quot;</span>, yytext); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">%%</span><br></pre></td></tr></table></figure>
+
+<h3 id="bison"><a href="#bison" class="headerlink" title="bison"></a>bison</h3><p><code>bison</code>是一个语法分析器的生成器，<code>bison</code>和 <code>flex</code>配合使用，它可以将用户提供的语法规则转化成一个语法分析器。简单来说，通过给定语法的产生式开始，<code>bison</code>会通过算法，最终构造得到动作表，然后利用这个动作表去解析句子。具体来说，<code>bison</code>读取用户提供的语法的产生式，生成一个 C 语言格式的 LALR(1) 动作表，并将其包含进一个名为<code>yyparse()</code>的 C 函数，这个函数的作用就是利用这个动作表来解析 <code>token</code>流 ，而这个<code>token</code>流 是由<code>flex</code>生成的词法分析器扫描源程序得到的。</p>
+<p>在<code>parser.y</code>文件中需要包含对命令结点的定义和构造函数的声明，还需要包含其他操作需要用到的头文件，并对后面用到的变量进行声明。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">%&#123;</span><br><span class="line"><span class="comment">//#define YYSTYPE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;main.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">yylex</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">yyerror</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* msg)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">cmd_t</span> cmd;</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">cmd_t</span> root;</span><br><span class="line">%&#125;</span><br></pre></td></tr></table></figure>
+<p>后面主要定义了符号的结合性与动作表</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">%left <span class="string">&#x27;|&#x27;</span> <span class="string">&#x27;;&#x27;</span></span><br><span class="line">%left <span class="string">&#x27;&lt;&#x27;</span></span><br><span class="line">%left <span class="string">&#x27;&amp;&#x27;</span></span><br><span class="line">%left <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">%left <span class="string">&quot;&gt;&gt;&quot;</span></span><br><span class="line"></span><br><span class="line">%%</span><br><span class="line">line            :  command <span class="string">&#x27;\n&#x27;</span>	    		&#123; root = $<span class="number">1</span>; $$ = <span class="number">0</span>; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br><span class="line">		        | <span class="string">&#x27;\n&#x27;</span>       		        &#123; root = <span class="number">0</span>; $$ = <span class="number">0</span>; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br><span class="line">                ;</span><br><span class="line"></span><br><span class="line">command	        :  basic_command		    &#123; $$ = $<span class="number">1</span>;&#125;</span><br><span class="line">		        |  command <span class="string">&#x27;;&#x27;</span> command  	&#123; $$ = cmd_list_new($<span class="number">1</span>, $<span class="number">3</span>);&#125;</span><br><span class="line">		        |  command <span class="string">&#x27;&amp;&#x27;</span>			    &#123; $$ = cmd_back_new($<span class="number">1</span>);&#125;</span><br><span class="line">		        |  command <span class="string">&#x27;|&#x27;</span> command 		&#123; $$ = cmd_pipe_new($<span class="number">1</span>, $<span class="number">3</span>);&#125;</span><br><span class="line">		        |  command <span class="string">&#x27;&lt;&#x27;</span> command      &#123; $$ = cmd_redi_new($<span class="number">1</span>, $<span class="number">3</span>, <span class="number">0</span>);&#125;</span><br><span class="line">		        |  command <span class="string">&#x27;&gt;&#x27;</span> command		&#123; $$ = cmd_redo_new($<span class="number">1</span>, $<span class="number">3</span>, <span class="number">1</span>);&#125;</span><br><span class="line">		        |  command <span class="string">&quot;&gt;&gt;&quot;</span> command     &#123; $$ = cmd_redor_new($<span class="number">1</span>, $<span class="number">3</span>, <span class="number">1</span>);&#125;</span><br><span class="line">		        ;</span><br><span class="line"></span><br><span class="line">basic_command   :  T_ARG args			    &#123; <span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">t</span> =</span> make_node($<span class="number">1</span>, $<span class="number">2</span>); $$ = cmd_atom_new(t);&#125;</span><br><span class="line">		        ;</span><br><span class="line"></span><br><span class="line">args		    : T_ARG args			    &#123; $$ = make_node($<span class="number">1</span>, $<span class="number">2</span>);&#125;</span><br><span class="line">		        |                           &#123; $$ = (struct Node *)<span class="number">0</span>;&#125;</span><br><span class="line">		        ;</span><br><span class="line">%%</span><br></pre></td></tr></table></figure>
+<p>到这里建立命令树的基本框架已经完成，只需要后续填充每种结点的构造函数即可。</p>
+<h2 id="命令树的构造"><a href="#命令树的构造" class="headerlink" title="命令树的构造"></a>命令树的构造</h2><p>shell使用了多种不同类型的命令，可以分为：</p>
+<ul>
+<li>原子型，可以直接前往执行的命令</li>
+<li>后台型，使用了<code>&amp;</code>进行标记，使命令在后台运行</li>
+<li>列表型，使用了<code>;</code>间隔多个命令，这些命令需要一次执行</li>
+<li>管道型，使用了<code>|</code>标记，将左侧的命令结果作为右侧命令的输入</li>
+<li>输入重定向，使用了<code>&lt;</code>将右侧文件内容作为左侧命令的输入</li>
+<li>输出重定向，使用了<code>&gt;</code>将左侧命令输出到右侧文件</li>
+<li>输出重定向追加 <strong>【未能完成】</strong></li>
+</ul>
+<p>使用一个枚举体来表示多个不同的命令类型，节省空间。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">cmd_type_t</span>&#123;</span></span><br><span class="line">    CMD_ATOM,</span><br><span class="line">    CMD_BACK,</span><br><span class="line">    CMD_LIST,</span><br><span class="line">    CMD_PIPE,</span><br><span class="line">    CMD_REDI,</span><br><span class="line">    CMD_REDO,</span><br><span class="line">    CMD_REDOR</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>具体命令结构参见源码，其中<code>ATOM</code>类型中包含了可以执行的命令与参数信息，由<code>Node</code>结点保存，一个命令和参数列表由一个<code>Node</code>链表组成，第一个<code>Node</code>即为命令的名称，后面接续命令的参数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">node</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> *data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>read_cmd</code>中定义的<code>cmd_print</code>仅仅是检测命令树是否正确生成用的，实际运行并不执行。</p>
+<h2 id="命令历史的保存"><a href="#命令历史的保存" class="headerlink" title="命令历史的保存"></a>命令历史的保存</h2><p>命令的历史保存要开辟一块缓存区域，我设置的区域大小是<code>[50][128]</code>的，将这块区域作为环形缓冲区，设置一个<code>history_cnt</code>记录目前缓冲区中的命令数和一个<code>history_queue_start</code>记录目前缓冲区的起始位置。</p>
+<p>在<code>save_history(root)</code>函数中，处理以上两个变量并计算当前可以记录的位置<code>cur_line</code>，将当前可以记录的位置使用<code>memset()</code>清空，并调用<code>write2history()</code>递归遍历当前的命令树并将记录命令和参数的<code>Node</code>链表中的字符串追加写入缓冲区。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> history_buff[<span class="number">50</span>][<span class="number">128</span>] = &#123;&#125;;</span><br><span class="line"><span class="keyword">int</span> history_cnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> history_queue_start = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">save_history</span><span class="params">(<span class="keyword">cmd_t</span> _root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cur_line;</span><br><span class="line">    <span class="keyword">if</span>(history_cnt == <span class="number">50</span>)&#123;</span><br><span class="line">        cur_line = history_queue_start;</span><br><span class="line">        ++history_queue_start;</span><br><span class="line">        history_queue_start %= <span class="number">50</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        cur_line = history_cnt % <span class="number">50</span>;</span><br><span class="line">        ++history_cnt;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">memset</span>(history_buff[cur_line], <span class="number">0</span>, <span class="keyword">sizeof</span>(history_buff[cur_line]));</span><br><span class="line">    write2history(_root, cur_line);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要注意使用<code>snprinrf()</code>前获取的字符串长度有没有作废，<strong>如果字符串发生了修改，需要重新获取字符串长度。</strong></p>
+<h2 id="命令的执行"><a href="#命令的执行" class="headerlink" title="命令的执行"></a>命令的执行</h2><h3 id="内建命令"><a href="#内建命令" class="headerlink" title="内建命令"></a>内建命令</h3><p>T-shell设置了6个内建命令，其中主要的命令是<code>cd, about, exit/quit, history</code>，每次识别<code>node-&gt;data</code>，先判断是否是内建命令。</p>
+<h4 id="exit-quit"><a href="#exit-quit" class="headerlink" title="exit/quit"></a>exit/quit</h4><p>直接执行<code>exit(0)</code>，参数为<code>0</code>表示正常退出</p>
+<h4 id="about"><a href="#about" class="headerlink" title="about"></a>about</h4><p><code>about</code>与剩余两个命令大同小异，都是直接打印字符串信息</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(_node-&gt;data, <span class="string">&quot;about&quot;</span>))</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;This is a simplified version of shell on Linux.\n&quot;</span>);</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(_node-&gt;data, <span class="string">&quot;can_you_hear_me?&quot;</span>))</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hell yeah!\n&quot;</span>);</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(_node-&gt;data, <span class="string">&quot;who_am_i&quot;</span>))</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;How could I know\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="history"><a href="#history" class="headerlink" title="history"></a>history</h4><p><code>history</code>命令使用了之前设置的命令历史缓存区。<code>history</code>命令需要带参数执行，指定需要显示的历史记录数量（上限50）</p>
+<ul>
+<li>获取<code>history</code>的参数</li>
+<li>识别参数有效性</li>
+<li>从<code>history_buff</code>中输出历史记录</li>
+</ul>
+<h4 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h4><p><code>cd</code>主要的核心是使用<code>chdir(cd_path)</code>来切换目录</p>
+<ul>
+<li>传入<code>cd</code>的参数是希望进入的目录，因此这个<code>node</code>的后面不能再有其他<code>node</code>，如果有需要报错。</li>
+<li><code>cd</code>命令需要获得路径名称，如果参数中包含了<code>~</code>需要进行路径扩展，类似<code>type_prompt()</code>中的路径压缩，其中<code>pw</code>是已经在<code>typt_prompt()</code>中已经获取的<code>pwd</code>结构变量。</li>
+<li><code>cd_path</code>字符串使用完需要<code>free()</code>释放资源。</li>
+</ul>
+<h3 id="程序命令"><a href="#程序命令" class="headerlink" title="程序命令"></a>程序命令</h3><p>如果当前执行的命令类型是可以直接执行的<code>ATOM</code>类型，但是不是内建的命令，需要使用<code>fork()</code>出一个子进程执行，使用<code>fork()</code>需要识别返回值控制运行流程：</p>
+<ul>
+<li>返回<code>-1</code>时出错</li>
+<li>返回<code>0</code>是子进程</li>
+<li>返回子进程<code>pid</code>是父进程，直接使用<code>default</code>接收，父进程需要使用<code>waitpid()</code>等待子进程运行结束（除非是后台）</li>
+</ul>
+<p>当直接输入的命令不是可以执行的，也需要通过<code>fork()</code>出一个子进程来处理。</p>
+<p>后面对不同类型的命令采用不同的执行方式</p>
+<h4 id="ATOM"><a href="#ATOM" class="headerlink" title="ATOM"></a>ATOM</h4><p>原子型的命令负责命令的最终执行</p>
+<ul>
+<li>判断内建命令</li>
+<li>读取<code>node</code>链表，获得命令名称与参数，字符串指针依次保留在<code>arg[]</code>中<ul>
+<li>使用<code>execvp()</code>执行命令，之所以选择<code>execvp()</code>而不是<code>execv()</code>主要是因为可以直接执行已经在<code>PATH</code>中的命令（主要是<code>/bin</code>中的程序命令），不需要自己寻找命令的地址。</li>
+<li>如果命令执行失败，向<code>stderr</code>输出错误信息。</li>
+</ul>
+</li>
+</ul>
+<h4 id="BACK"><a href="#BACK" class="headerlink" title="BACK"></a>BACK</h4><p>之前提到父进程需要等待子进程完成之后才能继续运行，而后台命令则可以让父进程不需要等待子进程运行完成就可以继续运行。</p>
+<p>为了屏蔽键盘和控制台，子进程的标准输入、输出映射成<code>/dev/null</code>。子进程调用<code>signal(SIGCHLD,SIG_IGN)</code>，使得<code>Linux</code>接管此进程。 因此Shell可以避免调用<code>wait/waitpid</code>直接运行下一条命令。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (pid = fork()) &#123;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:&#123;</span><br><span class="line">        freopen(<span class="string">&quot;/dev/null&quot;</span>, <span class="string">&quot;w&quot;</span>, <span class="built_in">stdout</span>);</span><br><span class="line">        freopen(<span class="string">&quot;/dev/null&quot;</span>, <span class="string">&quot;r&quot;</span>, <span class="built_in">stdin</span>);</span><br><span class="line">        signal(SIGCHLD, SIG_IGN);</span><br><span class="line">        cmd_run(_back);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="LIST"><a href="#LIST" class="headerlink" title="LIST"></a>LIST</h4><p>命令列表需要将命令顺序执行，列表型的命令结点将<code>;</code>两端的命令分别记录为<code>left</code>和<code>right</code>，执行时在子进程中处理<code>left</code>，在父进程中处理<code>right</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(pid = fork())&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:&#123;</span><br><span class="line">        cmd_run(left);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;List Command Error\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">default</span>:&#123;</span><br><span class="line">        <span class="keyword">int</span> status;</span><br><span class="line">        waitpid(pid, &amp;status, <span class="number">0</span>);</span><br><span class="line">        cmd_run(right);</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这种运行流程中，前一个进程的运行结果一般不影响后面的命令，例如运行<code>cd ..;ls</code>后依然只是在当前目录运行<code>ls</code>而不是上一级目录，因为运行<code>cd ..</code>的是子进程而不是父进程，父进程的路径并没改变。</p>
+<h4 id="PIPE"><a href="#PIPE" class="headerlink" title="PIPE"></a>PIPE</h4><p>管道类型的命令类型结构与列表型类似，使用<code>|</code>分隔命令，并将前面一个进程(指令)的输出（<code>stdout</code>）直接作为下一个进程的输入（<code>stdin</code>）。</p>
+<p>实现管道需要用到<code>pipe(int fd[2])</code>函数创建一个匿名管道，将文件描述词由参数<code>fd</code>数组返回，<code>fd[0]</code>为管道里的读取端, <code>fd[1]</code>则为管道的写入端。返回值为<code>0</code>代表创建成功，为-<code>1</code>代表创建失败。</p>
+<p><strong>【需要注意的是】</strong>: <code>pipe</code>是一个半双工管道, 意思就是说读管道和写管道这两个行为同一时间内只能进行一个，因此父进程需要等待子进程结束后才能运行。</p>
+<p>具体的实现流程大致如下：</p>
+<ul>
+<li>建立一个匿名管道</li>
+<li>在子进程中关闭管道的读取并将输出（<code>stdout</code>）重定向到管道写入，然后运行<code>left</code>的命令</li>
+<li>在父进程中等待子进程执行，子进程退出后，父进程关闭管道的写入并将输入（<code>stdin</code>）重定向到管道读取，然后运行<code>right</code>的命令</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> pd[<span class="number">2</span>];</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">switch</span> (pid = fork()) &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:&#123;</span><br><span class="line">        close(pd[<span class="number">0</span>]);</span><br><span class="line">        dup2(pd[<span class="number">1</span>], STDOUT_FILENO);</span><br><span class="line">        cmd_run(left);</span><br><span class="line">        <span class="keyword">if</span>(pd[<span class="number">1</span>] != STDOUT_FILENO)</span><br><span class="line">            close(pd[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">default</span>:&#123;</span><br><span class="line">        <span class="keyword">int</span> status;</span><br><span class="line">        waitpid(pid, &amp;status, <span class="number">0</span>);</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        close(pd[<span class="number">1</span>]);</span><br><span class="line">        dup2(pd[<span class="number">0</span>], STDIN_FILENO);</span><br><span class="line">        cmd_run(right);</span><br><span class="line">        <span class="keyword">if</span>(pd[<span class="number">0</span>] != STDIN_FILENO)</span><br><span class="line">            close(pd[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="REDI（输入重定向）"><a href="#REDI（输入重定向）" class="headerlink" title="REDI（输入重定向）"></a>REDI（输入重定向）</h4><p><code>Linux</code>为每个进程赋予键盘输入和控制台输出的文件描述符默认为<code>0</code>和<code>1</code>, 在宏定义中中分别为<code>STDIN_FILENO</code>和<code>STDOUT_FILENO</code>。</p>
+<p>输入重定向的思路为: 子进程装载程序前，调用<code>dup2(fd, STDIN_FILENO)</code>将某个打开文件的文件描述<code>fd</code>映射到标准输出。</p>
+<ul>
+<li>从<code>right</code>的命令中获得要打开的文件的名称</li>
+<li>使用<code>open(File, O_RDONLY, 0777)</code>指定文件打开方式和权限</li>
+<li>使用<code>dup2()</code>重定向</li>
+<li>运行<code>left</code>的命令</li>
+</ul>
+<h4 id="REDO（输出重定向）"><a href="#REDO（输出重定向）" class="headerlink" title="REDO（输出重定向）"></a>REDO（输出重定向）</h4><p>与输入重定向大同小异，只是将输出重定向到<code>STDOUT_FILENO</code>，使用<code>open(File, O_WRONLY|O_CREAT|O_TRUNC, 0777)</code>打开文件。</p>
+<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p><img src="Shell-001-start/result-startup.png" alt="result-startup.png"></p>
+<h2 id="自建命令"><a href="#自建命令" class="headerlink" title="自建命令"></a>自建命令</h2><h3 id="非退出类"><a href="#非退出类" class="headerlink" title="非退出类"></a>非退出类</h3><p><img src="Shell-001-start/result-builtin.png" alt="result-builtin.png"></p>
+<h3 id="quit-exit"><a href="#quit-exit" class="headerlink" title="quit/exit"></a>quit/exit</h3><p><img src="Shell-001-start/result-quit.png" alt="result-quit.png"></p>
+<h2 id="程序命令-1"><a href="#程序命令-1" class="headerlink" title="程序命令"></a>程序命令</h2><p><img src="Shell-001-start/result-bin-cmd.png" alt="result-bin-cmd.png"></p>
+<h2 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h2><h3 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h3><p><img src="Shell-001-start/result-redo.png" alt="result-redo.png"></p>
+<h3 id="输入重定向"><a href="#输入重定向" class="headerlink" title="输入重定向"></a>输入重定向</h3><p><img src="Shell-001-start/result-redi.png" alt="result-redi.png"></p>
+<h3 id="输入输出重定向"><a href="#输入输出重定向" class="headerlink" title="输入输出重定向"></a>输入输出重定向</h3><p><img src="Shell-001-start/result-redio.png" alt="result-redio.png"></p>
+<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p><img src="Shell-001-start/result-pipe1.png" alt="result-pipe1.png"></p>
+<h2 id="连续执行"><a href="#连续执行" class="headerlink" title="连续执行"></a>连续执行</h2><p><img src="Shell-001-start/result-list.png" alt="result-list.png"></p>
+<h1 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h1><h2 id="当输入字符串不合法时会直接退出并显示Sytax-Error并退出"><a href="#当输入字符串不合法时会直接退出并显示Sytax-Error并退出" class="headerlink" title="当输入字符串不合法时会直接退出并显示Sytax Error并退出"></a>当输入字符串不合法时会直接退出并显示<code>Sytax Error</code>并退出</h2><p>主要时因为对词法分析器不是很理解，不知道该如何加强稳健性。</p>
+<h2 id="重定向-1"><a href="#重定向-1" class="headerlink" title="重定向"></a>重定向</h2><h3 id="【解决】同时使用输入输出重定向执行会失败"><a href="#【解决】同时使用输入输出重定向执行会失败" class="headerlink" title="【解决】同时使用输入输出重定向执行会失败"></a>【解决】同时使用输入输出重定向执行会失败</h3><p>执行<code>cmd1 &lt; infile &gt; outfile</code>类型命令，需要改变命令树构建时符号的结合性，将重定向符号<code>&gt;</code>和<code>&lt;</code>以及还未实现的<code>&gt;&gt;</code>设置为右结合。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%left <span class="string">&#x27;|&#x27;</span> <span class="string">&#x27;;&#x27;</span></span><br><span class="line">%left <span class="string">&#x27;&amp;&#x27;</span></span><br><span class="line">%right <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">%right <span class="string">&quot;&gt;&gt;&quot;</span></span><br><span class="line">%right <span class="string">&#x27;&lt;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样建立的命令树中局部根节点是<code>CMD_REDO</code>，其左子树是<code>CMD_REDI</code>类型，因此可以实现先执行输入重定向再执行输出重定向。</p>
+<h3 id="追加重定向-gt-gt-不知道如何添加到词法分析器中。"><a href="#追加重定向-gt-gt-不知道如何添加到词法分析器中。" class="headerlink" title="追加重定向&gt;&gt;不知道如何添加到词法分析器中。"></a>追加重定向<code>&gt;&gt;</code>不知道如何添加到词法分析器中。</h3><h2 id="history命令"><a href="#history命令" class="headerlink" title="history命令"></a><code>history</code>命令</h2><h3 id="【解决】显示的命令与参数之间没有空格"><a href="#【解决】显示的命令与参数之间没有空格" class="headerlink" title="【解决】显示的命令与参数之间没有空格"></a>【解决】显示的命令与参数之间没有空格</h3><p>使用<code>strncpy()</code>时指定复制长度时需要计入末尾的<code>\0</code>。</p>
+<h3 id="无法不带参数执行。"><a href="#无法不带参数执行。" class="headerlink" title="无法不带参数执行。"></a>无法不带参数执行。</h3><h3 id="包含当前输入的命令"><a href="#包含当前输入的命令" class="headerlink" title="包含当前输入的命令"></a>包含当前输入的命令</h3><p>目前方案有：</p>
+<ol>
+<li>修改输出时的<code>history_buff</code>下标，整体前移一个，需要注意起始位置有效性</li>
+<li>改变历史保存记录的运行位置。</li>
+</ol>
+<p>我选择了第二种，将<code>save_history(root)</code>添加到<code>exec_cmd()</code>中除退出外的每个命令后面，对于需要<code>fork()</code>执行的进程，添加到父进程等待子进程结束后的位置。</p>
+<p>运行结果如下：<br><img src="Shell-001-start/result-history-fix.png" alt="result-history-fix.png"></p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://csslab-ustc.github.io/courses/sysprog/lab1/index.html">工程化C的Lab1 </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/lisea/1788046">自己动手实现linux–&gt;Shell</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360923356">C语言实现一个Shell</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/108167693">编译工程附录：flex使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/111445997">编译工程附录：Bison基础</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Phantom T 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="Phantom T 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Phantom T
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://phantomt.github.io/2021/12/07/Shell-001-start/" title="简易shell的实现 | 无信号接收版">https://phantomt.github.io/2021/12/07/Shell-001-start/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/05/28/Book-002-Homo-Deus/" rel="prev" title="未来简史/读书笔记">
+                  <i class="fa fa-chevron-left"></i> 未来简史/读书笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phantom T</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"phantomT","repo":"hexo-gitalk","client_id":"b6dcc47c3c7ef6e52002","client_secret":"4b1bd615b27b373815e57080ed022051b759ea8c","admin_user":"phantomT","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"be5ac549a7589e9ef14ff585f3b66153"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
