@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://phantomt.github.io/2021/12/07/Shell-001-start/</loc>
+    
+    <lastmod>2021-12-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/Linux-000-VPS/</loc>
+    
+    <lastmod>2021-12-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/28/Book-002-Homo-Deus/</loc>
+    
+    <lastmod>2019-05-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/Book-001-Scientific/</loc>
+    
+    <lastmod>2019-05-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/05/Hexo-002-Comment/</loc>
+    
+    <lastmod>2019-05-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/Hexo-001-sitemap/</loc>
+    
+    <lastmod>2019-05-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/Hexo-000-start/</loc>
+    
+    <lastmod>2019-05-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/STM32-001-Serial/</loc>
+    
+    <lastmod>2019-05-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/Linux-003-RaspberryPi/</loc>
+    
+    <lastmod>2019-05-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/Book-000-Mckinsey/</loc>
+    
+    <lastmod>2019-05-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/08/Linux-004-KEY/</loc>
+    
+    <lastmod>2019-05-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/Linux-001-OpenWrt/</loc>
+    
+    <lastmod>2019-05-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/Linux-002-intro/</loc>
+    
+    <lastmod>2019-05-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/07/Why42-190507/</loc>
+    
+    <lastmod>2019-05-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/05/Why42-190505/</loc>
+    
+    <lastmod>2019-05-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/Why42-181109/</loc>
+    
+    <lastmod>2019-05-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/EE-002-UHV/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/EE-001-TAIYANGGONG/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/EE-000-SIFANG/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/STM32-000-CubeMX/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/HVDC-002-Converter/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/HVDC-001-Transformer/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/HVDC-000-Line/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/005C-fileinfo/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/006C-findkey/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/007C-blur-search/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/004C-finddata/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/003C-fread-fwrite/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/001C-text-catch/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/002C-text-catch/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/2019/05/02/000hello-world/</loc>
+    
+    <lastmod>2019-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/404.html</loc>
+    
+    <lastmod>2018-02-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  <url>
+    <loc>https://phantomt.github.io/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/C-C/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/hexo/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/CS/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/EE/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/HVDC/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/git/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/node-js/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/GitHub/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Markdown/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Google/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/JavaScript/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/IPv6/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Shadowsocks/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/VPS/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Linux/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/%E6%A0%A1%E5%9B%AD%E7%BD%91/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/GNU/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/OpenWrt/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Netgear/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Raspberry-Pi/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Algorithm/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/STM32/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/HAL/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/STM32CubeMX/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Keil/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Qt/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/GUI/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/%E4%B8%B2%E5%8F%A3/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Why42/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/%E5%88%9B%E6%96%B0/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/shell/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/Life/</loc>
+    <lastmod>2021-12-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+</urlset>
