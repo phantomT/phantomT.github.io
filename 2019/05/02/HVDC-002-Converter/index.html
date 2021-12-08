@@ -27,26 +27,26 @@
 <meta property="og:site_name" content="欢迎来到本尊的鱼缸">
 <meta property="og:description" content="2019-04-29今天突然收到了一个打赏问我能不能转载我的博文，也没有任何联系方式，所以我就在这写一下希望那位大佬能看到吧😳我的博文可以转载，只需要遵守文末的Creative Commons协议即可，如果不确定可以给我发邮件。这一篇是HVDC的最后一次作业，是电子版的，为了避免有人抄我的所以我发的晚了些(虽然已经考完试了😢)">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/6pulsebridge.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/12pulsebridge.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/bridgerectifier.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/inverter-valve.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/3phaseMMC.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/submodule.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/equivalentcircuit.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/1.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/2.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/3.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/definition-of-circulation.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/8.png">
-<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/9.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/6pulsebridge.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/12pulsebridge.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/bridgerectifier.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/inverter-valve.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/3phaseMMC.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/submodule.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/equivalentcircuit.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/1.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/2.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/3.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/definition-of-circulation.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/8.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/9.png">
 <meta property="article:published_time" content="2019-05-02T11:29:49.000Z">
 <meta property="article:modified_time" content="2019-05-02T11:31:16.427Z">
 <meta property="article:author" content="Phantom T">
 <meta property="article:tag" content="EE">
 <meta property="article:tag" content="HVDC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/6pulsebridge.png">
+<meta name="twitter:image" content="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/6pulsebridge.png">
 
 
 <link rel="canonical" href="https://phantomt.github.io/2019/05/02/HVDC-002-Converter/">
@@ -273,12 +273,12 @@
 <span id="more"></span>
 <h2 id="基于SCR的LCC"><a href="#基于SCR的LCC" class="headerlink" title="基于SCR的LCC"></a>基于SCR的LCC</h2><h3 id="电路结构"><a href="#电路结构" class="headerlink" title="电路结构"></a>电路结构</h3><p>HVDC的基本LCC配置使用三相Graetz 桥式整流器或六脉冲桥，包含六个电子开关，每个电子开关将三相中的一个连接到两个DC端子中的一个。完整的开关元件通常称为阀门，不论其结构如何。通常，桥中的两个阀门在任何时间都在传导：一个位于顶行，一个（来自不同的相位）位于底行。两个导电阀将串联的三个AC相电压中的两个连接到DC端子。因此，任何给定时刻的DC输出电压由两个AC相电压的串联组合给出。例如，如果阀V1和V2导通，则DC输出电压由相1的电压减去相3的电压给出。</p>
 <p>由于交流电源中不可避免（但有益）的电感，从一对导电阀到下一个导电阀的过渡不会立即发生。相反，当桥的同一排上的两个阀同时导通时，存在短的重叠时段。例如，如果阀V1和V2最初导通然后阀V3打开，则传导从V1传递到V3，但是在短时间内这两个阀同时传导。在此期间，直流输出电压由相1和2的电压的平均值减去相3的电压给出.HVDC转换器中的重叠角 μ（或u）随负载电流而增加，但满载时通常约为20°。</p>
-<p><img src="/2019/05/02/HVDC-002-Converter/6pulsebridge.png" alt="图表-1 6 pulse bridge with inductance"></p>
+<p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/6pulsebridge.png" alt="图表-1 6 pulse bridge with inductance"></p>
 <p>仅使用60°的相位变化，当使用六脉冲布置时，在DC和AC端子处产生相当大的谐波失真。六脉冲桥式布置的增强使用十二脉冲桥中的12个阀。阿十二脉冲桥有效地串联连接在直流侧和布置成使它们各自的AC电源之间的相位移，使得一些谐波电压和电流被抵消两个六脉冲桥。</p>
 <p>两个交流电源之间的相位偏移通常为30°，通过使用具有两个不同次级绕组（或阀门绕组）的换流变压器实现。通常一个阀门绕组是星形（Y形）连接而另一个是三角形连接。有12个阀门将两组三相中的每一相连接到两个直流导轨，每30°发生一次相位变化，谐波大大减少。由于这个原因，十二脉冲系统已经成为几乎所有线路换向转换器HVDC系统的标准。</p>
-<p><img src="/2019/05/02/HVDC-002-Converter/12pulsebridge.png" alt="图表-2 12 pulse bridge with thyristor valves"></p>
-<h3 id="性能特点"><a href="#性能特点" class="headerlink" title="性能特点"></a>性能特点</h3><p><img src="/2019/05/02/HVDC-002-Converter/bridgerectifier.png" alt="图表-3 Bridge rectifier at alpha=20 u=20"></p>
-<p><img src="/2019/05/02/HVDC-002-Converter/inverter-valve.png" alt="图表-4 Inverter valve voltage and current"></p>
+<p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/12pulsebridge.png" alt="图表-2 12 pulse bridge with thyristor valves"></p>
+<h3 id="性能特点"><a href="#性能特点" class="headerlink" title="性能特点"></a>性能特点</h3><p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/bridgerectifier.png" alt="图表-3 Bridge rectifier at alpha=20 u=20"></p>
+<p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/inverter-valve.png" alt="图表-4 Inverter valve voltage and current"></p>
 <p>晶闸管阀最早是在高压直流输电系统用在1972年的伊尔河换流站的加拿大。闸流管是一种固态的半导体类似于装置二极管，但是具有用于在限定的时刻切换装置上的额外的控制端子。由于晶闸管的击穿电压仅为几千伏，因此HVDC晶闸管阀采用大量串联的晶闸管构建。额外的无源元件，如分级电容器和电阻器需要与每个晶闸管并联连接，以确保在晶闸管之间均匀分配阀两端的电压。晶闸管及其分级电路和其他辅助设备被称为晶闸管级。</p>
 <p>每个晶闸管阀通常包含数十或数百个晶闸管电平，每个晶闸管电平相对于地球工作在不同的（高）电位。命令信息以接通晶闸管因此不能简单地使用有线连接来发送-它需要被分离。隔离方法可以是磁性的（使用脉冲变压器），但通常是光学的。使用两种光学方法：间接和直接光学触发。在间接光学触发方法中，低压控制电子设备沿光纤将光脉冲发送到高侧控制电子设备，其功率来自每个晶闸管的电压。替代的直接光学触发方法省去了大多数高端电子设备，而是使用来自控制电子设备的光脉冲来切换光触发晶闸管（LTT），尽管可能仍需要小型监控电子设备来保护阀门。</p>
 <p>基于晶闸管的12脉动换流器的主要优点是：耐压水平高、输送容量大、控制技术成熟、运行经验丰富、制造水平高、运行可靠性强。</p>
@@ -293,26 +293,26 @@
 </ol>
 <h3 id="工程现状"><a href="#工程现状" class="headerlink" title="工程现状"></a>工程现状</h3><p>随着电力科学技术的发展，电网换相换流器高压直流输电系统（<strong>Line Commutated Converter Based High Voltage Direct Current，LCC-HVDC</strong>）的技术已经非常成熟。目前， LCC-HVDC系统已经被广泛地应用于海底电缆送电、大容量远距离输电以及异步电网背靠背互联等场合。但是，LCC-HVDC系统存在着的逆变站换相失败、无法对弱交流系统供电、运行过程中需要消耗大量无功功率等缺陷，在一定程度上制约它的发展。</p>
 <p>截至2012年，晶闸管阀已用于100多个高压直流输电系统，还有更多仍处于建设或计划中。2010年运行的任何单个HVDC转换器（十二脉冲桥）的最高额定功率为2000 MW，中国的宁东 - 山东±660 kV 。在该方案的每一端提供两个这样的转换器，其具有传统的双极结构。自2007年以来，单个HVDC转换器的最高额定电压是连接挪威和荷兰的±450 kV NorNed方案，该方案在每个端部只有一个转换器，这对于LCC HVDC方案来说是不寻常的。</p>
-<h2 id="基于IGBT的MMC"><a href="#基于IGBT的MMC" class="headerlink" title="基于IGBT的MMC"></a>基于IGBT的MMC</h2><h3 id="电路结构-1"><a href="#电路结构-1" class="headerlink" title="电路结构"></a>电路结构</h3><p><img src="/2019/05/02/HVDC-002-Converter/3phaseMMC.png"></p>
+<h2 id="基于IGBT的MMC"><a href="#基于IGBT的MMC" class="headerlink" title="基于IGBT的MMC"></a>基于IGBT的MMC</h2><h3 id="电路结构-1"><a href="#电路结构-1" class="headerlink" title="电路结构"></a>电路结构</h3><p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/3phaseMMC.png"></p>
 <p>图1为MMC 的拓扑结构，它由6个桥臂构成，其中每个桥臂由若干个相互连接且结构相同的子模块(sub module，SM)与一个电抗器L 串联构成，上下2个桥臂构成一个相单元。根据MMC 的模块化设计，6个桥臂具有对称性，各子模块的电气参数和各桥臂电抗值都是相同的。与以往VSC拓扑结构显著不同的是，模块化多电平换流器在直流侧正负极之间没有直流储能电容。</p>
 <p>MMC 的子模块由一个作为开关单元的IGBT半桥和一个直流储能电容构成，如图2 所示。图中，K1为高速旁路开关；K2为压接式封装晶闸管，这2个元件是作为保护措施来增强MMC的安全性；USM为子模块的输出电压；iSM 为该子模块所在桥臂的电流；UC 为子模块的电容电压。每个子模块都是两端元件，通过2个开关单元T1 和T2 的作用，USM 可以同时在2种电流方向的情况下进行电容电压UC 与0 之间的切换。具体开关状态如表1所述。其中，1 表示导通，0 表示关断。</p>
-<p><img src="/2019/05/02/HVDC-002-Converter/submodule.png"></p>
-<h3 id="性能特点-1"><a href="#性能特点-1" class="headerlink" title="性能特点"></a>性能特点</h3><p><img src="/2019/05/02/HVDC-002-Converter/equivalentcircuit.png"></p>
+<p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/submodule.png"></p>
+<h3 id="性能特点-1"><a href="#性能特点-1" class="headerlink" title="性能特点"></a>性能特点</h3><p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/equivalentcircuit.png"></p>
 <p>图3为MMC-HVDC 系统中整流侧的等值电路图，桥臂中的R代表桥臂器件的等值损耗电阻。由于换流器中3个相单元具有严格的对称性，以a相为例。P点和N点表示换流器直流侧的正负母线，它们相对于参考中性点o 的电压分别为Udc/2 和−Udc/2。ua1 和ua2 分别是a相上、下桥臂可控电压源电压；uao 为a相交流输出侧的电压。可以得到</p>
-<p><img src="/2019/05/02/HVDC-002-Converter/1.png"></p>
+<p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/1.png"></p>
 <p>将式(1)中的上下两式相加，得到</p>
-<p><img src="/2019/05/02/HVDC-002-Converter/2.png"></p>
+<p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/2.png"></p>
 <p>由式(1)可知，三相交流电压的输出是通过对相单元中上、下桥臂处于投入状态的子模块个数进行调整而得到的；由式(2)可知，直流电压等于相单元中上、下桥臂电压之和，即保证相单元中在任何时刻投入的子模块个数都相同，这些是MMC 正常工作的必备条件。</p>
 <p>由于MMC 中3个相单元具有严格的对称性，并且相单元中上、下2个桥臂同样也具有严格的对称性，因此直流电流Idc在3个相单元间被均分，a相的输出端电流也被上、下2个桥臂均分为2部分。可以得到a 相上、下桥臂电流为</p>
-<p><img src="/2019/05/02/HVDC-002-Converter/3.png"></p>
+<p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/3.png"></p>
 <p>根据MMC 中三个相单元的对称性，b相、c相与a相具有上述同样的工作机理。</p>
 <p>要实现系统高性能和高效率的运行，不仅要有适当的电路拓扑结构作为基础，还要有相应的调制策略作为保障。针对大功率多电平换流器，目前一般有如下几种调制策略：阶梯波脉宽调制、消除特定次谐波调制、多载波PWM技术、多电平电压空间矢量控制、载波移相脉宽调制技术。</p>
 <p>换流器中的3个相单元并联于直流侧母线上，在运行时每个相单元产生的直流电压很难保持严格一致，因此就有环流在3个相单元间流动，图4为MMC换流器内部的环流原理图。</p>
-<p><img src="/2019/05/02/HVDC-002-Converter/definition-of-circulation.png"></p>
+<p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/definition-of-circulation.png"></p>
 <p>由于图3所示的换流器的各相单元结构是对称的，以a相为例，icir1为流经a相单元的环流，由图4可得</p>
-<p><img src="/2019/05/02/HVDC-002-Converter/8.png"></p>
+<p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/8.png"></p>
 <p>得到环流icir1 表达式：</p>
-<p><img src="/2019/05/02/HVDC-002-Converter/9.png"></p>
+<p><img src="/2019/05/02/HVDC-002-Converter/05/02/HVDC-002-Converter/9.png"></p>
 <p>其它相单元依次类推。由式(8)—(9)可以得出，环流只存在于换流器内部，独立于换流器外部所接电源或负荷。尽管桥臂电抗可以限制环流的大小，但是相单元间环流的存在仍会使桥臂电流发生畸变，也会对电容电压平衡产生一定影响，所以就有必要采用合适的控制策略对电容电压平衡和环流进行协同控制。</p>
 <h3 id="工程现状-1"><a href="#工程现状-1" class="headerlink" title="工程现状"></a>工程现状</h3><p>目前，以全控型电力电子器件为基础的电压源型换流器高压直流输电（<strong>Voltage Source Converter Based High Voltage Direct Current， VSC-HVDC</strong>）因其可独立控制有功无功功率、不存在换相失败、可为无源孤岛供电等诸多优点得到学术界与工业界的青睐。在众多的VSC-HVDC 输电拓扑中，由西门子公司提出的模块化多电平换流器直流输电系统（<strong>Modular Multilevel Converter Based High Voltage Direct Current， MMC-HVDC</strong>）具有较好的发展前景。作为VSC-HVDC 拓扑的一种，MMC-HVDC 具备VSC-HVDC 所有的优点。同时，因MMC 拓扑结构的特点， MMC-HVDC 系统还具备开关频率较低、开关损耗小、无需交流滤波器组和扩展性强等优点，这使得其可以运用于高直流电压、大功率输电的场合[6]。但是，MMC-HVDC 系统造价昂贵、无法有效地处理直流故障等缺点却制约其在长距离大功率输电场合的运用。  </p>
 <p>模块化多电平换流器(<strong>Modular Multilevel Converter MMC</strong>)已成为柔性直流输电系统的首选换流器拓扑。我国已建成的上海南汇柔性直流工程、南澳三端柔性直流工程、舟山五端柔性直流输电工程以及正在建设中的厦门柔性直流工程都采用MMC结构。国际上SIEMENS已建成的美国跨湾工程(Trans Bay Cable Project TBC)和法国一西班牙联网工程(INELFE工程))都采用MMC结构。同时，ABB公司提出了一种级联两电平结构(cascaded two level CTL)，其本质仍为MMC，并且ABB后续建设的数项柔性直流工程都采用CTL结构。因此，MMC已由最初的低压、小容量示范工程向高电压、大容量方向快速发展，展现出很好的发展前景。  </p>

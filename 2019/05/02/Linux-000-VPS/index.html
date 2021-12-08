@@ -27,11 +27,11 @@
 <meta property="og:site_name" content="欢迎来到本尊的鱼缸">
 <meta property="og:description" content="苯宝宝假期呆在学校学习，然而校园网实在坑爹。。所以通过一些教程了解了搭建代理服务器的方式通过IPv6来上网，效果还不错，虽然也有一些问题QAQ">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://phantomt.github.io/Linux-000-VPS/taocan.png">
-<meta property="og:image" content="https://phantomt.github.io/Linux-000-VPS/SSRclient.png">
-<meta property="og:image" content="https://phantomt.github.io/Linux-000-VPS/icon.png">
-<meta property="og:image" content="https://phantomt.github.io/Linux-000-VPS/proxyserver.png">
-<meta property="og:image" content="https://phantomt.github.io/Linux-000-VPS/proxyrule.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/taocan.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/SSRclient.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/icon.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/proxyserver.png">
+<meta property="og:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/proxyrule.png">
 <meta property="article:published_time" content="2019-05-02T11:32:35.000Z">
 <meta property="article:modified_time" content="2021-12-08T05:53:27.532Z">
 <meta property="article:author" content="Phantom T">
@@ -41,7 +41,7 @@
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="校园网">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://phantomt.github.io/Linux-000-VPS/taocan.png">
+<meta name="twitter:image" content="https://phantomt.github.io/2019/05/02/Linux-000-VPS/taocan.png">
 
 
 <link rel="canonical" href="https://phantomt.github.io/2019/05/02/Linux-000-VPS/">
@@ -289,7 +289,7 @@
 </ul>
 </blockquote>
 </li>
-<li><p>截图为证:<br><img src="/Linux-000-VPS/taocan.png"></p>
+<li><p>截图为证:<br><img src="/2019/05/02/Linux-000-VPS/taocan.png"></p>
 </li>
 <li><p>一般宿舍都是组团买50元的套餐，但是目前学校好像按照账号限速！！！也就是说我们特么6个人分一个号的速度！！！本来网口只有100兆！而且50块钱也太贵了！更多的吐槽不能乱说了，怕水表。</p>
 </li>
@@ -353,7 +353,7 @@
 <li><p>放行IPv6端口</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/sbin/ip6tables -I INPUT -p tcp --dport &quot;yourport&quot; -j ACCEPT    #将这里的&quot;yourport&quot;改成在上面搭建过程中设置的端口</span><br><span class="line">/etc/rc.d/init.d/ip6tables save    #保存端口放行设置</span><br><span class="line">/etc/init.d/ip6tables restart    #重启ip6tables，应用放行设置</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="SSR客户端的设置-Windows系统"><a href="#SSR客户端的设置-Windows系统" class="headerlink" title="SSR客户端的设置/Windows系统"></a>SSR客户端的设置/Windows系统</h3><p>将SSR客户端下载后解压缩，文件夹大致如图:<br><img src="/Linux-000-VPS/SSRclient.png"><br>双击 <strong>ShadowsocksR-dotnet4.0.exe</strong> 启动<br>这时任务栏会出现一个小飞机图标，<img src="/Linux-000-VPS/icon.png"><br>双击小飞机，填入服务器数据，如果使用IPv6，则将IP一栏填写成服务器的IPv6地址。<br>例如:</p>
+<h3 id="SSR客户端的设置-Windows系统"><a href="#SSR客户端的设置-Windows系统" class="headerlink" title="SSR客户端的设置/Windows系统"></a>SSR客户端的设置/Windows系统</h3><p>将SSR客户端下载后解压缩，文件夹大致如图:<br><img src="/2019/05/02/Linux-000-VPS/SSRclient.png"><br>双击 <strong>ShadowsocksR-dotnet4.0.exe</strong> 启动<br>这时任务栏会出现一个小飞机图标，<img src="/2019/05/02/Linux-000-VPS/icon.png"><br>双击小飞机，填入服务器数据，如果使用IPv6，则将IP一栏填写成服务器的IPv6地址。<br>例如:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">服务器IP: #服务器的ip地址</span><br><span class="line">服务器端口: 8388   #前面设置的服务器端口</span><br><span class="line">密码: #前面设置的SSR密码</span><br><span class="line">加密: aes-256-cfb</span><br><span class="line">协议: 默认的 origin 就行</span><br><span class="line">协议参数: 不用管</span><br><span class="line">混淆: 默认的 plain 就行</span><br><span class="line">混淆参数: 不用管</span><br><span class="line">备注: 随意</span><br><span class="line">Group: 随意</span><br></pre></td></tr></table></figure>
 <p>右键小飞机，将系统代理模式设置为PAC模式，代理规则为全局，这时小飞机就会变成绿色，像上面的图片一样。<br><em>更多SSR的使用请上网自行搜索，包括二维码、绕行规则什么的</em></p>
 <h3 id="使用Proxifier进行全局代理"><a href="#使用Proxifier进行全局代理" class="headerlink" title="使用Proxifier进行全局代理"></a>使用Proxifier进行全局代理</h3><ul>
@@ -363,14 +363,14 @@
 <li>Address填:127.0.0.1;</li>
 <li>Port填:1080;</li>
 <li>Protocol选择:SOCKS Version 5;</li>
-<li>确定。<br><img src="/Linux-000-VPS/proxyserver.png"></li>
+<li>确定。<br><img src="/2019/05/02/Linux-000-VPS/proxyserver.png"></li>
 </ol>
 </li>
 <li>添加代理规则:<ol>
 <li>点击Profile-&gt;Proxification Rules，逐一添加;</li>
 <li>将ShadowsocksR-dotnet4.0.exe添加到直连;</li>
 <li>将localhost添加到直连;</li>
-<li>将默认设置为Proxy SOCKS5 127.0.0.1。<br><img src="/Linux-000-VPS/proxyrule.png"></li>
+<li>将默认设置为Proxy SOCKS5 127.0.0.1。<br><img src="/2019/05/02/Linux-000-VPS/proxyrule.png"></li>
 </ol>
 </li>
 </ul>
