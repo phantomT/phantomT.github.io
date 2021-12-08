@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /home/
+Allow: /archives/
+Allow: /tags/
+
+Allow: /js/
+Allow: /css/
+Allow: /fonts/
+
+Sitemap: https://phantomT.github.io/sitemap.xml
