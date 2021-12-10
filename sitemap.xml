@@ -290,6 +290,13 @@
 
   
   <url>
+    <loc>https://phantomt.github.io/tags/C-C/</loc>
+    <lastmod>2021-12-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://phantomt.github.io/tags/hexo/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -305,13 +312,6 @@
   
   <url>
     <loc>https://phantomt.github.io/tags/EE/</loc>
-    <lastmod>2021-12-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://phantomt.github.io/tags/C-C/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -409,13 +409,6 @@
   </url>
   
   <url>
-    <loc>https://phantomt.github.io/tags/GNU/</loc>
-    <lastmod>2021-12-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://phantomt.github.io/tags/OpenWrt/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -431,6 +424,13 @@
   
   <url>
     <loc>https://phantomt.github.io/tags/Netgear/</loc>
+    <lastmod>2021-12-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://phantomt.github.io/tags/GNU/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
