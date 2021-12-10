@@ -280,6 +280,25 @@ T-shell设置了6个内建命令，其中主要的命令是`cd, about, exit/quit
 - 读取`node`链表，获得命令名称与参数，字符串指针依次保留在`arg[]`中
     - 使用`execvp()`执行命令，之所以选择`execvp()`而不是`execv()`主要是因为可以直接执行已经在`PATH`中的命令（主要是`/bin`中的程序命令），不需要自己寻找命令的地址。
     - 如果命令执行失败，向`stderr`输出错误信息。
+   
+**【更新】添加一个运行命令的路径**
+    如果命令在`PATH`中没有找到，则在当前目录中查找，利用了`type_prompt()`中获得的`pathName`，注意要在路径中加入`/`否则会出错，在代码中包含了一行检查命令路径的输出信息。
+    
+   ```c
+if(execvp(arg[0], arg) == -1) {
+    char *curPath = malloc(strlen(pathName)+strlen(arg[0])+2);
+    if(curPath == NULL){
+        printf("execv in curPath malloc failed.\n");
+        exit(1);
+    }
+    strncpy(curPath, pathName, strlen(pathName)+1);
+    strncpy(curPath+ strlen(pathName), "/", 2);
+    strncpy(curPath+ strlen(pathName)+1, arg[0], strlen(arg[0])+1);
+    printf("%s\n", curPath);
+    if(execv(curPath, arg) == -1)
+        fprintf(stderr, "Cannot run command, check your input.");
+}
+```
 
 #### BACK
 之前提到父进程需要等待子进程完成之后才能继续运行，而后台命令则可以让父进程不需要等待子进程运行完成就可以继续运行。
@@ -401,6 +420,11 @@ switch (pid = fork()) {
 
 ## 连续执行
 ![result-list.png](Shell-001-start/result-list.png)
+
+## 运行当前目录中的程序
+例如运行自己
+在主函数循环开始前加入一行提示语表示程序第一次执行，最后退出时也可以看到第一次退出的是嵌套的TShell
+![result-curpath.png](Shell-001-start/result-curpath.png)
 
 # 遇到的问题
 ## 当输入字符串不合法时会直接退出并显示`Sytax Error`并退出
