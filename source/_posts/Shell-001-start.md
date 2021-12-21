@@ -1,5 +1,5 @@
 ---
-title: 简易shell的实现 | 无信号接收版
+title: 简易shell的实现 | 更新简单信号处理
 date: 2021-12-07 21:23:49
 tags:
     - shell
@@ -19,16 +19,15 @@ tags:
 
 # T-Shell project
 
-## TODO
-- [ ] `SIG`系统信号捕获与处理
-- [ ] `>>`追加写入功能【现在还没搞懂怎么加入词法分析树】
 ## 已经实现功能
 - 内建命令：`cd/about/history/exit/quit`等，`history`命令只能带参数执行
 - Program指令：`ls/pwd/vi/grep`等在`PATH`中的程序
 - 用`;`分段的多命令执行
-- `< >`输入输出重定向
+- `< > >>`输入输出重定向
 - `|`管道
 - `&`后台运行
+- 带颜色的提示符
+- 简单的信号处理：Ctrl+C/Z，`INT`和`STOP`
 ## 主要文件
 - `main.c`主函数
 - `main.h`主函数的头文件，包含大部分函数声明
@@ -38,6 +37,7 @@ tags:
 - `type_prompt.c`生成命令行开头的提示符
 - `exec_cmd.c`包含主函数执行的执行命令函数和具体操作的执行命令函数
 - `builtin_cmd.c`包含比较复杂的内建命令实现，如`cd`，`history`
+- `sig_handle.c`包含简单的信号处理函数
 
 # Shell简介
 ## 什么是Shell
@@ -280,7 +280,7 @@ T-shell设置了6个内建命令，其中主要的命令是`cd, about, exit/quit
 - 读取`node`链表，获得命令名称与参数，字符串指针依次保留在`arg[]`中
     - 使用`execvp()`执行命令，之所以选择`execvp()`而不是`execv()`主要是因为可以直接执行已经在`PATH`中的命令（主要是`/bin`中的程序命令），不需要自己寻找命令的地址。
     - 如果命令执行失败，向`stderr`输出错误信息。
-   
+
 **【更新】添加一个运行命令的路径**
     如果命令在`PATH`中没有找到，则在当前目录中查找，利用了`type_prompt()`中获得的`pathName`，注意要在路径中加入`/`否则会出错，在代码中包含了一行检查命令路径的输出信息。
     
@@ -298,7 +298,7 @@ if(execvp(arg[0], arg) == -1) {
     if(execv(curPath, arg) == -1)
         fprintf(stderr, "Cannot run command, check your input.");
 }
-```
+   ```
 
 #### BACK
 之前提到父进程需要等待子进程完成之后才能继续运行，而后台命令则可以让父进程不需要等待子进程运行完成就可以继续运行。
@@ -391,7 +391,61 @@ switch (pid = fork()) {
 #### REDO（输出重定向）
 与输入重定向大同小异，只是将输出重定向到`STDOUT_FILENO`，使用`open(File, O_WRONLY|O_CREAT|O_TRUNC, 0777)`打开文件。
 
+## 信号的处理
+
+Linux的信号通过`signal(sig, sig_handle)`绑定接收到的信号和信号处理函数，为了处理`SIGINT`和`SIGTSTP`两个信号，需要在主函数中分别绑定两个信号处理函数。
+
+```c
+int main() {
+    //...
+    signal(SIGINT, sigint_handler);
+    signal(SIGTSTP, sigtstp_handler);
+    while(1){
+        //...
+    }
+```
+
+然后准备信号处理函数，在两个函数中打印辅助信息，并将收到的信号转发到进程组中PID绝对值与当前进程相同的进程，最后退出进程。
+
+```c
+void sigint_handler(int sig){
+    printf("Got a INT SIGNAL\n");
+    pid_t pid = getpid();
+    if(pid != 0)
+        kill(-pid, sig);
+    exit(0);
+}
+void sigtstp_handler(int sig){
+    printf("Got a STOP SIGNAL\n");
+    pid_t pid = getpid();
+    if(pid != 0)
+        kill(-pid, sig);
+    exit(0);
+}
+```
+
+对于收到的信号，期望的行为是：仅终止当前进程，并不终止父进程，因此我选择了在程序执行函数`exec_cmd()`中修改`fork()`后的分支，为父进程添加信号忽略。之所以选择信号忽略而不是信号屏蔽，首要原因是这是信号的简易处理，并且**没有设置前后台队列，难以区分前后台**；其次是因为对于信号屏蔽来说，**被屏蔽的信号在解除屏蔽后还会执行一次**，因此父进程在接触屏蔽后依然会立即被终止。
+
+如果是按照CSAPP的lab中的实现，需要为正在运行的进程建立前后台队列，并将信号发送到前台队列中的每个进程，并且需要在父子进程设置信号量集的时候设置阻塞，避免同时对同一个信号集进行写。
+
+在这里使用信号忽略可以简化步骤为：在`fork()`之后父进程设置忽略信号，在子进程结束后，父进程设置恢复接受处理信号。当前粗略的认为当前正在执行的程序是唯一的前台进程，父进程都进入后台。
+
+```c
+default:{
+                    signal(SIGINT, SIG_IGN);
+                    signal(SIGTSTP, SIG_IGN);
+                    //...
+                    waitpid(pid, &status, 0);
+                    signal(SIGINT, sigint_handler);
+                    signal(SIGTSTP, sigtstp_handler);
+                    //...
+                }
+```
+
+其实当子进程结束后会向父进程发出`SIGCHLD`信号，如有必要也可以设置处理。
+
 # 运行结果
+
 ## 启动
 ![result-startup.png](Shell-001-start/result-startup.png)
 
@@ -426,9 +480,31 @@ switch (pid = fork()) {
 在主函数循环开始前加入一行提示语表示程序第一次执行，最后退出时也可以看到第一次退出的是嵌套的TShell
 ![result-curpath.png](Shell-001-start/result-curpath.png)
 
+## 【更新】`cd`路径带有`/`或`~`
+
+![cd new1](Shell-001-start/cd new1.png)
+
+![cd new2](Shell-001-start/image-20211221193957620.png)
+
+## 【更新】追加输出重定向`>>`
+
+![redor](Shell-001-start/image-20211221194507786.png)
+
+## 【更新】信号处理
+
+![signal](Shell-001-start/image-20211221194737812.png)
+
 # 遇到的问题
-## 当输入字符串不合法时会直接退出并显示`Sytax Error`并退出
+
+## 词法分析器
+
+### 当输入字符串不合法时会直接退出并显示`Sytax Error`并退出
+
 主要时因为对词法分析器不是很理解，不知道该如何加强稳健性。
+
+### 【解决】`CD`命令不能包含`~`和`/`
+
+修改`scanner.l`中的`ID`正则表达式，将`~`和`/`添加到最前面（因为加在后面会出错，不知道为什么，可能是`/`触发了某种分隔机制）
 
 ## 重定向
 ### 【解决】同时使用输入输出重定向执行会失败
@@ -444,15 +520,51 @@ switch (pid = fork()) {
 
 这样建立的命令树中局部根节点是`CMD_REDO`，其左子树是`CMD_REDI`类型，因此可以实现先执行输入重定向再执行输出重定向。
 
-### 追加重定向`>>`不知道如何添加到词法分析器中。
+### 【解决】追加重定向`>>`不知道如何添加到词法分析器中。
+
+感谢助教的引导，因为`>>`是多字符的标志，因此不能直接在`parser.y`中直接使用，需要像`T_ARG`一样声明成标识符。
+
+我在`token`中声明了一个标识符，并在`scanner.l`中添加了正则表达式，设置好规则以后就能识别了。
+
+因为`REDOR`标识符包含了`>`和`>>`两个符号，因此为他包装了一个新的命令构造函数`cmd_redo_check()`，根据`REDOR`选择构造哪个输出重定向命令。
+
+```C
+/* in parser.y */
+%union{
+    int num;
+    char *id;
+    char *op;
+    cmd_t cmd;
+    node node;
+}
+
+%token<id>      T_ARG
+%token<op>      REDOR
+//...
+%right REDOR
+//...
+command	        :  basic_command		    { $$ = $1;}
+		       //...
+		        |  command REDOR command    { $$ = cmd_redo_check($1, $3, 1, $2);}
+		        ;
+```
+
+```c
+/* in scanner.l */
+//...
+REDO    [>]{1,2}
+//...
+{REDO}      {yylval = strdup(yytext); return REDOR;}
+```
 
 ## `history`命令
-### 【解决】显示的命令与参数之间没有空格
-使用`strncpy()`时指定复制长度时需要计入末尾的`\0`。
 
 ### 无法不带参数执行。
 
-### 包含当前输入的命令
+### 【解决】显示的命令与参数之间没有空格
+使用`strncpy()`时指定复制长度时需要计入末尾的`\0`。
+
+### 【解决】包含当前输入的命令
 目前方案有：
 1. 修改输出时的`history_buff`下标，整体前移一个，需要注意起始位置有效性
 2. 改变历史保存记录的运行位置。
