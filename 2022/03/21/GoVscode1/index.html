@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="EEYuucrF8H4R8FSjMZmWSyKVx6wA67NNdoJGSyXtLq0">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"phantomt.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true,"dimmer":true},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="使用Golang编写menu项目，创建一个版本库，采用VSCode作为编译调试环境。记录从创建版本库、配置VSCode编译调试环境、编写menu第一版简单程序，以及最终调试运行，提供一个Go+VSCode的开发环境配置与工作流程的参考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Win环境下，使用VS Code配置Go开发环境并编写menu项目">
+<meta property="og:url" content="https://phantomt.github.io/2022/03/21/GoVscode1/index.html">
+<meta property="og:site_name" content="欢迎来到本尊的鱼缸">
+<meta property="og:description" content="使用Golang编写menu项目，创建一个版本库，采用VSCode作为编译调试环境。记录从创建版本库、配置VSCode编译调试环境、编写menu第一版简单程序，以及最终调试运行，提供一个Go+VSCode的开发环境配置与工作流程的参考。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://phantomt.github.io/2022/03/21/GoVscode1/image-20220321132727412.png">
+<meta property="og:image" content="https://phantomt.github.io/2022/03/21/GoVscode1/image-20220321132854798.png">
+<meta property="og:image" content="https://phantomt.github.io/2022/03/21/GoVscode1/image-20220321133232007.png">
+<meta property="og:image" content="https://phantomt.github.io/2022/03/21/GoVscode1/image-20220321133626119.png">
+<meta property="og:image" content="https://phantomt.github.io/2022/03/21/GoVscode1/image-20220321133939968.png">
+<meta property="og:image" content="https://phantomt.github.io/2022/03/21/GoVscode1/image-20220321145321900.png">
+<meta property="og:image" content="https://phantomt.github.io/2022/03/21/GoVscode1/image-20220321182407475.png">
+<meta property="og:image" content="https://phantomt.github.io/2022/03/21/GoVscode1/image-20220321182425934.png">
+<meta property="og:image" content="https://phantomt.github.io/2022/03/21/GoVscode1/image-20220321192107706.png">
+<meta property="article:published_time" content="2022-03-21T05:16:00.000Z">
+<meta property="article:modified_time" content="2022-03-21T11:25:50.920Z">
+<meta property="article:author" content="Phantom T">
+<meta property="article:tag" content="VSCode">
+<meta property="article:tag" content="Golang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://phantomt.github.io/2022/03/21/GoVscode1/image-20220321132727412.png">
+
+
+<link rel="canonical" href="https://phantomt.github.io/2022/03/21/GoVscode1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://phantomt.github.io/2022/03/21/GoVscode1/","path":"2022/03/21/GoVscode1/","title":"Win环境下，使用VS Code配置Go开发环境并编写menu项目"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Win环境下，使用VS Code配置Go开发环境并编写menu项目 | 欢迎来到本尊的鱼缸</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">欢迎来到本尊的鱼缸</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Nothing is true and everything is permitted.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-主页"><a href="/" rel="section"><i class="home fa-fw"></i>主页</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-记录"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>记录</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">开发环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Go%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">Go安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VS-Code%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">1.2.</span> <span class="nav-text">VS Code环境准备</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAGitHub%E7%89%88%E6%9C%AC%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">创建GitHub版本库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E5%86%99menu%E7%AC%AC%E4%B8%80%E7%89%88%E7%A8%8B%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">编写menu第一版程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E5%90%8C%E6%AD%A5"><span class="nav-number">4.</span> <span class="nav-text">上传同步</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Phantom T"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Phantom T</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/phantomT" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;phantomT" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bobphantom@126.com" title="E-Mail → mailto:bobphantom@126.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://phantomt.github.io/2022/03/21/GoVscode1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Phantom T">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到本尊的鱼缸">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Win环境下，使用VS Code配置Go开发环境并编写menu项目
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-03-21 13:16:00 / 修改时间：19:25:50" itemprop="dateCreated datePublished" datetime="2022-03-21T13:16:00+08:00">2022-03-21</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>使用<code>Golang</code>编写<code>menu</code>项目，创建一个版本库，采用<code>VSCode</code>作为编译调试环境。记录从创建版本库、配置<code>VSCode</code>编译调试环境、编写<code>menu</code>第一版简单程序，以及最终调试运行，提供一个<code>Go+VSCode</code>的开发环境配置与工作流程的参考。</p>
+<span id="more"></span>
+
+<h1 id="开发环境准备"><a href="#开发环境准备" class="headerlink" title="开发环境准备"></a>开发环境准备</h1><h2 id="Go安装"><a href="#Go安装" class="headerlink" title="Go安装"></a>Go安装</h2><ol>
+<li><p>官网下载安装<code>Windows</code>版安装文件并安装</p>
+<p><img src="/2022/03/21/GoVscode1/image-20220321132727412.png" alt="image-20220321132727412"></p>
+</li>
+<li><p><img src="/2022/03/21/GoVscode1/image-20220321132854798.png" alt="image-20220321132854798"></p>
+<p>在命令行中输入<code>go version</code>显示版本信息表示安装成功</p>
+</li>
+</ol>
+<h2 id="VS-Code环境准备"><a href="#VS-Code环境准备" class="headerlink" title="VS Code环境准备"></a>VS Code环境准备</h2><ol>
+<li>在插件中搜索<code>Go</code>并安装插件<img src="/2022/03/21/GoVscode1/image-20220321133232007.png" alt="image-20220321133232007"></li>
+</ol>
+<h1 id="创建GitHub版本库"><a href="#创建GitHub版本库" class="headerlink" title="创建GitHub版本库"></a>创建GitHub版本库</h1><ol>
+<li>创建新的<code>repository</code><img src="/2022/03/21/GoVscode1/image-20220321133626119.png" alt="image-20220321133626119"></li>
+<li>将仓库克隆到本地文件夹<img src="/2022/03/21/GoVscode1/image-20220321133939968.png" alt="image-20220321133939968"></li>
+</ol>
+<h1 id="编写menu第一版程序"><a href="#编写menu第一版程序" class="headerlink" title="编写menu第一版程序"></a>编写<code>menu</code>第一版程序</h1><ol>
+<li><p>使用<code>go mod init menu</code>初始化目录<img src="/2022/03/21/GoVscode1/image-20220321145321900.png" alt="image-20220321145321900"></p>
+</li>
+<li><p>新建<code>menu.go</code>文件，编写代码，运行前<code>VSCode</code>会提示安装<code>Go</code>相关工具，直接<code>install all</code>就完事了嗷</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// dlv debug --headless --listen=:2345</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> cmdline <span class="keyword">string</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;WelCome to The Machine&quot;</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;#*********# Go_MENU v0.1 #*********#&quot;</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;help: User Manual || list: List Page&quot;</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;setup: Setup Page || quit: QUIT&quot;</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;And some hidden words&quot;</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;####################################&quot;</span>)</span><br><span class="line">	<span class="keyword">for</span> <span class="literal">true</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;\n#*********# Go_MENU v0.1 #*********#&quot;</span>)</span><br><span class="line">		fmt.Scan(&amp;cmdline)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">switch</span> cmdline &#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&quot;help&quot;</span>:</span><br><span class="line">			fmt.Println(<span class="string">&quot;How can I help you?&quot;</span>)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		<span class="keyword">case</span> <span class="string">&quot;list&quot;</span>:</span><br><span class="line">			fmt.Println(<span class="string">&quot;Hurry up to make your choise!&quot;</span>)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		<span class="keyword">case</span> <span class="string">&quot;setup&quot;</span>:</span><br><span class="line">			fmt.Println(<span class="string">&quot;Watch up where you going&quot;</span>)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		<span class="keyword">case</span> <span class="string">&quot;quit&quot;</span>:</span><br><span class="line">			fmt.Println(<span class="string">&quot;OK OK I&#x27;m done.&quot;</span>)</span><br><span class="line">			os.Exit(<span class="number">0</span>)</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&quot;canyouhearme&quot;</span>:</span><br><span class="line">			fmt.Println(<span class="string">&quot;Hell yes&quot;</span>)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		<span class="keyword">case</span> <span class="string">&quot;nut&quot;</span>:</span><br><span class="line">			fmt.Println(<span class="string">&quot;I could be bounded in a nutshell and count myself a king of infinite space.&quot;</span>)</span><br><span class="line">			fmt.Println(<span class="string">&quot;https://github.com/phantomT/T-Shell&quot;</span>)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			fmt.Println(<span class="string">&quot;HAHA, VERY FUNNY, DO THAT AGAIN&quot;</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>由于调试控制台中无法直接获取输入，因此需要使用“远程调试”方法，使用<code>dlv --headless</code>模式监听端口，在终端中进行调试，建立<code>VSCode</code>调试配置<code>launch.json</code>，<strong>注：默认创建的配置中，<code>debugAdapter</code>是不配置的，不配置时默认值为<code>legacy</code>，此时运行会报错而且无法进行调试。</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">    <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">    <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;0.2.0&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Connect to server&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;go&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;request&quot;</span>: <span class="string">&quot;attach&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;debugAdapter&quot;</span>: <span class="string">&quot;dlv-dap&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;mode&quot;</span>: <span class="string">&quot;remote&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;remotePath&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;port&quot;</span>: <span class="number">2345</span>,</span><br><span class="line">            <span class="attr">&quot;host&quot;</span>: <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>并在调试前使用终端输入<code>dlv debug --headless --listen=:2345</code>，开启监听<img src="/2022/03/21/GoVscode1/image-20220321182407475.png" alt="image-20220321182407475"></p>
+</li>
+<li><p>运行程序<img src="/2022/03/21/GoVscode1/image-20220321182425934.png" alt="image-20220321182425934"></p>
+</li>
+</ol>
+<h1 id="上传同步"><a href="#上传同步" class="headerlink" title="上传同步"></a>上传同步</h1><ol>
+<li>使用<code>git add . &amp;&amp; git commit -m &quot;build env demo&quot; &amp;&amp; git push</code>上传文件至远程仓库<img src="/2022/03/21/GoVscode1/image-20220321192107706.png" alt="image-20220321192107706"></li>
+</ol>
+<p>作者：406</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Phantom T 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="Phantom T 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Phantom T
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://phantomt.github.io/2022/03/21/GoVscode1/" title="Win环境下，使用VS Code配置Go开发环境并编写menu项目">https://phantomt.github.io/2022/03/21/GoVscode1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/VSCode/" rel="tag"># VSCode</a>
+              <a href="/tags/Golang/" rel="tag"># Golang</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/07/Shell-001-start/" rel="prev" title="简易shell的实现 | 更新简单信号处理">
+                  <i class="fa fa-chevron-left"></i> 简易shell的实现 | 更新简单信号处理
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phantom T</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"phantomT","repo":"hexo-gitalk","client_id":"b6dcc47c3c7ef6e52002","client_secret":"4b1bd615b27b373815e57080ed022051b759ea8c","admin_user":"phantomT","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"2671c276be140ba6e0d028cfe4c7ad4e"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
