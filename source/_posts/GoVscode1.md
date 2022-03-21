@@ -117,5 +117,6 @@ tags:
 # 上传同步
 
 1. 使用`git add . && git commit -m "build env demo" && git push`上传文件至远程仓库![image-20220321192107706](GoVscode1/image-20220321192107706.png)
+2. 可以看到远程仓库已经更新了![image-20220321193246955](GoVscode1/image-20220321193246955.png)
 
 作者：406
